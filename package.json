@@ -27,8 +27,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint . --ext .ts",
-    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write && git add -A ."
+    "lint": "eslint . --ext .ts"
   },
   "eslintConfig": {
     "extends": [
@@ -38,7 +37,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run prettier-format && npm run lint",
+      "pre-commit": "npx prettier --write . && npx eslint . --ext .ts",
       "pre-push": "npm test"
     }
   },
