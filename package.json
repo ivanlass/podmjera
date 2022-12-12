@@ -27,19 +27,14 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "prettier-format": "npx prettier --write ."
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npx prettier --write . && npx eslint . --ext .ts",
-      "pre-push": "npm test"
-    }
   },
   "lint-staged": {
     "*": "prettier --write"
