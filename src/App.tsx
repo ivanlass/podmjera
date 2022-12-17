@@ -1,12 +1,11 @@
-import { Flex, Text } from '@chakra-ui/react';
-
+// import SuperAdminDashboard from './pages/superAdmin/SuperAdminDashboard';
+import { Box } from '@chakra-ui/react';
+import Settings from './pages/storeOwner/Settings';
 function App() {
   return (
-    <Flex h='100vh' bg='#ededed' justifyContent='center' alignItems='center'>
-      <Text fontSize='6xl' fontWeight='extrabold' color='#dbdb2e'>
-        Hello SafeSys
-      </Text>
-    </Flex>
+    <Box>
+      <Settings />
+    </Box>
   );
 }
 
