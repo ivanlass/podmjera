@@ -1,5 +1,5 @@
 import { Box, Button, Input } from '@chakra-ui/react';
-import StoreCard from '../../components/StoreCard';
+import StoreCard from './components/StoreCard';
 
 function SuperAdminDashboard() {
   return (

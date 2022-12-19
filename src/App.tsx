@@ -1,12 +1,12 @@
-// import SuperAdminDashboard from './pages/superAdmin/SuperAdminDashboard';
 import { Box } from '@chakra-ui/react';
-import Settings from './pages/storeOwner/Settings';
-function App() {
+import Items from './pages/storeOwner/Items/Items';
+
+const App = () => {
   return (
     <Box>
-      <Settings />
+      <Items />
     </Box>
   );
-}
+};
 
 export default App;

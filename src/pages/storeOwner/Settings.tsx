@@ -8,12 +8,13 @@ import {
   Input,
   FormLabel,
   Flex,
+  Button,
 } from '@chakra-ui/react';
 
 function Settings() {
   return (
     <FormControl>
-      <Heading>Settings</Heading>
+      <Heading>Postavke</Heading>
       <Grid
         mt={4}
         templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
@@ -88,6 +89,9 @@ function Settings() {
             Ne primamo narudzbe zadnjih koliko minuta
           </FormLabel>
           <Input type='number' />
+          <Box w='100%' display='flex' justifyContent='flex-end' mt={4}>
+            <Button>Spremi</Button>
+          </Box>
         </GridItem>
       </Grid>
     </FormControl>
