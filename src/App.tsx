@@ -1,10 +1,10 @@
 import { Box } from '@chakra-ui/react';
-import Items from './pages/storeOwner/Items/Items';
+import Orders from './pages/storeOwner/Orders/Orders';
 
 const App = () => {
   return (
     <Box>
-      <Items />
+      <Orders />
     </Box>
   );
 };
