@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import EditItem from '../../../../modals/EditItem';
+import FavouriteItem from './FavouriteItem';
 
 const ItemTable = () => {
   const {
@@ -23,7 +24,7 @@ const ItemTable = () => {
   const testArr = Array.from(Array(10).keys());
 
   return (
-    <TableContainer bg='neutral.10' borderRadius='md' boxShadow='base' mt='4'>
+    <TableContainer bg='neutral.10' borderRadius='md' boxShadow='base'>
       <Table variant='unstyled'>
         <Thead>
           <Tr>
@@ -37,7 +38,8 @@ const ItemTable = () => {
         </Thead>
         <Tbody>
           {testArr.map((item) => (
-            <Tr key={item} _hover={{ bg: 'neutral.20' }}>
+            // <Tr key={item} _hover={{ bg: 'neutral.20' }}>
+            <FavouriteItem key={item} name='Megle'>
               <Td>
                 <Image
                   src='https://www.konzumshop.ba/images/products/022/02230013_1l.gif'
@@ -68,7 +70,8 @@ const ItemTable = () => {
                   icon={<DeleteIcon />}
                 />
               </Td>
-            </Tr>
+              {/* </Tr> */}
+            </FavouriteItem>
           ))}
         </Tbody>
       </Table>

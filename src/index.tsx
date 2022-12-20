@@ -4,15 +4,19 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <ChakraProvider theme={theme} resetCSS>
-      <App />
-    </ChakraProvider>
+    <DndProvider backend={HTML5Backend}>
+      <ChakraProvider theme={theme} resetCSS>
+        <App />
+      </ChakraProvider>
+    </DndProvider>
   </React.StrictMode>
 );
 
