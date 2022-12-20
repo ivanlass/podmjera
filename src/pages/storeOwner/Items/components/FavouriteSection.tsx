@@ -16,14 +16,14 @@ const FavouriteSection = () => {
         columns={{ base: 2, sm: 3, md: 4, lg: 6, xl: 8 }}
         spacing={4}
       >
-        <FavouriteItemsPlaceholder />
-        <FavouriteItemsPlaceholder />
-        <FavouriteItemsPlaceholder />
-        <FavouriteItemsPlaceholder />
-        <FavouriteItemsPlaceholder />
-        <FavouriteItemsPlaceholder />
-        <FavouriteItemsPlaceholder />
-        <FavouriteItemsPlaceholder />
+        <FavouriteItemsPlaceholder orderNum={1} />
+        <FavouriteItemsPlaceholder orderNum={2} />
+        <FavouriteItemsPlaceholder orderNum={3} />
+        <FavouriteItemsPlaceholder orderNum={4} />
+        <FavouriteItemsPlaceholder orderNum={5} />
+        <FavouriteItemsPlaceholder orderNum={6} />
+        <FavouriteItemsPlaceholder orderNum={7} />
+        <FavouriteItemsPlaceholder orderNum={8} />
       </SimpleGrid>
     </>
   );

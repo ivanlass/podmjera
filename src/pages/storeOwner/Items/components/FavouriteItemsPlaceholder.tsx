@@ -6,10 +6,14 @@ export const ItemTypes = {
   BOX: 'box',
 };
 
-export const FavouriteItemsPlaceholder: FC = () => {
+interface IProps {
+  orderNum: number;
+}
+
+export const FavouriteItemsPlaceholder: FC<IProps> = ({orderNum}) => {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.BOX,
-    drop: () => ({ name: '1' }),
+    drop: () => ({ name: orderNum }),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop(),
