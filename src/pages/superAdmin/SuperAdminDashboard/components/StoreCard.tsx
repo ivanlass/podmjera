@@ -8,7 +8,7 @@ function StoreCard() {
       spacing={4}
       bg='neutral.10'
       borderRadius='md'
-      boxShadow='shadow.50'
+      boxShadow='base'
       px='4'
       py='4'
       my='4'

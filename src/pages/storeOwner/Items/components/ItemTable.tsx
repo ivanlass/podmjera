@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import EditItem from '../../../../modals/EditItem';
-import FavouriteItem from './FavouriteItem';
+import FavouriteItem from './FavouriteItemBlueprint';
 
 const ItemTable = () => {
   const {
