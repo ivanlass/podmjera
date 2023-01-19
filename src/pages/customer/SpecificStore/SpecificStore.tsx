@@ -1,10 +1,12 @@
 import { Box, SimpleGrid } from '@chakra-ui/react';
+import Basket from '../../../components/Basket';
 import ItemCard from '../../../components/ProductCard';
 import CategoryCard from '../../storeOwner/Categories/components/CategoryCard';
 
 const SpecificStore = () => {
   return (
     <Box>
+      <Basket />
       <SimpleGrid mt='4' columns={{ base: 1, md: 3, lg: 4 }} spacing={4}>
         <ItemCard />
         <ItemCard />
