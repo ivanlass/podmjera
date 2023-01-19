@@ -18,7 +18,7 @@ const theme = extendTheme(
       global: {
         body: {
           color: colors.neutral[500],
-          bg: colors.neutral[20],
+          bg: colors.neutral[30],
           lineHeight: 'base',
         },
         a: {
