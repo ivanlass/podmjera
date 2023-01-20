@@ -10,7 +10,7 @@ interface IProps {
   orderNum: number;
 }
 
-export const FavouriteItemsPlaceholder: FC<IProps> = ({orderNum}) => {
+export const FavouriteItemsPlaceholder: FC<IProps> = ({ orderNum }) => {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.BOX,
     drop: () => ({ name: orderNum }),
