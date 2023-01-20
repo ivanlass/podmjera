@@ -1,24 +1,28 @@
-import {
-  Text,
-  Box,
-  Card,
-  CardBody,
-  CardFooter,
-  Divider,
-  Stack,
-  Image,
-  Flex,
-  Button,
-  IconButton,
-} from '@chakra-ui/react';
+import { FC, useContext } from 'react';
+import { Text, Box, Stack, Image, Flex, IconButton } from '@chakra-ui/react';
 import Counter from './Counter';
 import { AiOutlineClose } from 'react-icons/ai';
+import { BasketContext } from '../store/Basket.Context';
 
-const ProductCardSm = () => {
+interface IProduct {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  quantity: number;
+}
+
+interface IProps {
+  product: IProduct;
+}
+
+const ProductCardSm: FC<IProps> = ({ product }: IProps) => {
+  const basketContext = useContext(BasketContext);
+
   return (
     <Box display='flex' py='4'>
       <Image
-        src='https://www.konzumshop.ba/images/products/022/02230013_1l.gif'
+        src={product.image}
         alt='mlijeko'
         borderRadius='md'
         height='60px'
@@ -27,10 +31,10 @@ const ProductCardSm = () => {
       />
       <Stack justifyContent='space-between' ms='4'>
         <Text color='primary.700' fontSize={{ base: 'md', md: 'xl' }}>
-          3.27 KM
+          {product.price} KM
         </Text>
         <Text fontSize='sm' color='text.secondary'>
-          Meggle Mlijeko 2.8%
+          {product.name}
         </Text>
       </Stack>
       <Flex
@@ -39,9 +43,9 @@ const ProductCardSm = () => {
         alignItems='flex-end'
         justifyContent='space-between'
       >
-        <Counter />
+        <Counter product={product} />
         <Text fontSize='sm' color='text.secondary'>
-          15 KM
+          {product.price * product.quantity} KM
         </Text>
       </Flex>
       <IconButton
@@ -51,6 +55,7 @@ const ProductCardSm = () => {
         ms='4'
         icon={<AiOutlineClose />}
         aria-label='delete'
+        onClick={() => basketContext?.removeFromBasket(product.id)}
       />
     </Box>
   );

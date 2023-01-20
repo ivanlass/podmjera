@@ -1,44 +1,65 @@
-import {
-  Text,
-  Box,
-  Card,
-  CardBody,
-  CardFooter,
-  Divider,
-  Stack,
-  Image,
-} from '@chakra-ui/react';
+import { Text, Box, Card, CardBody, Image, Flex } from '@chakra-ui/react';
+import { FC } from 'react';
 import Counter from './Counter';
 
-const ItemCard = () => {
+interface IProduct {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+}
+
+interface IProps {
+  product: IProduct;
+}
+
+const ProductCard: FC<IProps> = ({ product }: IProps) => {
   return (
     <Card bg='neutral.10'>
-      <CardBody>
-        <Box display='flex' justifyContent='center'>
+      <CardBody p='4'>
+        <Box
+          w='100%'
+          display='flex'
+          alignItems={{ base: 'center', lg: 'flex-start' }}
+          flexDirection={{ base: 'column', lg: 'row' }}
+        >
           <Image
-            src='https://www.konzumshop.ba/images/products/022/02230013_1l.gif'
+            src={product.image}
             alt='mlijeko'
             borderRadius='md'
-            height={{ base: '100px', md: '150px' }}
-            objectFit='contain'
+            height='150px'
+            objectFit='cover'
             bgPosition='center'
           />
+
+          <Flex
+            flexDirection='column'
+            justifyContent='space-between'
+            ms={{ base: 0, lg: 2 }}
+            mt={{ base: 2, lg: 0 }}
+            h={{ base: '100%', lg: '150px' }}
+            w='100%'
+          >
+            <Box>
+              <Text color='primary.700' fontSize={{ base: 'md', md: 'xl' }}>
+                {product.price} KM
+              </Text>
+              <Text fontSize='sm' color='text.secondary'>
+                {product.name}
+              </Text>
+            </Box>
+            <Flex
+              mt={{ base: 4, lg: 0 }}
+              justifyContent='flex-end'
+              justifySelf='flex-end'
+            >
+              <Counter product={product} />
+            </Flex>
+          </Flex>
         </Box>
-        <Stack mt='4'>
-          <Text color='primary.700' fontSize={{ base: 'md', md: 'xl' }}>
-            3.27 KM
-          </Text>
-          <Text fontSize='sm' color='text.secondary'>
-            Meggle Mlijeko 2.8%
-          </Text>
-        </Stack>
       </CardBody>
-      <Divider />
-      <CardFooter justifyContent={{ base: 'center', md: 'flex-end' }}>
-        <Counter />
-      </CardFooter>
     </Card>
   );
 };
 
-export default ItemCard;
+export default ProductCard;
