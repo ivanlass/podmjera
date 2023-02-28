@@ -6,6 +6,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,7 +15,9 @@ root.render(
   <React.StrictMode>
     <DndProvider backend={HTML5Backend}>
       <ChakraProvider theme={theme} resetCSS>
-        <App />
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </ChakraProvider>
     </DndProvider>
   </React.StrictMode>
