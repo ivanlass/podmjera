@@ -7,6 +7,7 @@ import theme from './theme';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import { BrowserRouter } from 'react-router-dom';
+import { Auth0ProviderWithNavigate } from './auth0-provider-with-navigate';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,7 +17,9 @@ root.render(
     <DndProvider backend={HTML5Backend}>
       <ChakraProvider theme={theme} resetCSS>
         <BrowserRouter>
-          <App />
+          <Auth0ProviderWithNavigate>
+            <App />
+          </Auth0ProviderWithNavigate>
         </BrowserRouter>
       </ChakraProvider>
     </DndProvider>

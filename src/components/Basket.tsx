@@ -23,34 +23,34 @@ function Basket() {
 
   return (
     <>
-      <Button
-        pos='absolute'
-        right='40px'
-        top='40px'
-        zIndex='docked'
-        onClick={onOpen}
-        size='null'
-        p='4'
-        borderRadius='full'
-      >
-        {basketContext?.basket && basketContext?.basket.length > 0 && (
-          <Text
-            fontSize='xs'
-            position='absolute'
-            top='-15px'
-            right='-15px'
-            p='2'
-            borderRadius='full'
-            minW='32px'
-            minH='32px'
-            border='1px solid #fff'
-            bg='primary.500'
-          >
-            {basketContext.basket.length}
-          </Text>
-        )}
-        <BsBasket fontSize='lg' />
-      </Button>
+      <Box w='100%' textAlign='right' mt='20'>
+        <Button
+          onClick={onOpen}
+          size='null'
+          p='4'
+          bottom='0'
+          borderRadius='full'
+          right='4'
+        >
+          {basketContext?.basket && basketContext?.basket.length > 0 && (
+            <Text
+              fontSize='xs'
+              position='absolute'
+              top='-10px'
+              right='-10px'
+              p='2'
+              borderRadius='full'
+              minW='32px'
+              minH='32px'
+              border='1px solid #fff'
+              bg='primary.500'
+            >
+              {basketContext.basket.length}
+            </Text>
+          )}
+          <BsBasket fontSize='20' />
+        </Button>
+      </Box>
       <Drawer size={'md'} isOpen={isOpen} placement='right' onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>

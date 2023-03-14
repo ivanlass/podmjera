@@ -13,7 +13,7 @@ import {
 
 function Settings() {
   return (
-    <FormControl>
+    <FormControl mt={12}>
       <Heading>Postavke</Heading>
       <Grid
         mt={4}

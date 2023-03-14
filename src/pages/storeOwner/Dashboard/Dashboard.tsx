@@ -7,6 +7,7 @@ import {
   SimpleGrid,
   Text,
 } from '@chakra-ui/react';
+import Sidebar from '../../../components/Sidebar';
 import BestList from './components/BestList';
 import Statistics from './components/Statistics';
 
@@ -37,7 +38,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <Box p='4'>
+    <Box mt={12}>
       <Heading>Dashboard</Heading>
       <Grid
         templateColumns={{

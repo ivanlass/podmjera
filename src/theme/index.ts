@@ -1,12 +1,13 @@
 import { extendTheme, withDefaultColorScheme } from '@chakra-ui/react';
 import colors from './colors';
 import { Button } from './components/button';
+
 const theme = extendTheme(
   {
     colors,
     fonts: {
-      heading: `'Inter', sans-serif`,
-      body: `'Inter', sans-serif`,
+      heading: `'Space Grotesk', sans-serif`,
+      body: `'Space Grotesk', sans-serif`,
     },
     shadows: {
       shadow: {

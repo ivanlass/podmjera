@@ -12,7 +12,7 @@ import CategoryCard from './components/CategoryCard';
 
 const Categories = () => {
   return (
-    <Box p='4'>
+    <Box mt={12}>
       <Heading>Kategorije</Heading>
       <Box
         mt={4}

@@ -3,7 +3,7 @@ import OrdersList from './components/OrdersList';
 
 const Orders = () => {
   return (
-    <Box p='4'>
+    <Box mt={12}>
       <Heading>Narudžbe</Heading>
       <OrdersList />
     </Box>

@@ -5,7 +5,7 @@ import NewItemForm from './components/NewItemForm';
 
 const Items = () => {
   return (
-    <Box p='4'>
+    <Box mt={12}>
       <Heading>Artikli</Heading>
       <NewItemForm />
       <FavouriteSection />
