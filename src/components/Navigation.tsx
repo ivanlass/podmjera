@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Image, Flex, Button, Box } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
 import useOnClickOutside from '../hooks/useOnClickOutside';
@@ -7,18 +7,12 @@ import axios from 'axios';
 import { BsShop } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { createPath, ROUTE } from '../interfaces/routes.interface';
-import { BasketProvider } from '../store/Basket.Context';
-import Basket from './Basket';
-
+// !TODO nadji kako auth0 da vrati id usera i onda ga upisati u bazu podataka
 const Navigation = () => {
-  const { user, loginWithPopup, logout } = useAuth0();
+  const { user, loginWithPopup, logout, getAccessTokenSilently } = useAuth0();
   const [isDropdownOpen, setIsDropdownOpen] = useState<Boolean>(false);
   const ref = useRef(null);
   const navigate = useNavigate();
-
-  const login = async () => {
-    loginWithPopup();
-  };
 
   const handleClickOutside = () => {
     setIsDropdownOpen(false);
@@ -26,6 +20,39 @@ const Navigation = () => {
 
   const handleLogout = () => {
     logout();
+  };
+
+  const login = async () => {
+    loginWithPopup();
+  };
+
+  useEffect(() => {
+    if (
+      user?.userType === 'new' &&
+      localStorage.getItem('userType') !== 'registered'
+    ) {
+      signupUser();
+    }
+  }, [user]);
+
+  const signupUser = async () => {
+    console.log('asdljklasdjklasdjklasdjklasdjkl');
+    const accessToken = await getAccessTokenSilently();
+    axios
+      .post('http://localhost:6060/api/user/signup', user, {
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        // save in local storage info that user is registered
+        localStorage.setItem('userType', 'registered');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useOnClickOutside(ref, handleClickOutside);
