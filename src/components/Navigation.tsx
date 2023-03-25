@@ -7,9 +7,17 @@ import axios from 'axios';
 import { BsShop } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { createPath, ROUTE } from '../interfaces/routes.interface';
-// !TODO nadji kako auth0 da vrati id usera i onda ga upisati u bazu podataka
+import { useCreateUser } from '../API/Queries';
+
 const Navigation = () => {
   const { user, loginWithPopup, logout, getAccessTokenSilently } = useAuth0();
+  const { mutate } = useCreateUser({
+    onSuccess: () => {
+      if (user && user.sub) {
+        localStorage.setItem('userType', 'registered');
+      }
+    },
+  });
   const [isDropdownOpen, setIsDropdownOpen] = useState<Boolean>(false);
   const ref = useRef(null);
   const navigate = useNavigate();
@@ -21,7 +29,6 @@ const Navigation = () => {
   const handleLogout = () => {
     logout();
   };
-
   const login = async () => {
     loginWithPopup();
   };
@@ -31,29 +38,9 @@ const Navigation = () => {
       user?.userType === 'new' &&
       localStorage.getItem('userType') !== 'registered'
     ) {
-      signupUser();
+      mutate();
     }
   }, [user]);
-
-  const signupUser = async () => {
-    console.log('asdljklasdjklasdjklasdjklasdjkl');
-    const accessToken = await getAccessTokenSilently();
-    axios
-      .post('http://localhost:6060/api/user/signup', user, {
-        headers: {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        // save in local storage info that user is registered
-        localStorage.setItem('userType', 'registered');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   useOnClickOutside(ref, handleClickOutside);
   return (
@@ -77,9 +64,7 @@ const Navigation = () => {
             h='40px'
             src={user?.picture}
             alt='user'
-            ref={ref}
             cursor='pointer'
-            onChange={(event) => console.log(event)}
           />
         ) : (
           <Button onClick={login} variant='none'>

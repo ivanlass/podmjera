@@ -120,7 +120,6 @@ interface NavItemProps extends FlexProps {
 }
 const NavItem = ({ icon, children, to, ...rest }: NavItemProps) => {
   const { pathname } = useLocation();
-  console.log(pathname);
   return (
     <Link to={to}>
       <Flex

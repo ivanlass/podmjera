@@ -8,6 +8,9 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import { BrowserRouter } from 'react-router-dom';
 import { Auth0ProviderWithNavigate } from './auth0-provider-with-navigate';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -18,7 +21,9 @@ root.render(
       <ChakraProvider theme={theme} resetCSS>
         <BrowserRouter>
           <Auth0ProviderWithNavigate>
-            <App />
+            <QueryClientProvider client={queryClient}>
+              <App />
+            </QueryClientProvider>
           </Auth0ProviderWithNavigate>
         </BrowserRouter>
       </ChakraProvider>

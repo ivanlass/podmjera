@@ -9,20 +9,56 @@ import Navigation from './components/Navigation';
 import { ROUTE } from './interfaces/routes.interface';
 import Sidebar from './components/Sidebar';
 import Orders from './pages/storeOwner/Orders/Orders';
+import ProtectedRoute from './pages/ProtectedRoute';
 
 const App = () => {
   return (
     <>
       <Navigation />
       <Routes>
-        <Route path='store/:store' element={<SpecificStore />} />
-        <Route path='store/:store/naplata' element={<BillingProcedure />} />
+        <Route path={ROUTE.STORE} element={<SpecificStore />} />
+        <Route path={ROUTE.NAPLATA} element={<BillingProcedure />} />
         <Route element={<Sidebar />}>
-          <Route path={ROUTE.SETTINGS} element={<Settings />} />
-          <Route path={ROUTE.DASHBOARD} element={<Dashboard />} />
-          <Route path={ROUTE.CATEGORIES} element={<Categories />} />
-          <Route path={ROUTE.ARTICLES} element={<Items />} />
-          <Route path={ROUTE.ORDERS} element={<Orders />} />
+          <Route
+            path={ROUTE.SETTINGS}
+            element={
+              <ProtectedRoute>
+                <Settings />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTE.DASHBOARD}
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTE.CATEGORIES}
+            element={
+              <ProtectedRoute>
+                <Categories />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTE.ARTICLES}
+            element={
+              <ProtectedRoute>
+                <Items />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTE.ORDERS}
+            element={
+              <ProtectedRoute>
+                <Orders />
+              </ProtectedRoute>
+            }
+          />
         </Route>
         <Route path='*' element={<p>nema toga</p>} />
         {/* <Route path='*' element={<Navigate to='/404' replace />} /> */}
