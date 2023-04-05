@@ -19,3 +19,25 @@ export const useCreateUser = (options) => {
 
   return useMutation(saveNewUser, { ...options });
 };
+
+// get user data from the database
+export const useGetUser = (userID, options) => {
+  const { getAccessTokenSilently } = useAuth0();
+  async function getUser() {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.post(
+      `/api/user/getuser/`,
+      { userID },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  }
+
+  return useMutation(['userMeta'], () => getUser(), {
+    ...options,
+  });
+};

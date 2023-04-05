@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   Box,
   Flex,
@@ -7,11 +8,27 @@ import {
   SimpleGrid,
   Text,
 } from '@chakra-ui/react';
-import Sidebar from '../../../components/Sidebar';
 import BestList from './components/BestList';
 import Statistics from './components/Statistics';
+import { useGetUser } from '../../../API/Queries';
+import { useAuth0 } from '@auth0/auth0-react';
+import { Navigate } from 'react-router-dom';
+import { ROUTE } from '../../../interfaces/routes.interface';
 
 const Dashboard = () => {
+  const { user } = useAuth0();
+  const { data: userMeta, mutate: getUser } = useGetUser(user?.sub);
+
+  useEffect(() => {
+    getUser();
+  }, [user]);
+  console.log(userMeta && userMeta.storeID);
+  console.log(userMeta);
+
+  if (!(userMeta && userMeta.storeID)) {
+    return <Navigate to={ROUTE.NAME} replace />;
+  }
+
   // fake array of objects with name and price
   const bestProducts = [
     { name: 'Product 1', price: 100 },

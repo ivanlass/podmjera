@@ -10,6 +10,7 @@ import { ROUTE } from './interfaces/routes.interface';
 import Sidebar from './components/Sidebar';
 import Orders from './pages/storeOwner/Orders/Orders';
 import ProtectedRoute from './pages/ProtectedRoute';
+import StoreName from './pages/storeOwner/StoreName/StoreName';
 
 const App = () => {
   return (
@@ -18,6 +19,14 @@ const App = () => {
       <Routes>
         <Route path={ROUTE.STORE} element={<SpecificStore />} />
         <Route path={ROUTE.NAPLATA} element={<BillingProcedure />} />
+        <Route
+          path={ROUTE.NAME}
+          element={
+            <ProtectedRoute>
+              <StoreName />
+            </ProtectedRoute>
+          }
+        />
         <Route element={<Sidebar />}>
           <Route
             path={ROUTE.SETTINGS}

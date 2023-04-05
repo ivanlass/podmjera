@@ -3,24 +3,18 @@ import { Image, Flex, Button, Box } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
 import useOnClickOutside from '../hooks/useOnClickOutside';
 import { FiLogOut } from 'react-icons/fi';
-import axios from 'axios';
 import { BsShop } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { createPath, ROUTE } from '../interfaces/routes.interface';
-import { useCreateUser } from '../API/Queries';
+import { useCreateUser, useGetUser } from '../API/Queries';
 
 const Navigation = () => {
-  const { user, loginWithPopup, logout, getAccessTokenSilently } = useAuth0();
-  const { mutate } = useCreateUser({
-    onSuccess: () => {
-      if (user && user.sub) {
-        localStorage.setItem('userType', 'registered');
-      }
-    },
-  });
+  const { user, loginWithPopup, logout } = useAuth0();
+  const { mutate } = useCreateUser();
   const [isDropdownOpen, setIsDropdownOpen] = useState<Boolean>(false);
   const ref = useRef(null);
   const navigate = useNavigate();
+  const { mutate: getUser } = useGetUser(user?.sub);
 
   const handleClickOutside = () => {
     setIsDropdownOpen(false);
@@ -34,12 +28,13 @@ const Navigation = () => {
   };
 
   useEffect(() => {
-    if (
-      user?.userType === 'new' &&
-      localStorage.getItem('userType') !== 'registered'
-    ) {
+    if (user?.userType === 'new') {
       mutate();
     }
+  }, [user]);
+
+  useEffect(() => {
+    getUser();
   }, [user]);
 
   useOnClickOutside(ref, handleClickOutside);
