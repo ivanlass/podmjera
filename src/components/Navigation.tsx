@@ -12,9 +12,9 @@ const Navigation = () => {
   const { user, loginWithPopup, logout } = useAuth0();
   const { mutate } = useCreateUser();
   const [isDropdownOpen, setIsDropdownOpen] = useState<Boolean>(false);
-  const ref = useRef(null);
-  const navigate = useNavigate();
   const { mutate: getUser } = useGetUser(user?.sub);
+  const navigate = useNavigate();
+  const ref = useRef(null);
 
   const handleClickOutside = () => {
     setIsDropdownOpen(false);

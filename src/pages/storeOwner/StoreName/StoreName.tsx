@@ -1,11 +1,19 @@
 import { useRef } from 'react';
 import { Button, Flex, Text, Input } from '@chakra-ui/react';
+import { useSaveStoreName } from '../../../API/Queries';
+
 const StoreName = () => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const {data, mutate: saveStoreName, isLoading } = useSaveStoreName();
   const sendName = () => {
     console.log('send name');
-    console.log(inputRef.current?.value);
+    // trim empty spaces from input value
+    if(!inputRef.current?.value) return;
+
+    const name = inputRef.current?.value.trim();
+    saveStoreName(name);
   };
+console.log(data)
   return (
     <Flex justifyContent='center' alignItems='center' flexDir='column' mt={24}>
       <Flex
@@ -21,7 +29,7 @@ const StoreName = () => {
         <Text mb='4'>Za početak unesite ime Vaše trgovine</Text>
         <Input placeholder='Ime trgovine' ref={inputRef} />
         <Button mt='4' w='100%' onClick={sendName}>
-          Spremi
+          {isLoading ? 'Učitavanje...' : 'Pošalji'}
         </Button>
       </Flex>
     </Flex>

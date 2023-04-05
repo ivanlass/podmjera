@@ -41,3 +41,19 @@ export const useGetUser = (userID, options) => {
     ...options,
   });
 };
+
+export const useSaveStoreName = (options) => {
+  const { getAccessTokenSilently, user } = useAuth0();
+
+  async function saveStoreName(storeName) {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.post('/api/store/storename', {authID: user.sub, storeName }, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  }
+
+  return useMutation(saveStoreName, { ...options });
+};
