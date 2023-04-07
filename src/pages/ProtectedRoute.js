@@ -3,7 +3,12 @@ import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth0();
-
+  console.log(
+    user && !user['http://demozero.net/roles'].includes('storeOwner')
+  );
+  if (user === undefined) {
+    return <Navigate to='/' replace />;
+  }
   if (user && !user['http://demozero.net/roles'].includes('storeOwner')) {
     return <Navigate to='/' replace />;
   }

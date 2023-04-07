@@ -12,7 +12,7 @@ const Navigation = () => {
   const { user, loginWithPopup, logout } = useAuth0();
   const { mutate } = useCreateUser();
   const [isDropdownOpen, setIsDropdownOpen] = useState<Boolean>(false);
-  const { mutate: getUser } = useGetUser(user?.sub);
+  const { refetch: refetchGetUser } = useGetUser(user?.sub);
   const navigate = useNavigate();
   const ref = useRef(null);
 
@@ -31,10 +31,9 @@ const Navigation = () => {
     if (user?.userType === 'new') {
       mutate();
     }
-  }, [user]);
-
-  useEffect(() => {
-    getUser();
+    if (user) {
+      refetchGetUser();
+    }
   }, [user]);
 
   useOnClickOutside(ref, handleClickOutside);

@@ -1,19 +1,39 @@
 import { useRef } from 'react';
 import { Button, Flex, Text, Input } from '@chakra-ui/react';
 import { useSaveStoreName } from '../../../API/Queries';
+import { ROUTE, createPath } from '../../../interfaces/routes.interface';
+import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
 
 const StoreName = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
-  const {data, mutate: saveStoreName, isLoading } = useSaveStoreName();
-  const sendName = () => {
-    console.log('send name');
-    // trim empty spaces from input value
-    if(!inputRef.current?.value) return;
+  const {
+    data: store,
+    mutate: saveStoreName,
+    isLoading,
+  } = useSaveStoreName({
+    onSuccess: (store: any) => {
+      console.log(store);
+      if (store?.store?.name) {
+        queryClient.setQueryData('store', store.store);
+        navigate(
+          createPath({
+            path: ROUTE.DASHBOARD,
+            params: { store: store?.store?.name },
+          })
+        );
+      }
+    },
+  });
 
+  const sendName = () => {
+    if (!inputRef.current?.value) return;
     const name = inputRef.current?.value.trim();
     saveStoreName(name);
   };
-console.log(data)
+
   return (
     <Flex justifyContent='center' alignItems='center' flexDir='column' mt={24}>
       <Flex

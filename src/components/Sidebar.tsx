@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   IconButton,
   Box,
@@ -19,42 +19,18 @@ import { IconType } from 'react-icons';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { createPath, ROUTE } from '../interfaces/routes.interface';
+import { useGetStore, useGetUser } from '../API/Queries';
+import { useAuth0 } from '@auth0/auth0-react';
 
 interface LinkItemProps {
   name: string;
   icon: IconType;
   to: string;
 }
-const LinkItems: Array<LinkItemProps> = [
-  {
-    name: 'Postavke',
-    icon: FiSettings,
-    to: createPath({ path: ROUTE.SETTINGS, params: { store: 'jeleckusa' } }),
-  },
-  {
-    name: 'Kategorije',
-    icon: BiCategory,
-    to: createPath({ path: ROUTE.CATEGORIES, params: { store: 'jeleckusa' } }),
-  },
-  {
-    name: 'Artikli',
-    icon: TbBread,
-    to: createPath({ path: ROUTE.ARTICLES, params: { store: 'jeleckusa' } }),
-  },
-  {
-    name: 'Dashboard',
-    icon: AiOutlineDashboard,
-    to: createPath({ path: ROUTE.DASHBOARD, params: { store: 'jeleckusa' } }),
-  },
-  {
-    name: 'Narudžbe',
-    icon: FiList,
-    to: createPath({ path: ROUTE.ORDERS, params: { store: 'jeleckusa' } }),
-  },
-];
 
 export default function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Box>
       <SidebarContent
@@ -92,6 +68,61 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const { user } = useAuth0();
+  const { data: userMeta } = useGetUser(user?.sub);
+  const { data: store, refetch } = useGetStore(userMeta?._id, {
+    enabled: false,
+  });
+
+  useEffect(() => {
+    if (userMeta) {
+      refetch();
+    }
+  }, [userMeta]);
+
+  const linkItems: Array<LinkItemProps> = [
+    {
+      name: 'Postavke',
+      icon: FiSettings,
+      to: createPath({
+        path: ROUTE.SETTINGS,
+        params: { store: store?.name || '' },
+      }),
+    },
+    {
+      name: 'Kategorije',
+      icon: BiCategory,
+      to: createPath({
+        path: ROUTE.CATEGORIES,
+        params: { store: store?.name || '' },
+      }),
+    },
+    {
+      name: 'Artikli',
+      icon: TbBread,
+      to: createPath({
+        path: ROUTE.ARTICLES,
+        params: { store: store?.name || '' },
+      }),
+    },
+    {
+      name: 'Dashboard',
+      icon: AiOutlineDashboard,
+      to: createPath({
+        path: ROUTE.DASHBOARD,
+        params: { store: store?.name || '' },
+      }),
+    },
+    {
+      name: 'Narudžbe',
+      icon: FiList,
+      to: createPath({
+        path: ROUTE.ORDERS,
+        params: { store: store?.name || '' },
+      }),
+    },
+  ];
+
   return (
     <Box
       bg='neutral.10'
@@ -104,7 +135,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       <Flex alignItems='center' mx='8' my='4' justifyContent='flex-end'>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (
+      {linkItems.map((link) => (
         <NavItem key={link.name} icon={link.icon} to={link.to}>
           {link.name}
         </NavItem>

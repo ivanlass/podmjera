@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import {
   Box,
   Flex,
@@ -10,24 +9,29 @@ import {
 } from '@chakra-ui/react';
 import BestList from './components/BestList';
 import Statistics from './components/Statistics';
-import { useGetUser } from '../../../API/Queries';
+import { useGetUser, useGetStore } from '../../../API/Queries';
+import { useNavigate } from 'react-router-dom';
+import { ROUTE, createPath } from '../../../interfaces/routes.interface';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Navigate } from 'react-router-dom';
-import { ROUTE } from '../../../interfaces/routes.interface';
+import { useEffect } from 'react';
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const { user } = useAuth0();
-  const { data: userMeta, mutate: getUser } = useGetUser(user?.sub);
+
+  const { data: userMeta, refetch } = useGetUser(user?.sub, {
+    onSuccess: (data: any) => {
+      if (!(data && data.storeID)) {
+        return navigate(ROUTE.NAME);
+      }
+    },
+  });
 
   useEffect(() => {
-    getUser();
-  }, [user]);
-  console.log(userMeta && userMeta.storeID);
-  console.log(userMeta);
-
-  if (!(userMeta && userMeta.storeID)) {
-    return <Navigate to={ROUTE.NAME} replace />;
-  }
+    if (userMeta) {
+      refetch();
+    }
+  }, [userMeta]);
 
   // fake array of objects with name and price
   const bestProducts = [
