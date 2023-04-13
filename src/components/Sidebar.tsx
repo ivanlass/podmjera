@@ -1,17 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  IconButton,
-  Box,
-  CloseButton,
-  Flex,
-  Icon,
-  useColorModeValue,
-  Drawer,
-  DrawerContent,
-  useDisclosure,
-  BoxProps,
-  FlexProps,
-} from '@chakra-ui/react';
+import { IconButton, Box, CloseButton, Flex, Icon, useColorModeValue, Drawer, DrawerContent, useDisclosure, BoxProps, FlexProps } from '@chakra-ui/react';
 import { FiSettings, FiMenu, FiList } from 'react-icons/fi';
 import { BiCategory } from 'react-icons/bi';
 import { TbBread } from 'react-icons/tb';
@@ -33,29 +21,14 @@ export default function Sidebar() {
 
   return (
     <Box>
-      <SidebarContent
-        onClose={() => onClose}
-        display={{ base: 'none', md: 'block' }}
-      />
-      <Drawer
-        autoFocus={false}
-        isOpen={isOpen}
-        placement='left'
-        onClose={onClose}
-        returnFocusOnClose={false}
-        onOverlayClick={onClose}
-        size='full'
-      >
+      <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
+      <Drawer autoFocus={false} isOpen={isOpen} placement='left' onClose={onClose} returnFocusOnClose={false} onOverlayClick={onClose} size='full'>
         <DrawerContent>
           <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav
-        display={{ base: 'flex', md: 'none' }}
-        mt={12}
-        onOpen={onOpen}
-      />
+      <MobileNav display={{ base: 'flex', md: 'none' }} mt={12} onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p='4'>
         <Outlet />
       </Box>
@@ -124,14 +97,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   ];
 
   return (
-    <Box
-      bg='neutral.10'
-      w={{ base: 'full', md: 60 }}
-      pos='fixed'
-      h='full'
-      mt={10}
-      {...rest}
-    >
+    <Box bg='neutral.10' w={{ base: 'full', md: 60 }} pos='fixed' h='full' mt={10} {...rest}>
       <Flex alignItems='center' mx='8' my='4' justifyContent='flex-end'>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
@@ -180,22 +146,8 @@ interface MobileProps extends FlexProps {
 }
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   return (
-    <Flex
-      ml={{ base: 0, md: 60 }}
-      px={{ base: 4, md: 24 }}
-      height='20'
-      alignItems='center'
-      borderBottomWidth='1px'
-      borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
-      justifyContent='flex-end'
-      {...rest}
-    >
-      <IconButton
-        variant='outline'
-        onClick={onOpen}
-        aria-label='open menu'
-        icon={<FiMenu />}
-      />
+    <Flex ml={{ base: 0, md: 60 }} px={{ base: 4, md: 24 }} height='20' alignItems='center' borderBottomWidth='1px' borderBottomColor={useColorModeValue('gray.200', 'gray.700')} justifyContent='flex-end' {...rest}>
+      <IconButton variant='outline' onClick={onOpen} aria-label='open menu' icon={<FiMenu />} />
     </Flex>
   );
 };

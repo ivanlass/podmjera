@@ -3,7 +3,7 @@ import { Button, Flex, Text, Input } from '@chakra-ui/react';
 import { useSaveStoreName } from '../../../API/Queries';
 import { ROUTE, createPath } from '../../../interfaces/routes.interface';
 import { useNavigate } from 'react-router-dom';
-import { useQueryClient } from 'react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 const StoreName = () => {
   const queryClient = useQueryClient();
@@ -15,9 +15,8 @@ const StoreName = () => {
     isLoading,
   } = useSaveStoreName({
     onSuccess: (store: any) => {
-      console.log(store);
       if (store?.store?.name) {
-        queryClient.setQueryData('store', store.store);
+        queryClient.setQueryData(['store'], store.store);
         navigate(
           createPath({
             path: ROUTE.DASHBOARD,
@@ -36,16 +35,7 @@ const StoreName = () => {
 
   return (
     <Flex justifyContent='center' alignItems='center' flexDir='column' mt={24}>
-      <Flex
-        justifyContent='center'
-        alignItems='center'
-        flexDir='column'
-        mt={24}
-        bg='neutral.10'
-        boxShadow='base'
-        borderRadius='md'
-        p='8'
-      >
+      <Flex justifyContent='center' alignItems='center' flexDir='column' mt={24} bg='neutral.10' boxShadow='base' borderRadius='md' p='8'>
         <Text mb='4'>Za početak unesite ime Vaše trgovine</Text>
         <Input placeholder='Ime trgovine' ref={inputRef} />
         <Button mt='4' w='100%' onClick={sendName}>

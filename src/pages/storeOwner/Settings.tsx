@@ -1,100 +1,156 @@
-import {
-  GridItem,
-  Grid,
-  Text,
-  Box,
-  FormControl,
-  Heading,
-  Input,
-  FormLabel,
-  Flex,
-  Button,
-} from '@chakra-ui/react';
+import { GridItem, Grid, Text, Box, Heading, Input, FormLabel, Flex, Button, FormErrorMessage, FormControl } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
+import { useSaveStoreSettings } from '../../API/Queries';
 
 function Settings() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { mutate: sendSettings, isLoading } = useSaveStoreSettings();
+
+  const onSubmit = (data: any) => {
+    // send data to backend
+    sendSettings(data);
+  };
+
   return (
-    <FormControl mt={12}>
-      <Heading>Postavke</Heading>
-      <Grid
-        mt={4}
-        templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
-        gap={4}
-      >
-        <GridItem
-          w='100%'
-          bg='neutral.10'
-          p='4'
-          borderRadius='md'
-          boxShadow='base'
-        >
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Heading mt={12}>Postavke</Heading>
+      <Grid mt={4} templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={4}>
+        <GridItem w='100%' bg='neutral.10' p='4' borderRadius='md' boxShadow='base'>
           <FormLabel>Ime trgovine</FormLabel>
-          <Input type='text' />
+          <Input type='text' {...register('name')} />
           <FormLabel mt='4'>Slika</FormLabel>
-          <Input placeholder='Slika' type='file' />
+          <Input type='file' {...register('image')} />
           <Text fontSize='2xl' mt='8'>
             Radno vrijeme
           </Text>
-          <FormLabel mt='4'>Ponedjeljak</FormLabel>
+
+          <Text textAlign='center' mt='4' fontSize='lg'>
+            Ponedjeljak
+          </Text>
           <Flex gap={4}>
-            <Input placeholder='Opis' type='time' />
-            <Input placeholder='Opis' type='time' />
+            <FormControl isInvalid={errors.hasOwnProperty('mondayOpen')}>
+              <FormLabel mt='4'>Otvoreno od:</FormLabel>
+              <Input type='time' {...register('mondayOpen', { required: true })} />
+              <FormErrorMessage>Obavezno polje</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={errors.hasOwnProperty('mondayClose')}>
+              <FormLabel mt='4'>Zatvoreno od:</FormLabel>
+              <Input type='time' {...register('mondayClose', { required: true })} />
+              <FormErrorMessage>Obavezno polje</FormErrorMessage>
+            </FormControl>
           </Flex>
-          <FormLabel mt='4'>Utorak</FormLabel>
+          <Text textAlign='center' mt='4' fontSize='lg'>
+            Utorak
+          </Text>
           <Flex gap={4}>
-            <Input placeholder='Opis' type='time' />
-            <Input placeholder='Opis' type='time' />
+            <FormControl isInvalid={errors.hasOwnProperty('tuesdayOpen')}>
+              <FormLabel mt='4'>Otvoreno od:</FormLabel>
+              <Input type='time' {...register('tuesdayOpen', { required: true })} />
+              <FormErrorMessage>Obavezno polje</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={errors.hasOwnProperty('tuesdayClose')}>
+              <FormLabel mt='4'>Zatvoreno od:</FormLabel>
+              <Input type='time' {...register('tuesdayClose', { required: true })} />
+              <FormErrorMessage>Obavezno polje</FormErrorMessage>
+            </FormControl>
           </Flex>
-          <FormLabel mt='4'>Srijeda</FormLabel>
+          <Text textAlign='center' mt='4' fontSize='lg'>
+            Srijeda
+          </Text>
           <Flex gap={4}>
-            <Input placeholder='Opis' type='time' />
-            <Input placeholder='Opis' type='time' />
+            <FormControl isInvalid={errors.hasOwnProperty('wednesdayOpen')}>
+              <FormLabel mt='4'>Otvoreno od:</FormLabel>
+              <Input type='time' {...register('wednesdayOpen', { required: true })} />
+              <FormErrorMessage>Obavezno polje</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={errors.hasOwnProperty('wednesdayClose')}>
+              <FormLabel mt='4'>Zatvoreno od:</FormLabel>
+              <Input type='time' {...register('wednesdayClose', { required: true })} />
+              <FormErrorMessage>Obavezno polje</FormErrorMessage>
+            </FormControl>
           </Flex>
-          <FormLabel mt='4'>Četvrtak</FormLabel>
+          <Text textAlign='center' mt='4' fontSize='lg'>
+            Četvrtak
+          </Text>
           <Flex gap={4}>
-            <Input placeholder='Opis' type='time' />
-            <Input placeholder='Opis' type='time' />
+            <FormControl isInvalid={errors.hasOwnProperty('thursdayOpen')}>
+              <FormLabel mt='4'>Otvoreno od:</FormLabel>
+              <Input type='time' {...register('thursdayOpen', { required: true })} />
+              <FormErrorMessage>Obavezno polje</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={errors.hasOwnProperty('thursdayClose')}>
+              <FormLabel mt='4'>Zatvoreno od:</FormLabel>
+              <Input type='time' {...register('thursdayClose', { required: true })} />
+              <FormErrorMessage>Obavezno polje</FormErrorMessage>
+            </FormControl>
           </Flex>
-          <FormLabel mt='4'>Petak</FormLabel>
+          <Text textAlign='center' mt='4' fontSize='lg'>
+            Petak
+          </Text>
           <Flex gap={4}>
-            <Input placeholder='Opis' type='time' />
-            <Input placeholder='Opis' type='time' />
+            <FormControl isInvalid={errors.hasOwnProperty('fridayOpen')}>
+              <FormLabel mt='4'>Otvoreno od:</FormLabel>
+              <Input type='time' {...register('fridayOpen', { required: true })} />
+              <FormErrorMessage>Obavezno polje</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={errors.hasOwnProperty('fridayClose')}>
+              <FormLabel mt='4'>Zatvoreno od:</FormLabel>
+              <Input type='time' {...register('fridayClose', { required: true })} />
+              <FormErrorMessage>Obavezno polje</FormErrorMessage>
+            </FormControl>
           </Flex>
-          <FormLabel mt='4'>Subota</FormLabel>
+          <Text textAlign='center' mt='4' fontSize='lg'>
+            Subota
+          </Text>
           <Flex gap={4}>
-            <Input placeholder='Opis' type='time' />
-            <Input placeholder='Opis' type='time' />
+            <FormControl isInvalid={errors.hasOwnProperty('saturdayOpen')}>
+              <FormLabel mt='4'>Otvoreno od:</FormLabel>
+              <Input type='time' {...register('saturdayOpen', { required: true })} />
+              <FormErrorMessage>Obavezno polje</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={errors.hasOwnProperty('saturdayClose')}>
+              <FormLabel mt='4'>Zatvoreno od:</FormLabel>
+              <Input type='time' {...register('saturdayClose', { required: true })} />
+              <FormErrorMessage>Obavezno polje</FormErrorMessage>
+            </FormControl>
           </Flex>
-          <FormLabel mt='4'>Nedjelja</FormLabel>
+          <Text textAlign='center' mt='4' fontSize='lg'>
+            Nedjelja
+          </Text>
           <Flex gap={4}>
-            <Input placeholder='Opis' type='time' />
-            <Input placeholder='Opis' type='time' />
+            <FormControl isInvalid={errors.hasOwnProperty('sundayOpen')}>
+              <FormLabel mt='4'>Otvoreno od:</FormLabel>
+              <Input type='time' {...register('sundayOpen', { required: true })} />
+              <FormErrorMessage>Obavezno polje</FormErrorMessage>
+            </FormControl>
+            <FormControl isInvalid={errors.hasOwnProperty('sundayClose')}>
+              <FormLabel mt='4'>Zatvoreno od:</FormLabel>
+              <Input type='time' {...register('sundayClose', { required: true })} />
+              <FormErrorMessage>Obavezno polje</FormErrorMessage>
+            </FormControl>
           </Flex>
         </GridItem>
-        <GridItem
-          w='100%'
-          bg='neutral.10'
-          p='4'
-          borderRadius='md'
-          boxShadow='base'
-        >
+        <GridItem w='100%' bg='neutral.10' p='4' borderRadius='md' boxShadow='base'>
           <FormLabel>Naknada za dostavu</FormLabel>
-          <Input type='number' />
+          <Input type='number' {...register('deliveryFee')} />
           <FormLabel mt='4'>Minimalna narudžba</FormLabel>
-          <Input type='number' />
+          <Input type='number' {...register('minimalOrder')} />
           <FormLabel mt='4'>Neradni dan</FormLabel>
-          <Input type='date' />
+          <Input type='date' {...register('nonWorkingDay')} />
           <FormLabel mt='4'>Besplatna dostava preko:</FormLabel>
-          <Input type='number' />
-          <FormLabel mt='4'>
-            Ne primamo narudzbe zadnjih koliko minuta
-          </FormLabel>
-          <Input type='number' />
+          <Input type='number' {...register('freeDelivery')} />
+          <FormLabel mt='4'>Ne primamo narudzbe zadnjih koliko minuta</FormLabel>
+          <Input type='number' {...register('noDeliveryLastMinutes')} />
           <Box w='100%' display='flex' justifyContent='flex-end' mt={4}>
-            <Button>Spremi</Button>
+            <Button type='submit'>Spremi</Button>
           </Box>
         </GridItem>
       </Grid>
-    </FormControl>
+    </form>
   );
 }
 

@@ -1,34 +1,30 @@
-import {
-  Box,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  SimpleGrid,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem, Heading, SimpleGrid, Text } from '@chakra-ui/react';
 import BestList from './components/BestList';
 import Statistics from './components/Statistics';
-import { useGetUser, useGetStore } from '../../../API/Queries';
+import { useGetUser } from '../../../API/Queries';
 import { useNavigate } from 'react-router-dom';
-import { ROUTE, createPath } from '../../../interfaces/routes.interface';
+import { ROUTE } from '../../../interfaces/routes.interface';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect } from 'react';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useAuth0();
-
-  const { data: userMeta, refetch } = useGetUser(user?.sub, {
+  const {
+    data: userMeta,
+    refetch,
+    isStale,
+  } = useGetUser(user?.sub, {
     onSuccess: (data: any) => {
       if (!(data && data.storeID)) {
         return navigate(ROUTE.NAME);
       }
     },
+    staleTime: 1000 * 60 * 24,
   });
 
   useEffect(() => {
-    if (userMeta) {
+    if (userMeta && isStale) {
       refetch();
     }
   }, [userMeta]);
@@ -77,25 +73,13 @@ const Dashboard = () => {
           <Statistics label='Jučer' number={100} helpText='Prihod od jučer' />
         </GridItem>
         <GridItem w='100%'>
-          <Statistics
-            label='Tjedan'
-            number={100}
-            helpText='Prihod za ovaj tjedan'
-          />
+          <Statistics label='Tjedan' number={100} helpText='Prihod za ovaj tjedan' />
         </GridItem>
         <GridItem w='100%'>
-          <Statistics
-            label='Mjesec'
-            number={100}
-            helpText='Prihod za ovaj mjesec'
-          />
+          <Statistics label='Mjesec' number={100} helpText='Prihod za ovaj mjesec' />
         </GridItem>
         <GridItem w='100%'>
-          <Statistics
-            label='Prošli mjesec'
-            number={100}
-            helpText='Prihod za prošli mjesec'
-          />
+          <Statistics label='Prošli mjesec' number={100} helpText='Prihod za prošli mjesec' />
         </GridItem>
       </Grid>
       <SimpleGrid columns={12} spacing={4} mt='4'>

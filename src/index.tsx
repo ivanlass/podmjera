@@ -8,13 +8,19 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import { BrowserRouter } from 'react-router-dom';
 import { Auth0ProviderWithNavigate } from './auth0-provider-with-navigate';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // ✅ globally default to 20 seconds
+      staleTime: 1000 * 20,
+    },
+  },
+});
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <DndProvider backend={HTML5Backend}>
@@ -23,6 +29,7 @@ root.render(
           <Auth0ProviderWithNavigate>
             <QueryClientProvider client={queryClient}>
               <App />
+              <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
           </Auth0ProviderWithNavigate>
         </BrowserRouter>

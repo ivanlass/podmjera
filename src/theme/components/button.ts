@@ -28,6 +28,10 @@ export const Button = {
         bg: 'primary.400',
         boxShadow: 'xl',
       },
+      _active: {
+        bg: 'primary.600',
+        boxShadow: 'xl',
+      },
       borderRadius: 'md',
       _disabled: {
         bg: 'green',

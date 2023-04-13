@@ -1,6 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_SERVER_URL;
 
@@ -83,4 +83,23 @@ export const useSaveStoreName = (options) => {
   }
 
   return useMutation(saveStoreName, { ...options });
+};
+
+export const useSaveStoreSettings = (options) => {
+  const { getAccessTokenSilently, user } = useAuth0();
+  async function saveStoreSettings(storeSettings) {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.post(
+      '/api/store/storename',
+      { authID: user.sub, storeSettings },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  }
+
+  return useMutation(saveStoreSettings, { ...options });
 };
