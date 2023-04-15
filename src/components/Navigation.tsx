@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Image, Flex, Button, Box } from '@chakra-ui/react';
+import { Image, Flex, Button, Box, Avatar } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
 import useOnClickOutside from '../hooks/useOnClickOutside';
 import { FiLogOut } from 'react-icons/fi';
@@ -46,11 +46,12 @@ const Navigation = () => {
   }, [user]);
 
   useOnClickOutside(ref, handleClickOutside);
+
   return (
     <Flex as='nav' justifyContent='flex-end' px='4' py='2' bg='primary.500' w='100%' position='fixed' top='0' zIndex='docked' boxShadow='md'>
       <Flex alignItems='center' gap='2'>
         {user ? (
-          <Image onClick={() => setIsDropdownOpen((prev) => !prev)} borderRadius='full' h='40px' src={user?.picture} alt='user' cursor='pointer' />
+          <Avatar onClick={() => setIsDropdownOpen((prev) => !prev)} h='40px' w='40px' src={user?.picture} name='user' cursor='pointer' />
         ) : (
           <Button onClick={login} variant='none'>
             Login

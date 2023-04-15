@@ -1,16 +1,4 @@
-import {
-  Box,
-  Button,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  SimpleGrid,
-} from '@chakra-ui/react';
+import { Box, Button, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, SimpleGrid } from '@chakra-ui/react';
 
 interface EditItemProps {
   isOpen: boolean;

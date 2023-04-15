@@ -37,13 +37,7 @@ export const BasketProvider = ({ children }: Props) => {
     const productInBasket = basket.find((item) => item.id === product.id);
     if (productInBasket) {
       if (productInBasket.quantity > 1) {
-        setBasket(
-          basket.map((item) =>
-            item.id === product.id
-              ? { ...item, quantity: item.quantity - 1 }
-              : item
-          )
-        );
+        setBasket(basket.map((item) => (item.id === product.id ? { ...item, quantity: item.quantity - 1 } : item)));
       } else {
         setBasket(basket.filter((item) => item.id !== product.id));
       }
@@ -51,9 +45,7 @@ export const BasketProvider = ({ children }: Props) => {
   };
 
   const increaseQuantity = (product: IProduct) => {
-    const productInBasket = basket?.find(
-      (item: IProduct) => item.id === product.id
-    );
+    const productInBasket = basket?.find((item: IProduct) => item.id === product.id);
     if (productInBasket) {
       const newBasket = basket?.map((item: IProductInBasket) => {
         if (item.id === product.id) {
@@ -66,10 +58,7 @@ export const BasketProvider = ({ children }: Props) => {
       });
       setBasket(newBasket);
     } else {
-      setBasket((prev: IProductInBasket[]) => [
-        ...prev,
-        { ...product, quantity: 1 },
-      ]);
+      setBasket((prev: IProductInBasket[]) => [...prev, { ...product, quantity: 1 }]);
     }
   };
 
@@ -86,10 +75,7 @@ export const BasketProvider = ({ children }: Props) => {
     setBasket(basket.filter((item) => item.id !== id));
   };
 
-  const totalPrice = basket.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+  const totalPrice = basket.reduce((total, item) => total + item.price * item.quantity, 0);
 
   return (
     <BasketContext.Provider

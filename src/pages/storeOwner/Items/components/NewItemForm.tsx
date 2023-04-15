@@ -2,14 +2,7 @@ import { Box, Input, Text, Button, Flex, SimpleGrid } from '@chakra-ui/react';
 
 const NewItemForm = () => {
   return (
-    <Box
-      mt={4}
-      w={{ base: '100%', lg: 'fit-content' }}
-      bg='neutral.10'
-      p='4'
-      borderRadius='md'
-      boxShadow='base'
-    >
+    <Box mt={4} w={{ base: '100%', lg: 'fit-content' }} bg='neutral.10' p='4' borderRadius='md' boxShadow='base'>
       <Text fontSize='xl' fontWeight='bold'>
         Novi artikal
       </Text>

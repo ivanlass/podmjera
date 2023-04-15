@@ -4,13 +4,7 @@ import ChooseLocation from './components/ChooseLocation';
 const BillingProcedure = () => {
   return (
     <Box>
-      <Grid
-        templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }}
-        gap={4}
-        p={2}
-        maxW='1800px'
-        mx='auto'
-      >
+      <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={4} p={2} maxW='1800px' mx='auto'>
         <GridItem w='100%' p={2} bg='neutral.10' borderRadius='md'>
           <Text mt='4' mb='2' fontSize='2xl' fontWeight='bold'>
             Broj telefona

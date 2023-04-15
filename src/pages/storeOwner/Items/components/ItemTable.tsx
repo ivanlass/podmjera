@@ -1,25 +1,10 @@
-import {
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Image,
-  Th,
-  Thead,
-  Tr,
-  IconButton,
-  useDisclosure,
-} from '@chakra-ui/react';
+import { Table, TableContainer, Tbody, Td, Image, Th, Thead, Tr, IconButton, useDisclosure } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import EditItem from '../../../../modals/EditItem';
 import FavouriteItem from './FavouriteItemBlueprint';
 
 const ItemTable = () => {
-  const {
-    isOpen: isOpenEditItem,
-    onOpen: onOpenEditItem,
-    onClose: onCloseEditItem,
-  } = useDisclosure();
+  const { isOpen: isOpenEditItem, onOpen: onOpenEditItem, onClose: onCloseEditItem } = useDisclosure();
 
   const testArr = Array.from(Array(10).keys());
 
@@ -41,34 +26,15 @@ const ItemTable = () => {
             // <Tr key={item} _hover={{ bg: 'neutral.20' }}>
             <FavouriteItem key={item} name='Megle'>
               <Td>
-                <Image
-                  src='https://www.konzumshop.ba/images/products/022/02230013_1l.gif'
-                  alt='mlijeko'
-                  borderRadius='md'
-                  height='80px'
-                  objectFit='contain'
-                  bgPosition='center'
-                />
+                <Image src='https://www.konzumshop.ba/images/products/022/02230013_1l.gif' alt='mlijeko' borderRadius='md' height='80px' objectFit='contain' bgPosition='center' />
               </Td>
               <Td>Meggle Mlijeko 2.8%</Td>
               <Td>Mlijecni proizvodi</Td>
               <Td>25.4 KM</Td>
               <Td>Da</Td>
               <Td isNumeric>
-                <IconButton
-                  variant='ghost'
-                  aria-label='edit'
-                  fontSize='xl'
-                  onClick={onOpenEditItem}
-                  icon={<EditIcon />}
-                />
-                <IconButton
-                  ms='4'
-                  fontSize='xl'
-                  variant='ghost'
-                  aria-label='delete'
-                  icon={<DeleteIcon />}
-                />
+                <IconButton variant='ghost' aria-label='edit' fontSize='xl' onClick={onOpenEditItem} icon={<EditIcon />} />
+                <IconButton ms='4' fontSize='xl' variant='ghost' aria-label='delete' icon={<DeleteIcon />} />
               </Td>
               {/* </Tr> */}
             </FavouriteItem>

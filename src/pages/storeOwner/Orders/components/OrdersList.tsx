@@ -1,26 +1,9 @@
-import {
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Avatar,
-  Th,
-  Button,
-  Thead,
-  Tr,
-  IconButton,
-  useDisclosure,
-  Flex,
-} from '@chakra-ui/react';
+import { Table, TableContainer, Tbody, Td, Avatar, Th, Button, Thead, Tr, IconButton, useDisclosure, Flex } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import OrderDetailsForOwner from '../../../../modals/OrderDetailsForOwner/OrderDetailsForOwner';
 
 const OrdersList = () => {
-  const {
-    isOpen: isOpenOrderDetails,
-    onOpen: onOpenOrderDetails,
-    onClose: onCloseOrderDetails,
-  } = useDisclosure();
+  const { isOpen: isOpenOrderDetails, onOpen: onOpenOrderDetails, onClose: onCloseOrderDetails } = useDisclosure();
 
   const testArr = Array.from(Array(10).keys());
 
@@ -42,10 +25,7 @@ const OrdersList = () => {
             <Tr key={item} _hover={{ bg: 'neutral.20' }}>
               <Td>
                 <Flex alignItems='center'>
-                  <Avatar
-                    me={4}
-                    src='https://img.freepik.com/premium-psd/3d-illustration-man-cartoon-close-up-portrait-standing-man-with-sunglasses-mustache-pink-background-3d-avatar-ui-ux_1020-5093.jpg?w=2000'
-                  />
+                  <Avatar me={4} src='https://img.freepik.com/premium-psd/3d-illustration-man-cartoon-close-up-portrait-standing-man-with-sunglasses-mustache-pink-background-3d-avatar-ui-ux_1020-5093.jpg?w=2000' />
                   Marko Markovic
                 </Flex>
               </Td>
@@ -57,22 +37,13 @@ const OrdersList = () => {
                 <Button variant='ghost' onClick={onOpenOrderDetails}>
                   Otvori
                 </Button>
-                <IconButton
-                  ms='4'
-                  fontSize='xl'
-                  variant='ghost'
-                  aria-label='delete'
-                  icon={<DeleteIcon />}
-                />
+                <IconButton ms='4' fontSize='xl' variant='ghost' aria-label='delete' icon={<DeleteIcon />} />
               </Td>
             </Tr>
           ))}
         </Tbody>
       </Table>
-      <OrderDetailsForOwner
-        isOpen={isOpenOrderDetails}
-        onClose={onCloseOrderDetails}
-      />
+      <OrderDetailsForOwner isOpen={isOpenOrderDetails} onClose={onCloseOrderDetails} />
     </TableContainer>
   );
 };

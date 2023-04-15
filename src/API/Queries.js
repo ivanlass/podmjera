@@ -25,6 +25,7 @@ export const useGetUser = (userID, options) => {
   const { getAccessTokenSilently } = useAuth0();
   async function getUser() {
     const accessToken = await getAccessTokenSilently();
+    console.log(accessToken)
     const response = await axios.post(
       `/api/user/getuser/`,
       { userID },
@@ -90,11 +91,12 @@ export const useSaveStoreSettings = (options) => {
   async function saveStoreSettings(storeSettings) {
     const accessToken = await getAccessTokenSilently();
     const response = await axios.post(
-      '/api/store/storename',
-      { authID: user.sub, storeSettings },
+      '/api/store/savestoresettings',
+      { authID: user.sub, ...storeSettings },
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'multipart/form-data',
         },
       }
     );

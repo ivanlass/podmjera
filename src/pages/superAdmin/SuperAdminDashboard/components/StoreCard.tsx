@@ -3,17 +3,7 @@ import { DeleteIcon } from '@chakra-ui/icons';
 
 function StoreCard() {
   return (
-    <SimpleGrid
-      columns={[2, 1, 8]}
-      spacing={4}
-      bg='neutral.10'
-      borderRadius='md'
-      boxShadow='base'
-      px='4'
-      py='4'
-      my='4'
-      _hover={{ boxShadow: 'shadow.100' }}
-    >
+    <SimpleGrid columns={[2, 1, 8]} spacing={4} bg='neutral.10' borderRadius='md' boxShadow='base' px='4' py='4' my='4' _hover={{ boxShadow: 'shadow.100' }}>
       <Flex flexDirection='column' justifyContent='center'>
         <Text>Bingo</Text>
       </Flex>
@@ -53,13 +43,7 @@ function StoreCard() {
         </Button>
       </Flex>
       <Flex alignItems='center' justifyContent='flex-end'>
-        <IconButton
-          variant='ghost'
-          width='fit-content'
-          aria-label='Delete store'
-          size='sm'
-          icon={<DeleteIcon fontSize='xl' />}
-        />
+        <IconButton variant='ghost' width='fit-content' aria-label='Delete store' size='sm' icon={<DeleteIcon fontSize='xl' />} />
       </Flex>
     </SimpleGrid>
   );

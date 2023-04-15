@@ -28,9 +28,5 @@ export function createPath(args: TArgs) {
   if (args.hasOwnProperty('params') === false) return args.path;
 
   // Create a path by replacing params in the route definition
-  return Object.entries((args as TArgsWithParams).params).reduce(
-    (previousValue: string, [param, value]) =>
-      previousValue.replace(`:${param}`, '' + value),
-    args.path
-  );
+  return Object.entries((args as TArgsWithParams).params).reduce((previousValue: string, [param, value]) => previousValue.replace(`:${param}`, '' + value), args.path);
 }

@@ -10,21 +10,13 @@ const ChooseLocation = () => {
         <Text fontSize='2xl' fontWeight='bold'>
           Odaberite lokaciju
         </Text>
-        <IconButton
-          variant='outline'
-          size='xs'
-          borderRadius='full'
-          icon={isOpenForm ? <AiOutlineClose /> : <AiOutlinePlus />}
-          aria-label='new location'
-          onClick={() => setIsOpenForm(!isOpenForm)}
-        />
+        <IconButton variant='outline' size='xs' borderRadius='full' icon={isOpenForm ? <AiOutlineClose /> : <AiOutlinePlus />} aria-label='new location' onClick={() => setIsOpenForm(!isOpenForm)} />
       </Flex>
       {isOpenForm ? (
         <Box>
           <Input placeholder='Unesite adresu' />
           <Text mt='8' mb='2' color='grey'>
-            Možete označiti na mapi Vašu lokaciju, da bi Vas naš dostavljač
-            lakše pronašao.
+            Možete označiti na mapi Vašu lokaciju, da bi Vas naš dostavljač lakše pronašao.
           </Text>
           <iframe
             src='https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d22561.589632939897!2d18.327007624267583!3d45.02089164148128!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1shr!2sba!4v1677518270341!5m2!1shr!2sba'

@@ -8,15 +8,17 @@ function Settings() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { mutate: sendSettings, isLoading } = useSaveStoreSettings();
+  const { mutate: sendSettings, isLoading } = useSaveStoreSettings({onSuccess: (data: any) => console.log(data)});
 
   const onSubmit = (data: any) => {
-    // send data to backend
+    let formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('file', data.image[0]);
     sendSettings(data);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
       <Heading mt={12}>Postavke</Heading>
       <Grid mt={4} templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={4}>
         <GridItem w='100%' bg='neutral.10' p='4' borderRadius='md' boxShadow='base'>

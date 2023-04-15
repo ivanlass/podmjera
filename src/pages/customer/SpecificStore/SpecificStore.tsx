@@ -49,12 +49,7 @@ const SpecificStore = () => {
     <BasketProvider>
       <Box>
         <Basket />
-        <SimpleGrid
-          mt={2}
-          px='4'
-          columns={{ base: 2, md: 3, lg: 4, '2xl': 5 }}
-          spacing={4}
-        >
+        <SimpleGrid mt={2} px='4' columns={{ base: 2, md: 3, lg: 4, '2xl': 5 }} spacing={4}>
           {products.map((product) => (
             <Box key={product.id}>
               <ProductCard product={product} />

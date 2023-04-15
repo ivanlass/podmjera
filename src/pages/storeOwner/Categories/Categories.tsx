@@ -1,27 +1,11 @@
-import {
-  Box,
-  FormLabel,
-  Heading,
-  Input,
-  Text,
-  Button,
-  Flex,
-  SimpleGrid,
-} from '@chakra-ui/react';
+import { Box, FormLabel, Heading, Input, Text, Button, Flex, SimpleGrid } from '@chakra-ui/react';
 import CategoryCard from './components/CategoryCard';
 
 const Categories = () => {
   return (
     <Box mt={12}>
       <Heading>Kategorije</Heading>
-      <Box
-        mt={4}
-        w={{ base: '100%', lg: '40%' }}
-        bg='neutral.10'
-        p='4'
-        borderRadius='md'
-        boxShadow='base'
-      >
+      <Box mt={4} w={{ base: '100%', lg: '40%' }} bg='neutral.10' p='4' borderRadius='md' boxShadow='base'>
         <Text fontSize='xl' fontWeight='bold'>
           Nova kategorija
         </Text>

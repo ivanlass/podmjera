@@ -29,17 +29,7 @@ export const FavouriteItemsPlaceholder: FC<IProps> = ({ orderNum }) => {
   }
 
   return (
-    <Box
-      border='1px dashed'
-      borderColor='neutral.50'
-      p='4'
-      boxShadow='base'
-      minH={'200px'}
-      borderRadius='md'
-      ref={drop}
-      bg={backgroundColor}
-      data-testid='dustbin'
-    >
+    <Box border='1px dashed' borderColor='neutral.50' p='4' boxShadow='base' minH={'200px'} borderRadius='md' ref={drop} bg={backgroundColor} data-testid='dustbin'>
       {isActive ? 'Release to drop' : 'Drag a box here'}
     </Box>
   );

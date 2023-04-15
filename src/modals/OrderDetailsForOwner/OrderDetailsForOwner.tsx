@@ -1,15 +1,4 @@
-import {
-  Button,
-  GridItem,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  SimpleGrid,
-} from '@chakra-ui/react';
+import { Button, GridItem, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, SimpleGrid } from '@chakra-ui/react';
 import Details from './components/Details';
 import OrdersTable from './components/OrdersTable';
 

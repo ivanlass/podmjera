@@ -1,17 +1,4 @@
-import {
-  useDisclosure,
-  Button,
-  Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  Text,
-  DrawerHeader,
-  DrawerBody,
-  DrawerFooter,
-  Box,
-  Flex,
-} from '@chakra-ui/react';
+import { useDisclosure, Button, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, Text, DrawerHeader, DrawerBody, DrawerFooter, Box, Flex } from '@chakra-ui/react';
 import React, { useContext } from 'react';
 import { BsBasket } from 'react-icons/bs';
 import { BasketContext } from '../store/Basket.Context';
@@ -24,27 +11,9 @@ function Basket() {
   return (
     <>
       <Box w='100%' textAlign='right' mt='20'>
-        <Button
-          onClick={onOpen}
-          size='null'
-          p='4'
-          bottom='0'
-          borderRadius='full'
-          right='4'
-        >
+        <Button onClick={onOpen} size='null' p='4' bottom='0' borderRadius='full' right='4'>
           {basketContext?.basket && basketContext?.basket.length > 0 && (
-            <Text
-              fontSize='xs'
-              position='absolute'
-              top='-10px'
-              right='-10px'
-              p='2'
-              borderRadius='full'
-              minW='32px'
-              minH='32px'
-              border='1px solid #fff'
-              bg='primary.500'
-            >
+            <Text fontSize='xs' position='absolute' top='-10px' right='-10px' p='2' borderRadius='full' minW='32px' minH='32px' border='1px solid #fff' bg='primary.500'>
               {basketContext.basket.length}
             </Text>
           )}
@@ -71,11 +40,7 @@ function Basket() {
             )}
           </DrawerBody>
 
-          <DrawerFooter
-            display='block'
-            borderTop='1px solid'
-            borderColor='neutral.50'
-          >
+          <DrawerFooter display='block' borderTop='1px solid' borderColor='neutral.50'>
             <Flex justifyContent='space-between' mt='4' mb='4'>
               <Text>Total</Text>
               <Text fontWeight='bold'>{basketContext?.totalPrice} KM</Text>
