@@ -25,7 +25,6 @@ export const useGetUser = (userID, options) => {
   const { getAccessTokenSilently } = useAuth0();
   async function getUser() {
     const accessToken = await getAccessTokenSilently();
-    console.log(accessToken)
     const response = await axios.post(
       `/api/user/getuser/`,
       { userID },

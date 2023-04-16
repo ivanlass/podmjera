@@ -1,21 +1,68 @@
-import { GridItem, Grid, Text, Box, Heading, Input, FormLabel, Flex, Button, FormErrorMessage, FormControl } from '@chakra-ui/react';
+import { GridItem, Grid, Text, Box, Heading, Input, FormLabel, Flex, Button, FormErrorMessage, FormControl, useToast } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
-import { useSaveStoreSettings } from '../../API/Queries';
+import { useGetUser, useSaveStoreSettings } from '../../API/Queries';
+import { useAuth0 } from '@auth0/auth0-react';
+import { useEffect } from 'react';
+
+interface SettingsProps {
+  name: string;
+  image: string;
+  mondayOpen: string;
+  mondayClose: string;
+  tuesdayOpen: string;
+  tuesdayClose: string;
+  wednesdayOpen: string;
+  wednesdayClose: string;
+  thursdayOpen: string;
+  thursdayClose: string;
+  fridayOpen: string;
+  fridayClose: string;
+  saturdayOpen: string;
+  saturdayClose: string;
+  sundayOpen: string;
+  sundayClose: string;
+  deliveryFee: number;
+  minimalOrder: number;
+  nonWorkingDay: Date;
+  freeDelivery: number;
+  noDeliveryLastMinutes: number;
+}
 
 function Settings() {
+  const toast = useToast();
+  const { user } = useAuth0();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const { mutate: sendSettings, isLoading } = useSaveStoreSettings({onSuccess: (data: any) => console.log(data)});
+  } = useForm<SettingsProps>();
+  const { data: userMeta, refetch: refetchGetUser } = useGetUser(user?.sub);
+  const { mutate: sendSettings, isLoading } = useSaveStoreSettings({
+    onSuccess: (data: any) => console.log(data),
+    onError: (error: any) => {
+      toast({
+        title: 'Došlo je do greške.',
+        description: error.response.data.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    },
+  });
 
-  const onSubmit = (data: any) => {
+  console.log(userMeta);
+  const onSubmit = (data: SettingsProps) => {
     let formData = new FormData();
     formData.append('name', data.name);
     formData.append('file', data.image[0]);
-    sendSettings(data);
+    sendSettings({ id: userMeta._id, data });
   };
+
+  useEffect(() => {
+    if (user) {
+      refetchGetUser();
+    }
+  }, [user]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
