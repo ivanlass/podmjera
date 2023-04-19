@@ -1,8 +1,9 @@
 import { GridItem, Grid, Text, Box, Heading, Input, FormLabel, Flex, Button, FormErrorMessage, FormControl, useToast } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
-import { useGetUser, useSaveStoreSettings } from '../../API/Queries';
+import { useGetStore, useGetUser, useSaveStoreSettings } from '../../API/Queries';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface SettingsProps {
   name: string;
@@ -29,6 +30,7 @@ interface SettingsProps {
 }
 
 function Settings() {
+  const queryClient = useQueryClient()
   const toast = useToast();
   const { user } = useAuth0();
   const {
@@ -37,8 +39,19 @@ function Settings() {
     formState: { errors },
   } = useForm<SettingsProps>();
   const { data: userMeta, refetch: refetchGetUser } = useGetUser(user?.sub);
+  // useGetStore
+  const { data: store, refetch: refetchStore  } = useGetStore(userMeta?._id,)
   const { mutate: sendSettings, isLoading } = useSaveStoreSettings({
-    onSuccess: (data: any) => console.log(data),
+    onSuccess: (data: any) => {
+      toast({
+        description: 'Uspješno ste spremili postavke.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
+      console.log(data)
+      queryClient.setQueryData(['store'], data)
+    },
     onError: (error: any) => {
       toast({
         title: 'Došlo je do greške.',
@@ -50,12 +63,12 @@ function Settings() {
     },
   });
 
-  console.log(userMeta);
+
   const onSubmit = (data: SettingsProps) => {
     let formData = new FormData();
     formData.append('name', data.name);
     formData.append('file', data.image[0]);
-    sendSettings({ id: userMeta._id, data });
+    sendSettings({ id: userMeta._id, data, slika: data.image[0]});
   };
 
   useEffect(() => {
