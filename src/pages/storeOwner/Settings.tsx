@@ -1,4 +1,4 @@
-import { GridItem, Grid, Text, Box, Heading, Input, FormLabel, Flex, Button, FormErrorMessage, FormControl, useToast } from '@chakra-ui/react';
+import { GridItem, Grid, Text, Box, Heading, Input, FormLabel, Flex, Button, FormErrorMessage, FormControl, useToast, Image } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { useGetStore, useGetUser, useSaveStoreSettings } from '../../API/Queries';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -30,18 +30,22 @@ interface SettingsProps {
 }
 
 function Settings() {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const toast = useToast();
   const { user } = useAuth0();
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm<SettingsProps>();
   const { data: userMeta, refetch: refetchGetUser } = useGetUser(user?.sub);
-  // useGetStore
-  const { data: store, refetch: refetchStore  } = useGetStore(userMeta?._id,)
-  const { mutate: sendSettings, isLoading } = useSaveStoreSettings({
+  const { data: store } = useGetStore(userMeta?._id,{
+    onSuccess: (storeSettings: any) => {
+      reset({...storeSettings})
+    }
+  });
+  const { mutate: sendSettings } = useSaveStoreSettings({
     onSuccess: (data: any) => {
       toast({
         description: 'Uspješno ste spremili postavke.',
@@ -49,8 +53,10 @@ function Settings() {
         duration: 5000,
         isClosable: true,
       });
-      console.log(data)
-      queryClient.setQueryData(['store'], data)
+      queryClient.setQueryData(['store'], data);
+
+
+      
     },
     onError: (error: any) => {
       toast({
@@ -63,12 +69,11 @@ function Settings() {
     },
   });
 
-
   const onSubmit = (data: SettingsProps) => {
     let formData = new FormData();
     formData.append('name', data.name);
     formData.append('file', data.image[0]);
-    sendSettings({ id: userMeta._id, data, slika: data.image[0]});
+    sendSettings({ id: userMeta._id, data, slika: data.image[0] });
   };
 
   useEffect(() => {
@@ -82,10 +87,16 @@ function Settings() {
       <Heading mt={12}>Postavke</Heading>
       <Grid mt={4} templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={4}>
         <GridItem w='100%' bg='neutral.10' p='4' borderRadius='md' boxShadow='base'>
+          <FormControl isInvalid={errors.hasOwnProperty('name')}>
           <FormLabel>Ime trgovine</FormLabel>
-          <Input type='text' {...register('name')} />
-          <FormLabel mt='4'>Slika</FormLabel>
-          <Input type='file' {...register('image')} />
+          <Input type='text' {...register('name', { required: true })} />
+          <FormErrorMessage>Obavezno polje</FormErrorMessage>
+        </FormControl>
+          <Flex flexDirection='column' mt='4' alignItems='center'>
+            <Image src={store?.image} w='300px'/>
+            <FormLabel mt='4'>Slika</FormLabel>
+            <Input type='file' {...register('image')} w='300px'/>
+          </Flex>
           <Text fontSize='2xl' mt='8'>
             Radno vrijeme
           </Text>

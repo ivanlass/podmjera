@@ -104,3 +104,44 @@ export const useSaveStoreSettings = (options) => {
 
   return useMutation(saveStoreSettings, { ...options });
 };
+
+
+
+export const useSaveCategory = (options) => {
+  const { getAccessTokenSilently, user } = useAuth0();
+  async function saveCategory(payload) {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.post(
+      '/api/category/add',
+      { authID: user.sub, ...payload },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  }
+
+  return useMutation(saveCategory, { ...options });
+};
+
+export const useGetCategories = (storeID, options) => {
+  const { getAccessTokenSilently } = useAuth0();
+  async function getCategory() {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.post(
+      `/api/category/get`,
+      { storeID },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  }
+  return useQuery(['categories'], () => getCategory(), {
+    ...options,
+  });
+};
