@@ -37,13 +37,13 @@ function Settings() {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm<SettingsProps>();
   const { data: userMeta, refetch: refetchGetUser } = useGetUser(user?.sub);
-  const { data: store } = useGetStore(userMeta?._id,{
+  const { data: store } = useGetStore(userMeta?._id, {
     onSuccess: (storeSettings: any) => {
-      reset({...storeSettings})
-    }
+      reset({ ...storeSettings });
+    },
   });
   const { mutate: sendSettings } = useSaveStoreSettings({
     onSuccess: (data: any) => {
@@ -54,9 +54,6 @@ function Settings() {
         isClosable: true,
       });
       queryClient.setQueryData(['store'], data);
-
-
-      
     },
     onError: (error: any) => {
       toast({
@@ -88,14 +85,14 @@ function Settings() {
       <Grid mt={4} templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={4}>
         <GridItem w='100%' bg='neutral.10' p='4' borderRadius='md' boxShadow='base'>
           <FormControl isInvalid={errors.hasOwnProperty('name')}>
-          <FormLabel>Ime trgovine</FormLabel>
-          <Input type='text' {...register('name', { required: true })} />
-          <FormErrorMessage>Obavezno polje</FormErrorMessage>
-        </FormControl>
+            <FormLabel>Ime trgovine</FormLabel>
+            <Input type='text' {...register('name', { required: true })} />
+            <FormErrorMessage>Obavezno polje</FormErrorMessage>
+          </FormControl>
           <Flex flexDirection='column' mt='4' alignItems='center'>
-            <Image src={store?.image} w='300px'/>
+            <Image src={store?.image} w='300px' />
             <FormLabel mt='4'>Slika</FormLabel>
-            <Input type='file' {...register('image')} w='300px'/>
+            <Input type='file' {...register('image')} w='300px' />
           </Flex>
           <Text fontSize='2xl' mt='8'>
             Radno vrijeme

@@ -105,8 +105,6 @@ export const useSaveStoreSettings = (options) => {
   return useMutation(saveStoreSettings, { ...options });
 };
 
-
-
 export const useSaveCategory = (options) => {
   const { getAccessTokenSilently, user } = useAuth0();
   async function saveCategory(payload) {

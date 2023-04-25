@@ -6,7 +6,7 @@ interface CategoryCardProps {
   name: string;
 }
 
-const CategoryCard = ({id, name}: CategoryCardProps) => {
+const CategoryCard = ({ id, name }: CategoryCardProps) => {
   return (
     <Box key={id} display='flex' justifyContent='space-between' alignItems='center' bg='neutral.10' p='4' borderRadius='md' boxShadow='base'>
       <Box>

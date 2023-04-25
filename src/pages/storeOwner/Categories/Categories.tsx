@@ -13,16 +13,18 @@ interface CategoryProps {
 const Categories = () => {
   const queryClient = useQueryClient();
   const { user } = useAuth0();
-  const { data: userMeta} = useGetUser(user?.sub);
+  const { data: userMeta } = useGetUser(user?.sub);
   const { data: store } = useGetStore(userMeta?._id);
   const { data: categories, refetch: refetchCategories } = useGetCategories(store?._id);
-  const { mutate: saveCategory } = useSaveCategory({onSuccess: (newCategories: any) => {
-    queryClient.setQueryData(['categories'], newCategories.category);
-    reset();
-  }});
+  const { mutate: saveCategory } = useSaveCategory({
+    onSuccess: (newCategories: any) => {
+      queryClient.setQueryData(['categories'], newCategories.category);
+      reset();
+    },
+  });
 
   useEffect(() => {
-    if(store?._id){
+    if (store?._id) {
       refetchCategories();
     }
   }, [store]);
@@ -31,13 +33,12 @@ const Categories = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm<CategoryProps>();
 
   const onSubmit = (data: CategoryProps) => {
     saveCategory({ ...data, storeID: store?._id });
   };
-
 
   return (
     <Box mt={12}>
@@ -47,19 +48,19 @@ const Categories = () => {
           Nova kategorija
         </Text>
         <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
-        <FormControl isInvalid={errors.hasOwnProperty('category')}>
-          <FormLabel>Ime trgovine</FormLabel>
-          <Input type='text' {...register('category', { required: true })} />
-          <FormErrorMessage>Obavezno polje</FormErrorMessage>
-        </FormControl>
-        <Flex mt='4' justifyContent='flex-end'>
-          <Button type='submit'>Spremi novu kategoriju</Button>
-        </Flex>
+          <FormControl isInvalid={errors.hasOwnProperty('category')}>
+            <FormLabel>Ime trgovine</FormLabel>
+            <Input type='text' {...register('category', { required: true })} />
+            <FormErrorMessage>Obavezno polje</FormErrorMessage>
+          </FormControl>
+          <Flex mt='4' justifyContent='flex-end'>
+            <Button type='submit'>Spremi novu kategoriju</Button>
+          </Flex>
         </form>
       </Box>
       <SimpleGrid mt='8' columns={{ base: 1, md: 4, xl: 6 }} spacing={4}>
         {categories.category.category?.map((category: any) => (
-           <CategoryCard id={category} name={category} />
+          <CategoryCard id={category} name={category} />
         ))}
       </SimpleGrid>
     </Box>
