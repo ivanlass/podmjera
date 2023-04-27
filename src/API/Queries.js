@@ -111,7 +111,7 @@ export const useSaveCategory = (options) => {
   async function saveCategory(payload) {
     const accessToken = await getAccessTokenSilently();
     const response = await axios.post(
-      '/api/category/add',
+      '/api/store/category/add',
       { authID: user.sub, ...payload },
       {
         headers: {
@@ -125,26 +125,6 @@ export const useSaveCategory = (options) => {
   return useMutation(saveCategory, { ...options });
 };
 
-export const useGetCategories = (storeID, options) => {
-  const { getAccessTokenSilently } = useAuth0();
-  async function getCategory() {
-    const accessToken = await getAccessTokenSilently();
-    const response = await axios.post(
-      `/api/category/get`,
-      { storeID },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    return response.data;
-  }
-
-  return useQuery(['categories'], () => getCategory(), {
-    ...options,
-  });
-};
 
 // storeID, category (name)
 export const useDeleteCategories = (options) => {
@@ -152,7 +132,7 @@ export const useDeleteCategories = (options) => {
   async function deleteCategory(payload) {
     const accessToken = await getAccessTokenSilently();
     const response = await axios.post(
-      `/api/category/delete`,
+      `/api/store/category/delete`,
       { ...payload },
       {
         headers: {
@@ -164,4 +144,25 @@ export const useDeleteCategories = (options) => {
   }
 
   return useMutation(deleteCategory, { ...options });
+};
+
+
+export const useAddArticle = (options) => {
+  const { getAccessTokenSilently, user } = useAuth0();
+  async function addArticle(storeSettings) {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.post(
+      '/api/article/add',
+      { authID: user.sub, ...storeSettings },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    return response.data;
+  }
+
+  return useMutation(addArticle, { ...options });
 };

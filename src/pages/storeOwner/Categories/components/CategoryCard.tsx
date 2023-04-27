@@ -1,8 +1,8 @@
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, IconButton, Text, useToast } from '@chakra-ui/react';
 import { useDeleteCategories } from '../../../../API/Queries';
-import { CategoryProps } from '../../../../interfaces/categories.interface';
 import { useQueryClient } from '@tanstack/react-query';
+import { storeInterface } from '../../../../interfaces/store.interface';
 
 interface CategoryCardProps {
   id: string;
@@ -14,8 +14,8 @@ const CategoryCard = ({ id, name, storeID }: CategoryCardProps) => {
   const toast = useToast();
 
   const { mutate: deleteCategory, isLoading: isDeletingCategory } = useDeleteCategories({
-    onSuccess: (newCategories: CategoryProps) => {
-      queryClient.setQueryData(['categories'], newCategories);
+    onSuccess: (newCategories: storeInterface) => {
+      queryClient.setQueryData(['store'], newCategories);
       toast({
         description: 'Uspješno ste obrisali kategoriju.',
         status: 'success',

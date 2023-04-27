@@ -1,7 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { Box, Input, Text, Button, Flex, SimpleGrid, useToast, Spinner, FormControl, FormLabel, Switch, FormErrorMessage, Container } from '@chakra-ui/react';
 import { Select } from 'chakra-react-select';
-import { useGetUser, useGetStore, useGetCategories } from '../../../../API/Queries';
+import { useGetUser, useGetStore, useAddArticle } from '../../../../API/Queries';
 import { useForm, Controller } from 'react-hook-form';
 import { useEffect } from 'react';
 
@@ -9,8 +9,14 @@ const NewItemForm = () => {
   const { user } = useAuth0();
   const toast = useToast();
   const { data: userMeta } = useGetUser(user?.sub);
-  const { data: store } = useGetStore(userMeta?._id);
-  const { data: categories, refetch: refetchCategories, isLoading } = useGetCategories(store?._id);
+  const { data: store, isLoading } = useGetStore(userMeta?._id);
+  const {mutate: sendArticle} = useAddArticle({
+    onSuccess: (data: any) => {
+      console.log(data);
+  }, 
+  onError: (error: any) => {
+    console.log(error);
+  }});
 
   const {
     control,
@@ -20,15 +26,23 @@ const NewItemForm = () => {
     reset,
   } = useForm();
 
-  useEffect(() => {
-    if (store?._id) {
-      refetchCategories();
-    }
-  }, [store]);
 
   const onSubmit = (data: any) => {
-    console.log('asdjkl');
-    console.log(data);
+    let formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('image', data.image[0]);
+    const category = data.category.map((category: any) => category.label);
+    console.log(data)
+    const dataForSend = {
+      name: data.name,
+      price: data.price,
+      category,
+      available: data.available,
+      quantity: 0,
+      storeID: store._id
+    };
+
+    sendArticle({ id: userMeta._id, ...dataForSend, slika: data.image[0] });
   };
 
   return (
@@ -46,10 +60,10 @@ const NewItemForm = () => {
             <Input placeholder='Ime artikla' {...register('name', { required: true })} />
             <Controller
               control={control}
-              name='food'
-              rules={{ required: 'Please enter at least one food group.' }}
+              name='category'
+              rules={{ required: 'Unesite barem jednu kategoriju.' }}
               render={({ field: { onChange, onBlur, value, name, ref }, fieldState: { error } }) => (
-                <FormControl isInvalid={!!error} id='food'>
+                <FormControl isInvalid={!!error} id='category'>
                   <Select
                     isMulti
                     name={name}
@@ -57,11 +71,10 @@ const NewItemForm = () => {
                     onChange={onChange}
                     onBlur={onBlur}
                     value={value}
-                    options={categories?.category?.category.map((category: string) => ({
+                    options={store?.category.map((category: string) => ({
                       label: category,
-                      value: category,
                     }))}
-                    placeholder='Food Groups'
+                    placeholder='Kategorija'
                     closeMenuOnSelect={false}
                   />
 
@@ -82,7 +95,7 @@ const NewItemForm = () => {
                 </FormControl>
               )}
             />
-            <Controller
+            {/* <Controller
               control={control}
               name='image'
               defaultValue=''
@@ -93,7 +106,8 @@ const NewItemForm = () => {
                   <FormErrorMessage>{error && error.message}</FormErrorMessage>
                 </FormControl>
               )}
-            />
+            /> */}
+            
 
             <Controller
               control={control}
@@ -115,6 +129,7 @@ const NewItemForm = () => {
           </SimpleGrid>
         </form>
       )}
+      <Input placeholder='Slika'  type='file' {...register("image")} />
     </Box>
   );
 };
