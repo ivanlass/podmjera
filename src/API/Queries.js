@@ -46,6 +46,7 @@ export const useGetUser = (userID, options) => {
 // get user data from the database
 export const useGetStore = (userID, options) => {
   const { getAccessTokenSilently } = useAuth0();
+
   async function getStore() {
     const accessToken = await getAccessTokenSilently();
     const response = await axios.post(
@@ -139,7 +140,28 @@ export const useGetCategories = (storeID, options) => {
     );
     return response.data;
   }
+
   return useQuery(['categories'], () => getCategory(), {
     ...options,
   });
+};
+
+// storeID, category (name)
+export const useDeleteCategories = (options) => {
+  const { getAccessTokenSilently } = useAuth0();
+  async function deleteCategory(payload) {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.post(
+      `/api/category/delete`,
+      { ...payload },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  }
+
+  return useMutation(deleteCategory, { ...options });
 };
