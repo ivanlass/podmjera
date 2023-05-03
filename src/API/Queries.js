@@ -43,7 +43,6 @@ export const useGetUser = (userID, options) => {
   });
 };
 
-
 export const useGetStore = (userID, options) => {
   const { getAccessTokenSilently } = useAuth0();
 
@@ -125,7 +124,6 @@ export const useSaveCategory = (options) => {
   return useMutation(saveCategory, { ...options });
 };
 
-
 // storeID, category (name)
 export const useDeleteCategories = (options) => {
   const { getAccessTokenSilently } = useAuth0();
@@ -145,7 +143,6 @@ export const useDeleteCategories = (options) => {
 
   return useMutation(deleteCategory, { ...options });
 };
-
 
 export const useAddArticle = (options) => {
   const { getAccessTokenSilently, user } = useAuth0();
@@ -167,7 +164,6 @@ export const useAddArticle = (options) => {
   return useMutation(addArticle, { ...options });
 };
 
-
 export const useEditArticle = (options) => {
   const { getAccessTokenSilently, user } = useAuth0();
 
@@ -175,7 +171,7 @@ export const useEditArticle = (options) => {
     const accessToken = await getAccessTokenSilently();
     const response = await axios.put(
       '/api/article/edit',
-      {...article },
+      { ...article },
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -189,13 +185,11 @@ export const useEditArticle = (options) => {
   return useMutation(editArticle, { ...options });
 };
 
-
-
 export const useDeleteArticle = (options) => {
   const { getAccessTokenSilently } = useAuth0();
 
   async function deleteArticle(storeSettings) {
-    console.log(storeSettings)
+    console.log(storeSettings);
     const accessToken = await getAccessTokenSilently();
     const response = await axios.post(
       '/api/article/delete',
@@ -216,7 +210,7 @@ export const checkIfStoreHasItems = async (storeId) => {
   try {
     const response = await axios.get(`/api/article/check-store-items/${storeId}`);
     const items = response.data.message;
-    console.log(items)
+    console.log(items);
     return items;
   } catch (error) {
     console.error(error);
@@ -224,23 +218,17 @@ export const checkIfStoreHasItems = async (storeId) => {
   }
 };
 
-
 export const useSearchArticles = (options) => {
-
-  async function searchArticles({storeID, searchQuery}) {
-    console.log(searchQuery)
-    const response = await axios.get(
-      `/api/article/search/${searchQuery}/${storeID}`,
-    );
+  async function searchArticles({ storeID, searchQuery }) {
+    console.log(searchQuery);
+    const response = await axios.get(`/api/article/search/${searchQuery}/${storeID}`);
     return response.data;
   }
 
-  return useMutation(searchArticles, 
-  {
+  return useMutation(searchArticles, {
     ...options,
   });
 };
-
 
 export const useSaveFavouriteArticle = (options) => {
   const { getAccessTokenSilently } = useAuth0();
@@ -267,37 +255,27 @@ export const useRemoveFavouriteArticle = (options) => {
 
   async function removeFavouriteArticle(id) {
     const accessToken = await getAccessTokenSilently();
-    const response = await axios.delete(
-      `/api/article/favourite/delete/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    const response = await axios.delete(`/api/article/favourite/delete/${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return response.data;
   }
   return useMutation(removeFavouriteArticle, { ...options });
 };
-
-
-
-
 
 export const useGetAllFavouriteArticles = (storeID, options) => {
   const { getAccessTokenSilently } = useAuth0();
 
   async function getAllFavouriteArticles() {
     const accessToken = await getAccessTokenSilently();
-    console.log('asdasd',storeID)
-    const response = await axios.get(
-      `/api/article/favourites/${storeID}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    console.log('asdasd', storeID);
+    const response = await axios.get(`/api/article/favourites/${storeID}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return response.data;
   }
 
@@ -306,4 +284,3 @@ export const useGetAllFavouriteArticles = (storeID, options) => {
     staleTime: 1000 * 60 * 60 * 24,
   });
 };
-

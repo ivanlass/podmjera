@@ -6,7 +6,5 @@
     "main.e97e7a4a.js.map": "/static/js/main.e97e7a4a.js.map",
     "787.85b14e1c.chunk.js.map": "/static/js/787.85b14e1c.chunk.js.map"
   },
-  "entrypoints": [
-    "static/js/main.e97e7a4a.js"
-  ]
+  "entrypoints": ["static/js/main.e97e7a4a.js"]
 }
