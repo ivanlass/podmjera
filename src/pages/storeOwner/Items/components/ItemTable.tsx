@@ -8,13 +8,14 @@ import { articlesInterface } from '../../../../interfaces/articles.interface';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useQuery, useIsFetching, useIsMutating } from '@tanstack/react-query';
+import { useQuery, useIsFetching, useQueryClient } from '@tanstack/react-query';
 import DeleteArticleModal from './DeleteArticleModal';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import FavouriteSection from '../components/FavouriteSection';
 import SearchArticles from './SearchArticles';
 
 const ItemTable = () => {
+  const queryClient = useQueryClient();
   const { isOpen: isOpenEditItem, onOpen: onOpenEditItem, onClose: onCloseEditItem } = useDisclosure();
   const { isOpen: isOpenDeleteItem, onOpen: onOpenDeleteItem, onClose: onCloseDeleteItem } = useDisclosure();
   const { user } = useAuth0();
@@ -25,7 +26,6 @@ const ItemTable = () => {
   const [articleForEdit, setArticleForEdit] = useState<articlesInterface | null>(null);
   const [articleForDelete, setArticleForDelete] = useState<articlesInterface | null>(null);
   const isFetchingFavourites = useIsFetching({ queryKey: ['favourites'] });
-  const isMutatingFavourites = useIsMutating({ mutationKey: ['favourites'] });
   const {
     isLoading: isLoadingArticles,
     data: articles,
@@ -73,11 +73,12 @@ const ItemTable = () => {
   if (isLoadingArticles) return <p>Loading...</p>;
   if (isError) return <p>Error...</p>;
 
+
   return (
     <>
       {articles?.length > 0 ? (
         <>
-          {isFetchingFavourites || isMutatingFavourites ? (
+          {isFetchingFavourites ? (
             <Text>Fetching...</Text>
           ) : (
             <>
