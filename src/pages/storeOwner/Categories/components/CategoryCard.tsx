@@ -39,7 +39,7 @@ const CategoryCard = ({ id, name, storeID }: CategoryCardProps) => {
   };
 
   return (
-    <Box key={id} display='flex' justifyContent='space-between' alignItems='center' bg='neutral.10' p='4' borderRadius='md' boxShadow='base'>
+    <Box key={id} display='flex' justifyContent='space-between' alignItems='center' bg='neutral.10' p='4' borderRadius='xl' boxShadow='base'>
       <Box>
         <Text textTransform='capitalize'>{name}</Text>
       </Box>

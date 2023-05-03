@@ -5,7 +5,7 @@ const OrdersTable = () => {
   const testArr = Array.from(Array(10).keys());
 
   return (
-    <TableContainer bg='neutral.10' borderRadius='md' boxShadow='base' height='700px' overflowY='auto'>
+    <TableContainer bg='neutral.10' borderRadius='xl' boxShadow='base' height='700px' overflowY='auto'>
       <Table variant='unstyled'>
         <Thead>
           <Tr>
@@ -21,7 +21,7 @@ const OrdersTable = () => {
           {testArr.map((item) => (
             <Tr key={item} _hover={{ bg: 'neutral.20' }}>
               <Td>
-                <Image src='https://www.konzumshop.ba/images/products/022/02230013_1l.gif' alt='mlijeko' borderRadius='md' height='80px' objectFit='contain' bgPosition='center' />
+                <Image src='https://www.konzumshop.ba/images/products/022/02230013_1l.gif' alt='mlijeko' borderRadius='xl' height='80px' objectFit='contain' bgPosition='center' />
               </Td>
               <Td>Meggle Mlijeko 2.8%</Td>
               <Td>3</Td>

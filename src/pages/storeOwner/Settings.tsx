@@ -32,13 +32,13 @@ interface SettingsProps {
 function Settings() {
   const queryClient = useQueryClient();
   const toast = useToast();
-  const { user } = useAuth0();
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<SettingsProps>();
+  const { user } = useAuth0();
   const { data: userMeta, refetch: refetchGetUser } = useGetUser(user?.sub);
   const { data: store } = useGetStore(userMeta?._id, {
     onSuccess: (storeSettings: any) => {
@@ -83,7 +83,7 @@ function Settings() {
     <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
       <Heading mt={12}>Postavke</Heading>
       <Grid mt={4} templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={4}>
-        <GridItem w='100%' bg='neutral.10' p='4' borderRadius='md' boxShadow='base'>
+        <GridItem w='100%' bg='neutral.10' p='4' borderRadius='xl' boxShadow='base'>
           <FormControl isInvalid={errors.hasOwnProperty('name')}>
             <FormLabel>Ime trgovine</FormLabel>
             <Input type='text' {...register('name', { required: true })} />
@@ -204,7 +204,7 @@ function Settings() {
             </FormControl>
           </Flex>
         </GridItem>
-        <GridItem w='100%' bg='neutral.10' p='4' borderRadius='md' boxShadow='base'>
+        <GridItem w='100%' bg='neutral.10' p='4' borderRadius='xl' boxShadow='base'>
           <FormLabel>Naknada za dostavu</FormLabel>
           <Input type='number' {...register('deliveryFee')} />
           <FormLabel mt='4'>Minimalna narudžba</FormLabel>

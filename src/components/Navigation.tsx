@@ -58,7 +58,7 @@ const Navigation = () => {
           </Button>
         )}
         {isDropdownOpen && (
-          <Box ref={ref} position='absolute' top='50px' right={4} bg='neutral.10' boxShadow={'md'} zIndex='dropdown' p='4' w='150px' borderRadius='md'>
+          <Box ref={ref} position='absolute' top='50px' right={4} bg='neutral.10' boxShadow={'md'} zIndex='dropdown' p='4' w='150px' borderRadius='xl'>
             {user && user['http://demozero.net/roles'].includes('storeOwner') && (
               <Button
                 leftIcon={<BsShop />}

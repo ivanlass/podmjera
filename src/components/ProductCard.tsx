@@ -18,7 +18,7 @@ const ProductCard: FC<IProps> = ({ product }: IProps) => {
     <Card bg='neutral.10'>
       <CardBody p='4'>
         <Box w='100%' display='flex' alignItems={{ base: 'center', lg: 'flex-start' }} flexDirection={{ base: 'column', lg: 'row' }}>
-          <Image src={product.image} alt='mlijeko' borderRadius='md' height='150px' objectFit='cover' bgPosition='center' />
+          <Image src={product.image} alt='mlijeko' borderRadius='xl' height='150px' objectFit='cover' bgPosition='center' />
 
           <Flex flexDirection='column' justifyContent='space-between' ms={{ base: 0, lg: 2 }} mt={{ base: 2, lg: 0 }} h={{ base: '100%', lg: '150px' }} w='100%'>
             <Box>

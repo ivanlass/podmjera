@@ -34,7 +34,7 @@ export const Button = {
       },
       borderRadius: 'md',
       _disabled: {
-        bg: 'green',
+        bg: 'primary.100',
       },
     },
     outline: () => ({

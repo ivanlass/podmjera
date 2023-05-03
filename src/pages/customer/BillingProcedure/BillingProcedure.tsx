@@ -5,7 +5,7 @@ const BillingProcedure = () => {
   return (
     <Box>
       <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={4} p={2} maxW='1800px' mx='auto'>
-        <GridItem w='100%' p={2} bg='neutral.10' borderRadius='md'>
+        <GridItem w='100%' p={2} bg='neutral.10' borderRadius='xl'>
           <Text mt='4' mb='2' fontSize='2xl' fontWeight='bold'>
             Broj telefona
           </Text>
@@ -26,7 +26,7 @@ const BillingProcedure = () => {
               alignItems='center'
               height='100px'
               p={2}
-              borderRadius='md'
+              borderRadius='xl'
               border='1px solid'
               borderColor='primary.400'
               cursor='pointer'
@@ -48,7 +48,7 @@ const BillingProcedure = () => {
               alignItems='center'
               height='100px'
               p={2}
-              borderRadius='md'
+              borderRadius='xl'
               border='1px solid'
               borderColor='neutral.50'
               cursor='pointer'
@@ -69,7 +69,7 @@ const BillingProcedure = () => {
               alignItems='center'
               height='100px'
               p={2}
-              borderRadius='md'
+              borderRadius='xl'
               border='1px solid'
               borderColor='neutral.50'
               cursor='pointer'

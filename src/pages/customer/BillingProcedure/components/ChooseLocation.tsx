@@ -38,7 +38,7 @@ const ChooseLocation = () => {
             alignItems='center'
             flexDir='column'
             p={2}
-            borderRadius='md'
+            borderRadius='xl'
             border='1px solid'
             borderColor='neutral.50'
             cursor='pointer'
@@ -58,7 +58,7 @@ const ChooseLocation = () => {
             alignItems='center'
             flexDir='column'
             p={2}
-            borderRadius='md'
+            borderRadius='xl'
             border='1px solid'
             borderColor='primary.400'
             cursor='pointer'

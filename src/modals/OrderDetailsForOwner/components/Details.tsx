@@ -2,7 +2,7 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 
 const Details = () => {
   return (
-    <Box p='4' bg='neutral.10' borderRadius='md' boxShadow='base'>
+    <Box p='4' bg='neutral.10' borderRadius='xl' boxShadow='base'>
       <Text color='text.secondary' fontSize='sm'>
         Adresa
       </Text>

@@ -8,7 +8,7 @@ interface StatisticsProps {
 
 const Statistics = ({ label, number, helpText }: StatisticsProps) => {
   return (
-    <Stat bg='neutral.10' boxShadow='base' borderRadius='md' p='4'>
+    <Stat bg='neutral.10' boxShadow='base' borderRadius='xl' p='4'>
       <StatLabel>{label}</StatLabel>
       <StatNumber>{number} KM</StatNumber>
       <StatHelpText>{helpText}</StatHelpText>

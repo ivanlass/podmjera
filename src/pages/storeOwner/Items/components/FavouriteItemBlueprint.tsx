@@ -1,6 +1,9 @@
-import { Tr } from '@chakra-ui/react';
+import { Tr, useToast, Flex, Spinner } from '@chakra-ui/react';
 import type { FC } from 'react';
 import { useDrag } from 'react-dnd';
+import { useSaveFavouriteArticle } from '../../../../API/Queries';
+import { useQueryClient } from '@tanstack/react-query';
+import { articlesInterface } from '../../../../interfaces/articles.interface';
 
 export const ItemTypes = {
   BOX: 'box',
@@ -8,21 +11,37 @@ export const ItemTypes = {
 export interface BoxProps {
   name: string;
   children: React.ReactNode;
+  articleID: string;
+  storeID: string;
 }
 
 interface DropResult {
   name: string;
 }
 
-const FavouriteItem: FC<BoxProps> = function Box({ name, children }) {
+const FavouriteItem: FC<BoxProps> = function Box({ name, children, articleID, storeID }) {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+  const { mutate: saveFavouriteArticle, isLoading: isLoadingFavourite } = useSaveFavouriteArticle({
+    onSuccess: (newFavourite: articlesInterface) => {
+      queryClient.setQueryData(['favourites'], (old: any) => [...old, newFavourite]);
+
+      toast({
+        title: 'Artikal je uspešno sačuvan',
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
+      });
+    },
+  });
+
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ItemTypes.BOX,
     item: { name },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<DropResult>();
-      console.log(dropResult);
       if (item && dropResult) {
-        alert(`You dropped ${item.name} into ${dropResult.name}!`);
+        saveFavouriteArticle({ articleID, storeID, position: dropResult.name });
       }
     },
     collect: (monitor) => ({
@@ -32,6 +51,7 @@ const FavouriteItem: FC<BoxProps> = function Box({ name, children }) {
   }));
 
   const opacity = isDragging ? 0.4 : 1;
+
   return (
     <Tr cursor='move' ref={drag} style={{ opacity }}>
       {children}

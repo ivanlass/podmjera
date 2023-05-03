@@ -19,7 +19,7 @@ const Categories = () => {
   const { data: store } = useGetStore(userMeta?._id);
   const { mutate: saveCategory, isLoading: isSavingCategory } = useSaveCategory({
     onSuccess: (newCategories: storeInterface) => {
-      console.log(newCategories)
+      console.log(newCategories);
       queryClient.setQueryData(['store'], newCategories);
       reset();
       toast({
@@ -30,7 +30,6 @@ const Categories = () => {
       });
     },
   });
-
 
   const {
     register,
@@ -46,7 +45,7 @@ const Categories = () => {
   return (
     <Box mt={12}>
       <Heading>Kategorije</Heading>
-      <Box mt={4} w={{ base: '100%', lg: '40%' }} bg='neutral.10' p='4' borderRadius='md' boxShadow='base'>
+      <Box mt={4} w={{ base: '100%', lg: '40%' }} bg='neutral.10' p='4' borderRadius='xl' boxShadow='base'>
         <Text fontSize='xl' fontWeight='bold'>
           Nova kategorija
         </Text>

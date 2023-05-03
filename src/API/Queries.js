@@ -43,7 +43,7 @@ export const useGetUser = (userID, options) => {
   });
 };
 
-// get user data from the database
+
 export const useGetStore = (userID, options) => {
   const { getAccessTokenSilently } = useAuth0();
 
@@ -166,3 +166,144 @@ export const useAddArticle = (options) => {
 
   return useMutation(addArticle, { ...options });
 };
+
+
+export const useEditArticle = (options) => {
+  const { getAccessTokenSilently, user } = useAuth0();
+
+  async function editArticle(article) {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.put(
+      '/api/article/edit',
+      {...article },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    return response.data;
+  }
+
+  return useMutation(editArticle, { ...options });
+};
+
+
+
+export const useDeleteArticle = (options) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  async function deleteArticle(storeSettings) {
+    console.log(storeSettings)
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.post(
+      '/api/article/delete',
+      { ...storeSettings },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  }
+
+  return useMutation(deleteArticle, { ...options });
+};
+
+export const checkIfStoreHasItems = async (storeId) => {
+  try {
+    const response = await axios.get(`/api/article/check-store-items/${storeId}`);
+    const items = response.data.message;
+    console.log(items)
+    return items;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+
+
+export const useSearchArticles = (options) => {
+
+  async function searchArticles({storeID, searchQuery}) {
+    console.log(searchQuery)
+    const response = await axios.get(
+      `/api/article/search/${searchQuery}/${storeID}`,
+    );
+    return response.data;
+  }
+
+  return useMutation(searchArticles, 
+  {
+    ...options,
+  });
+};
+
+
+export const useSaveFavouriteArticle = (options) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  async function saveFavouriteArticle(payload) {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.post(
+      '/api/article/favourite/add',
+      { ...payload },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  }
+
+  return useMutation(saveFavouriteArticle, { ...options });
+};
+
+export const useRemoveFavouriteArticle = (options) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  async function removeFavouriteArticle(id) {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.delete(
+      `/api/article/favourite/delete/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  }
+  return useMutation(removeFavouriteArticle, { ...options });
+};
+
+
+
+
+
+export const useGetAllFavouriteArticles = (storeID, options) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  async function getAllFavouriteArticles() {
+    const accessToken = await getAccessTokenSilently();
+    console.log('asdasd',storeID)
+    const response = await axios.get(
+      `/api/article/favourites/${storeID}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  }
+
+  return useQuery(['favourites'], () => getAllFavouriteArticles(), {
+    ...options,
+    staleTime: 1000 * 60 * 60 * 24,
+  });
+};
+

@@ -18,7 +18,7 @@ const Counter: FC<IProps> = ({ product }: IProps) => {
   const basketContext = useContext(BasketContext);
 
   return (
-    <Box bg='primary.500' borderRadius='md'>
+    <Box bg='primary.500' borderRadius='xl'>
       {basketContext?.productQuantity(product.id) === undefined || basketContext?.productQuantity(product.id) > 0 ? (
         <Flex alignItems='center'>
           <IconButton aria-label='minus' size='sm' onClick={() => basketContext?.decreaseQuantity(product)} icon={<MinusIcon />} />

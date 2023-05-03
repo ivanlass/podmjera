@@ -1,7 +1,20 @@
-import { SimpleGrid, Text } from '@chakra-ui/react';
+import { SimpleGrid, Box, Text, Flex } from '@chakra-ui/react';
 import FavouriteItemsPlaceholder from './FavouriteItemsPlaceholder';
+import { useGetAllFavouriteArticles } from '../../../../API/Queries';
+import { articlesInterface } from '../../../../interfaces/articles.interface';
 
-const FavouriteSection = () => {
+interface IProps {
+  storeID: string;
+}
+
+const FavouriteSection = ({ storeID }: IProps) => {
+  const { data: favouriteArticles } = useGetAllFavouriteArticles(storeID, {
+    enabled: !!storeID,
+  });
+
+  const findArticle = (orderNum: number) => {
+    return favouriteArticles?.find((article: articlesInterface) => article.position === orderNum);
+  };
   return (
     <>
       <Text mt={8} fontSize='2xl'>
@@ -10,16 +23,16 @@ const FavouriteSection = () => {
       <Text color='text.secondary' mb='4'>
         Ovdje stavite artikle koje želite da se prikazuju na početnoj stranici vaše trgovine, kao prvi na popisu.
       </Text>
-      <SimpleGrid mb='8' columns={{ base: 2, sm: 3, md: 4, lg: 6, xl: 8 }} spacing={4}>
-        <FavouriteItemsPlaceholder orderNum={1} />
-        <FavouriteItemsPlaceholder orderNum={2} />
-        <FavouriteItemsPlaceholder orderNum={3} />
-        <FavouriteItemsPlaceholder orderNum={4} />
-        <FavouriteItemsPlaceholder orderNum={5} />
-        <FavouriteItemsPlaceholder orderNum={6} />
-        <FavouriteItemsPlaceholder orderNum={7} />
-        <FavouriteItemsPlaceholder orderNum={8} />
-      </SimpleGrid>
+      <Flex columnGap='4' overflow='auto' scrollSnapType='x mandatory' pb='4' pt='8'>
+        <FavouriteItemsPlaceholder orderNum={1} article={findArticle(1)} />
+        <FavouriteItemsPlaceholder orderNum={2} article={findArticle(2)} />
+        <FavouriteItemsPlaceholder orderNum={3} article={findArticle(3)} />
+        <FavouriteItemsPlaceholder orderNum={4} article={findArticle(4)} />
+        <FavouriteItemsPlaceholder orderNum={5} article={findArticle(5)} />
+        <FavouriteItemsPlaceholder orderNum={6} article={findArticle(6)} />
+        <FavouriteItemsPlaceholder orderNum={7} article={findArticle(7)} />
+        <FavouriteItemsPlaceholder orderNum={8} article={findArticle(8)} />
+      </Flex>
     </>
   );
 };

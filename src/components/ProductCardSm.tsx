@@ -21,7 +21,7 @@ const ProductCardSm: FC<IProps> = ({ product }: IProps) => {
 
   return (
     <Box display='flex' py='4'>
-      <Image src={product.image} alt='mlijeko' borderRadius='md' height='60px' objectFit='contain' bgPosition='center' />
+      <Image src={product.image} alt='mlijeko' borderRadius='xl' height='60px' objectFit='contain' bgPosition='center' />
       <Stack justifyContent='space-between' ms='4'>
         <Text color='primary.700' fontSize={{ base: 'md', md: 'xl' }}>
           {product.price} KM
