@@ -5,6 +5,7 @@ interface IProduct {
   name: string;
   price: number;
   image: string;
+  perPiece: boolean;
 }
 
 interface IProductInBasket {
@@ -13,6 +14,7 @@ interface IProductInBasket {
   price: number;
   image: string;
   quantity: number;
+  perPiece: boolean;
 }
 
 type Props = {
@@ -36,8 +38,8 @@ export const BasketProvider = ({ children }: Props) => {
   const decreaseQuantity = (product: IProduct) => {
     const productInBasket = basket.find((item) => item.id === product.id);
     if (productInBasket) {
-      if (productInBasket.quantity > 1) {
-        setBasket(basket.map((item) => (item.id === product.id ? { ...item, quantity: item.quantity - 1 } : item)));
+      if (product.perPiece ? productInBasket.quantity > 1 : productInBasket.quantity > 0.1) {
+        setBasket(basket.map((item) => (item.id === product.id ? { ...item, quantity: product.perPiece ? item.quantity - 1 : Number((item.quantity - 0.1).toFixed(3)) } : item)));
       } else {
         setBasket(basket.filter((item) => item.id !== product.id));
       }
@@ -49,16 +51,18 @@ export const BasketProvider = ({ children }: Props) => {
     if (productInBasket) {
       const newBasket = basket?.map((item: IProductInBasket) => {
         if (item.id === product.id) {
+          const qty = (item.quantity + 0.1).toFixed(3);
           return {
             ...item,
-            quantity: item.quantity + 1,
+            quantity: product.perPiece ? item.quantity + 1 : Number(qty),
           };
         }
         return item;
       });
       setBasket(newBasket);
     } else {
-      setBasket((prev: IProductInBasket[]) => [...prev, { ...product, quantity: 1 }]);
+      const qty = (0.1).toFixed(3);
+      setBasket((prev: IProductInBasket[]) => [...prev, { ...product, quantity: product.perPiece ? 1 : Number(qty) }]);
     }
   };
 

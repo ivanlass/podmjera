@@ -8,7 +8,7 @@ const OrdersList = () => {
   const testArr = Array.from(Array(10).keys());
 
   return (
-    <TableContainer bg='neutral.10' borderRadius='xl' boxShadow='base' mt='4'>
+    <TableContainer bg='neutral.10' borderRadius='xl' boxShadow='md' mt='4'>
       <Table variant='unstyled'>
         <Thead>
           <Tr>

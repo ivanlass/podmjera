@@ -48,7 +48,7 @@ export const FavouriteItemsPlaceholder: FC<IProps> = ({ orderNum, article }) => 
   }
 
   return (
-    <Box position='relative' border='1px dashed' scrollSnapAlign='start' minW='200px' borderColor='neutral.50' p='4' boxShadow='base' minH={'200px'} borderRadius='xl' ref={article ? null : drop} bg={backgroundColor}>
+    <Box position='relative' border='1px dashed' scrollSnapAlign='start' minW='200px' borderColor='neutral.50' p='4' boxShadow='md' minH={'200px'} borderRadius='xl' ref={article ? null : drop} bg={backgroundColor}>
       {article?.name ? (
         <Box w='100%' height='100%'>
           <Text textAlign='center'>{article?.name}</Text>

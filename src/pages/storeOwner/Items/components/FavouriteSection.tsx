@@ -16,8 +16,8 @@ const FavouriteSection = ({ storeID }: IProps) => {
     return favouriteArticles?.find((article: articlesInterface) => article.position === orderNum);
   };
   return (
-    <>
-      <Text mt={8} fontSize='2xl'>
+    <Box bg='neutral.10' p='4' mt={20} boxShadow='md' borderRadius='xl'>
+      <Text  fontSize='2xl'>
         Favoriti
       </Text>
       <Text color='text.secondary' mb='4'>
@@ -33,7 +33,7 @@ const FavouriteSection = ({ storeID }: IProps) => {
         <FavouriteItemsPlaceholder orderNum={7} article={findArticle(7)} />
         <FavouriteItemsPlaceholder orderNum={8} article={findArticle(8)} />
       </Flex>
-    </>
+    </Box>
   );
 };
 

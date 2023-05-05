@@ -83,7 +83,7 @@ function Settings() {
     <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
       <Heading mt={12}>Postavke</Heading>
       <Grid mt={4} templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={4}>
-        <GridItem w='100%' bg='neutral.10' p='4' borderRadius='xl' boxShadow='base'>
+        <GridItem w='100%' bg='neutral.10' p='4' borderRadius='xl' boxShadow='md'>
           <FormControl isInvalid={errors.hasOwnProperty('name')}>
             <FormLabel>Ime trgovine</FormLabel>
             <Input type='text' {...register('name', { required: true })} />
@@ -204,7 +204,7 @@ function Settings() {
             </FormControl>
           </Flex>
         </GridItem>
-        <GridItem w='100%' bg='neutral.10' p='4' borderRadius='xl' boxShadow='base'>
+        <GridItem w='100%' bg='neutral.10' p='4' borderRadius='xl' boxShadow='md'>
           <FormLabel>Naknada za dostavu</FormLabel>
           <Input type='number' {...register('deliveryFee')} />
           <FormLabel mt='4'>Minimalna narudžba</FormLabel>

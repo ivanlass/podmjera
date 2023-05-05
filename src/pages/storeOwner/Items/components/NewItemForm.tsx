@@ -82,12 +82,12 @@ const NewItemForm = () => {
   console.log(store);
   if (!store?.category)
     return (
-      <Flex w='60%' bg='neutral.10' p='4' borderRadius='xl' boxShadow='base' justifyContent='center' alignItems='center' minH='200px'>
+      <Flex w='60%' bg='neutral.10' p='4' borderRadius='xl' boxShadow='md' justifyContent='center' alignItems='center' minH='200px'>
         <Spinner size='xl' />
       </Flex>
     );
   return (
-    <Box mt={4} w='60%' bg='neutral.10' p='4' borderRadius='xl' boxShadow='base'>
+    <Box mt={4} w='60%' bg='neutral.10' p='4' borderRadius='xl' boxShadow='xl'>
       {isLoading ? (
         <Flex justifyContent='center' alignItems='center' minH='200px'>
           <Spinner size='xl' />

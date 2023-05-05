@@ -85,7 +85,7 @@ const ItemTable = () => {
               {store && <SearchArticles storeID={store._id} />}
             </>
           )}
-          <TableContainer bg='neutral.10' borderRadius='xl' boxShadow='base' maxH='500px' overflowY='auto'>
+          <TableContainer bg='neutral.10' borderRadius='xl' boxShadow='md'  overflowY='auto'>
             <Table variant='unstyled'>
               <Thead>
                 <Tr>
@@ -100,10 +100,9 @@ const ItemTable = () => {
               </Thead>
               <Tbody>
                 {articles.map((item: articlesInterface) => (
-                  // <Tr key={item} _hover={{ bg: 'neutral.20' }}>
-                  <FavouriteItem key={item._id} name={item.name} articleID={item._id} storeID={item.storeID}>
+                    <FavouriteItem key={item._id} name={item.name} articleID={item._id} storeID={item.storeID}>
                     <Td>
-                      <Image src={item.image} fallback={<Icon as={TbSoup} boxSize='2em' />} alt='mlijeko' borderRadius='xl' height='80px' objectFit='contain' bgPosition='center' />
+                      <Image src={item.image} fallback={<Icon as={TbSoup} boxSize='2em' />} alt='mlijeko' borderRadius='xl' height='50px' objectFit='contain' bgPosition='center' />
                     </Td>
                     <Td>{item.name}</Td>
                     <Td whiteSpace='normal'>
@@ -122,12 +121,11 @@ const ItemTable = () => {
                       <IconButton variant='ghost' aria-label='edit' fontSize='xl' onClick={() => handleEdit(item)} icon={<EditIcon />} />
                       <IconButton ms='4' fontSize='xl' variant='ghost' aria-label='delete' icon={<DeleteIcon onClick={() => handleDelete(item)} />} />
                     </Td>
-                    {/* </Tr> */}
-                  </FavouriteItem>
+                    </FavouriteItem>              
                 ))}
               </Tbody>
             </Table>
-          </TableContainer>
+            </TableContainer>
           {articleForEdit && <EditItem isOpen={isOpenEditItem} onClose={onCloseEditItem} article={articleForEdit} selectOptions={store.category} storeID={store._id} />}
           {articleForDelete && <DeleteArticleModal isOpen={isOpenDeleteItem} onClose={onCloseDeleteItem} article={articleForDelete} storeID={store._id} />}
 

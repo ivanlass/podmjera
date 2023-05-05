@@ -3,7 +3,7 @@ import { DeleteIcon } from '@chakra-ui/icons';
 
 function StoreCard() {
   return (
-    <SimpleGrid columns={[2, 1, 8]} spacing={4} bg='neutral.10' borderRadius='xl' boxShadow='base' px='4' py='4' my='4' _hover={{ boxShadow: 'shadow.100' }}>
+    <SimpleGrid columns={[2, 1, 8]} spacing={4} bg='neutral.10' borderRadius='xl' boxShadow='md' px='4' py='4' my='4' _hover={{ boxShadow: 'shadow.100' }}>
       <Flex flexDirection='column' justifyContent='center'>
         <Text>Bingo</Text>
       </Flex>

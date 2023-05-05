@@ -8,6 +8,7 @@ interface IProduct {
   name: string;
   price: number;
   image: string;
+  perPiece: boolean;
 }
 
 interface IProps {
@@ -24,7 +25,7 @@ const Counter: FC<IProps> = ({ product }: IProps) => {
           <IconButton aria-label='minus' size='sm' onClick={() => basketContext?.decreaseQuantity(product)} icon={<MinusIcon />} />
 
           <Text px='4' fontWeight='bold' color='primary.800'>
-            {basketContext?.productQuantity(product.id)}
+            {basketContext?.productQuantity(product.id)} {product.perPiece ? 'kom' : 'kg'}
           </Text>
           <IconButton size='sm' aria-label='plus' onClick={() => basketContext?.increaseQuantity(product)} icon={<SmallAddIcon fontSize='2xl' />} />
         </Flex>

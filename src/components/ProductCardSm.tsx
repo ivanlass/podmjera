@@ -10,6 +10,7 @@ interface IProduct {
   price: number;
   image: string;
   quantity: number;
+  perPiece: boolean;
 }
 
 interface IProps {

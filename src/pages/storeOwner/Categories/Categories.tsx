@@ -45,7 +45,7 @@ const Categories = () => {
   return (
     <Box mt={12}>
       <Heading>Kategorije</Heading>
-      <Box mt={4} w={{ base: '100%', lg: '40%' }} bg='neutral.10' p='4' borderRadius='xl' boxShadow='base'>
+      <Box mt={4} w={{ base: '100%', lg: '40%' }} bg='neutral.10' p='4' borderRadius='xl' boxShadow='md'>
         <Text fontSize='xl' fontWeight='bold'>
           Nova kategorija
         </Text>

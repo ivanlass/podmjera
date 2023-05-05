@@ -5,7 +5,7 @@ const OrdersTable = () => {
   const testArr = Array.from(Array(10).keys());
 
   return (
-    <TableContainer bg='neutral.10' borderRadius='xl' boxShadow='base' height='700px' overflowY='auto'>
+    <TableContainer bg='neutral.10' borderRadius='xl' boxShadow='md' height='700px' overflowY='auto'>
       <Table variant='unstyled'>
         <Thead>
           <Tr>
