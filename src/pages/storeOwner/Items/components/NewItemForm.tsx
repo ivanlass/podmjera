@@ -79,7 +79,7 @@ const NewItemForm = () => {
 
     sendArticle({ id: userMeta._id, ...dataForSend, slika: data.image[0] });
   };
-  console.log(store);
+
   if (!store?.category)
     return (
       <Flex w='60%' bg='neutral.10' p='4' borderRadius='xl' boxShadow='md' justifyContent='center' alignItems='center' minH='200px'>
