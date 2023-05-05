@@ -17,9 +17,7 @@ const FavouriteSection = ({ storeID }: IProps) => {
   };
   return (
     <Box bg='neutral.10' p='4' mt={20} boxShadow='md' borderRadius='xl'>
-      <Text  fontSize='2xl'>
-        Favoriti
-      </Text>
+      <Text fontSize='2xl'>Favoriti</Text>
       <Text color='text.secondary' mb='4'>
         Ovdje stavite artikle koje želite da se prikazuju na početnoj stranici vaše trgovine, kao prvi na popisu.
       </Text>

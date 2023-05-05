@@ -53,7 +53,7 @@ const FavouriteItem: FC<BoxProps> = function Box({ name, children, articleID, st
   const opacity = isDragging ? 0.4 : 1;
 
   return (
-    <Tr cursor='move' ref={drag} style={{ opacity }} _hover={{background:'neutral.30'}}>
+    <Tr cursor='move' ref={drag} style={{ opacity }} _hover={{ background: 'neutral.30' }}>
       {children}
     </Tr>
   );
