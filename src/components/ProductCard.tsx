@@ -44,17 +44,10 @@
 import { Text, Box, Card, Image } from '@chakra-ui/react';
 import { FC } from 'react';
 import Counter from './Counter';
-
-interface IProduct {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  perPiece: boolean;
-}
+import { articlesInterface } from '../interfaces/articles.interface';
 
 interface IProps {
-  product: IProduct;
+  product: articlesInterface;
 }
 
 const ProductCard: FC<IProps> = ({ product }: IProps) => {

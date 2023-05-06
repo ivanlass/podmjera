@@ -29,8 +29,8 @@ function Basket() {
           <DrawerBody position='relative'>
             {basketContext?.basket && basketContext?.basket.length > 0 ? (
               basketContext.basket.map((product) => (
-                <Box key={product.id}>
-                  <ProductCardSm key={product.id} product={product} />
+                <Box key={product._id}>
+                  <ProductCardSm key={product._id} product={product} />
                 </Box>
               ))
             ) : (

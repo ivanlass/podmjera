@@ -284,3 +284,25 @@ export const useGetAllFavouriteArticles = (storeID, options) => {
     staleTime: 1000 * 60 * 60 * 24,
   });
 };
+
+export const useGetStores = (options) => {
+  async function getStores() {
+    const response = await axios.get(`/api/store/getstores/`);
+    return response.data;
+  }
+
+  return useQuery(['stores'], () => getStores(), {
+    ...options,
+  });
+};
+
+export const useGetStoreArticles = (storeID, options) => {
+  async function getStoreArticles() {
+    const response = await axios.get(`/api/article/${storeID}/`);
+    return response.data;
+  }
+
+  return useQuery(['articles'], () => getStoreArticles(), {
+    ...options,
+  });
+};

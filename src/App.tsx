@@ -11,12 +11,14 @@ import Sidebar from './components/Sidebar';
 import Orders from './pages/storeOwner/Orders/Orders';
 import ProtectedRoute from './pages/ProtectedRoute';
 import StoreName from './pages/storeOwner/StoreName/StoreName';
+import StorePickerPage from './pages/StorePickerPage';
 
 const App = () => {
   return (
     <>
       <Navigation />
       <Routes>
+        <Route path={ROUTE.HOME} element={<StorePickerPage />} />
         <Route path={ROUTE.STORE} element={<SpecificStore />} />
         <Route path={ROUTE.NAPLATA} element={<BillingProcedure />} />
         <Route

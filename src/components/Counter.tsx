@@ -2,17 +2,10 @@ import { Box, Flex, Text, IconButton } from '@chakra-ui/react';
 import { SmallAddIcon, MinusIcon } from '@chakra-ui/icons';
 import { useContext, FC } from 'react';
 import { BasketContext } from '../store/Basket.Context';
-
-interface IProduct {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  perPiece: boolean;
-}
+import { articlesInterface } from '../interfaces/articles.interface';
 
 interface IProps {
-  product: IProduct;
+  product: articlesInterface;
 }
 
 const Counter: FC<IProps> = ({ product }: IProps) => {
@@ -20,12 +13,12 @@ const Counter: FC<IProps> = ({ product }: IProps) => {
 
   return (
     <Box bg='primary.500' borderRadius='xl'>
-      {basketContext?.productQuantity(product.id) === undefined || basketContext?.productQuantity(product.id) > 0 ? (
+      {basketContext?.productQuantity(product._id) === undefined || basketContext?.productQuantity(product._id) > 0 ? (
         <Flex alignItems='center'>
           <IconButton aria-label='minus' size='sm' onClick={() => basketContext?.decreaseQuantity(product)} icon={<MinusIcon />} />
 
           <Text px='4' fontWeight='bold' color='primary.800'>
-            {basketContext?.productQuantity(product.id)} {product.perPiece ? 'kom' : 'kg'}
+            {basketContext?.productQuantity(product._id)} {product.perPiece ? 'kom' : 'kg'}
           </Text>
           <IconButton size='sm' aria-label='plus' onClick={() => basketContext?.increaseQuantity(product)} icon={<SmallAddIcon fontSize='2xl' />} />
         </Flex>

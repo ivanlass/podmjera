@@ -3,18 +3,10 @@ import { Text, Box, Stack, Image, Flex, IconButton } from '@chakra-ui/react';
 import Counter from './Counter';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BasketContext } from '../store/Basket.Context';
-
-interface IProduct {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  quantity: number;
-  perPiece: boolean;
-}
+import { articlesInterface } from '../interfaces/articles.interface';
 
 interface IProps {
-  product: IProduct;
+  product: articlesInterface;
 }
 
 const ProductCardSm: FC<IProps> = ({ product }: IProps) => {
@@ -37,7 +29,7 @@ const ProductCardSm: FC<IProps> = ({ product }: IProps) => {
           {product.price * product.quantity} KM
         </Text>
       </Flex>
-      <IconButton variant='outline' size='xs' borderRadius='full' ms='4' icon={<AiOutlineClose />} aria-label='delete' onClick={() => basketContext?.removeFromBasket(product.id)} />
+      <IconButton variant='outline' size='xs' borderRadius='full' ms='4' icon={<AiOutlineClose />} aria-label='delete' onClick={() => basketContext?.removeFromBasket(product._id)} />
     </Box>
   );
 };
