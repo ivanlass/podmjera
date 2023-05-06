@@ -73,7 +73,6 @@ const ItemTable = () => {
   if (isLoadingArticles) return <p>Loading...</p>;
   if (isError) return <p>Error...</p>;
 
-
   return (
     <>
       {articles?.length > 0 ? (
