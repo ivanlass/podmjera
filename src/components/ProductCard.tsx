@@ -41,10 +41,11 @@
 
 // export default ProductCard;
 
-import { Text, Box, Card, Image } from '@chakra-ui/react';
+import { Text, Box, Card, Image, Icon } from '@chakra-ui/react';
 import { FC } from 'react';
 import Counter from './Counter';
 import { articlesInterface } from '../interfaces/articles.interface';
+import { CiApple } from 'react-icons/ci';
 
 interface IProps {
   product: articlesInterface;
@@ -54,10 +55,18 @@ const ProductCard: FC<IProps> = ({ product }: IProps) => {
   return (
     <Card bg='neutral.10' overflow='hidden' borderRadius='xl' boxShadow='md' _hover={{ boxShadow: 'xl' }}>
       <Box display='flex' alignItems={{ base: 'center', lg: 'flex-start' }} flexDirection={{ base: 'column', lg: 'column' }}>
-        <Image src={product.image} alt='mlijeko' height={{ base: '180px', md: '250px' }} w='100%' objectFit='cover' bgPosition='center' />
+        <Image
+          src={product.image}
+          alt='mlijeko'
+          height={{ base: '180px', md: '250px' }}
+          w='100%'
+          objectFit='cover'
+          bgPosition='center'
+          fallback={<Icon as={CiApple} boxSize={{ base: '4rem', md: '8rem' }} color='primary.500' height={{ base: '180px', md: '250px' }} alignSelf='center' />}
+        />
         <Box bottom='0' w='100%'>
           <Box p={{ base: '2', md: '4' }} display='flex' flexDir='column' justifyContent='space-between'>
-            <Text fontSize={{ base: 'sm', md: 'lg' }} color='text.primary' fontWeight='light'>
+            <Text textTransform='capitalize' fontSize={{ base: 'sm', md: 'lg' }} color='text.primary' fontWeight='light'>
               {product.name}
             </Text>
             <Box pt='2' display='flex' justifyContent='space-between' alignItems='flex-end' flexDir={{ base: 'column', md: 'row' }}>

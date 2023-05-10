@@ -1,16 +1,16 @@
-import { Box, SimpleGrid, Spinner } from '@chakra-ui/react';
+import { Box, SimpleGrid, Spinner, Text } from '@chakra-ui/react';
 import Basket from '../../../components/Basket';
 import ProductCard from '../../../components/ProductCard';
-import { products } from '../../../products';
 import { BasketProvider } from '../../../store/Basket.Context';
-import { useGetStoreArticles, useGetStore } from '../../../API/Queries';
+import { useGetStoreArticles, useGetSpecificStore } from '../../../API/Queries';
 import { useParams } from 'react-router-dom';
 import { articlesInterface } from '../../../interfaces/articles.interface';
 
 const SpecificStore = () => {
   const { storeID } = useParams<{ storeID: string }>();
-  // todo dohvati store
-  // const { data: store, isLoading: isLoadingStore, isError: isErrorStore } = useGetStore();
+  // todo dohvati specificstore
+  const { data: store } = useGetSpecificStore(storeID);
+
   const { data: storeArticles, isLoading, isError } = useGetStoreArticles(storeID);
 
   if (isLoading)
@@ -19,7 +19,12 @@ const SpecificStore = () => {
         <Spinner size={'xl'} />
       </Box>
     );
-  if (isError) return <Box>Error</Box>;
+  if (isError)
+    return (
+      <Box w='100vw' h='100vh' display='flex' justifyContent='center' alignItems='center'>
+        <Text>Greška, molimo pokušajte kasnije</Text>
+      </Box>
+    );
 
   return (
     <BasketProvider>

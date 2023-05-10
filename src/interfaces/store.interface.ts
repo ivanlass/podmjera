@@ -25,4 +25,6 @@ export interface storeInterface {
   image: string;
   category: Array<string>;
   updatedAt: string;
+
+  [key: string]: string | number | Array<string> | undefined;
 }

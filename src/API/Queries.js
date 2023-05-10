@@ -306,3 +306,14 @@ export const useGetStoreArticles = (storeID, options) => {
     ...options,
   });
 };
+
+export const useGetSpecificStore = (storeID, options) => {
+  async function getSpecificStore() {
+    const response = await axios.get(`/api/store/${storeID}/`);
+    return response.data;
+  }
+
+  return useQuery(['specificStore'], () => getSpecificStore(), {
+    ...options,
+  });
+};
