@@ -41,7 +41,7 @@
 
 // export default ProductCard;
 
-import { Text, Box, Card, Image, Icon } from '@chakra-ui/react';
+import { Text, Box, Card, Image, Icon, Flex } from '@chakra-ui/react';
 import { FC } from 'react';
 import Counter from './Counter';
 import { articlesInterface } from '../interfaces/articles.interface';
@@ -73,8 +73,10 @@ const ProductCard: FC<IProps> = ({ product }: IProps) => {
               <Text color='text.secondary' fontSize={{ base: 'sm', md: 'md' }} fontWeight='thin' alignSelf='flex-start'>
                 {product.price} KM / {product.perPiece ? 'komad' : 'kg'}
               </Text>
-              <Counter product={product} />
             </Box>
+            <Flex justifyContent='flex-end' mt='2'>
+              <Counter product={product} />
+            </Flex>
           </Box>
         </Box>
       </Box>

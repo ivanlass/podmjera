@@ -5,6 +5,7 @@ import { BasketProvider } from '../../../store/Basket.Context';
 import { useGetStoreArticles, useGetSpecificStore } from '../../../API/Queries';
 import { useParams } from 'react-router-dom';
 import { articlesInterface } from '../../../interfaces/articles.interface';
+import InfiniteProducts from './InfiniteProducts';
 
 const SpecificStore = () => {
   const { storeID } = useParams<{ storeID: string }>();
@@ -30,13 +31,14 @@ const SpecificStore = () => {
     <BasketProvider>
       <Box>
         <Basket />
-        <SimpleGrid mt={2} px='4' columns={{ base: 2, md: 3, lg: 4, '2xl': 5 }} spacing={{ base: 2, md: 4 }}>
+        <InfiniteProducts />
+        {/* <SimpleGrid mt={2} px='4' columns={{ base: 2, md: 3, lg: 4, '2xl': 5 }} spacing={{ base: 2, md: 4 }}>
           {storeArticles.map((product: articlesInterface) => (
             <Box key={product._id}>
               <ProductCard product={product} />
             </Box>
           ))}
-        </SimpleGrid>
+        </SimpleGrid> */}
       </Box>
     </BasketProvider>
   );

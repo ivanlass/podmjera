@@ -87,18 +87,7 @@ const StorePickerPage = () => {
         Odaberite prodavnicu
       </Heading>
       {stores?.map((store: storeInterface) => (
-        <Box
-          key={store._id}
-          onClick={() => isOpen(store[currentDayKeyOpen], store[currentDayKeyClose]) && goToStore(store)}
-          p='4'
-          cursor={isOpen(store[currentDayKeyOpen], store[currentDayKeyClose]) ? 'pointer' : 'not-allowed'}
-          w='max-content'
-          textAlign='center'
-          bg='neutral.10'
-          boxShadow='xl'
-          borderRadius='xl'
-          _hover={{ boxShadow: '2xl' }}
-        >
+        <Box key={store._id} onClick={() => goToStore(store)} p='4' cursor={'pointer'} w='max-content' textAlign='center' bg='neutral.10' boxShadow='xl' borderRadius='xl' _hover={{ boxShadow: '2xl' }}>
           <Image src={store.image} alt={store.name} fallback={<Icon as={BiStore} boxSize='8em' />} />
           <Text fontSize='3xl'>{store.name}</Text>
 

@@ -24,7 +24,7 @@ const Navigation = () => {
       refetch();
     }
   }, [userMeta]);
-
+  console.log(user);
   const handleClickOutside = () => {
     setIsDropdownOpen(false);
   };

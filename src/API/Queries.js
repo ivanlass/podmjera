@@ -43,19 +43,15 @@ export const useGetUser = (userID, options) => {
   });
 };
 
+
+// use this for fetching store if user have store
+// its different query key from useGetSpecificStore
 export const useGetStore = (userID, options) => {
-  const { getAccessTokenSilently } = useAuth0();
 
   async function getStore() {
-    const accessToken = await getAccessTokenSilently();
     const response = await axios.post(
       `/api/store/getstore/`,
-      { userID },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
+      { userID }
     );
     return response.data;
   }
@@ -307,6 +303,7 @@ export const useGetStoreArticles = (storeID, options) => {
   });
 };
 
+// get specific store. For example, when user click on store name in the store picker
 export const useGetSpecificStore = (storeID, options) => {
   async function getSpecificStore() {
     const response = await axios.get(`/api/store/${storeID}/`);
