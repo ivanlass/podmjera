@@ -43,16 +43,11 @@ export const useGetUser = (userID, options) => {
   });
 };
 
-
 // use this for fetching store if user have store
 // its different query key from useGetSpecificStore
 export const useGetStore = (userID, options) => {
-
   async function getStore() {
-    const response = await axios.post(
-      `/api/store/getstore/`,
-      { userID }
-    );
+    const response = await axios.post(`/api/store/getstore/`, { userID });
     return response.data;
   }
 

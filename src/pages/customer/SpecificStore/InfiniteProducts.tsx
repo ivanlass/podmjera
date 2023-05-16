@@ -18,19 +18,10 @@ function InfiniteProducts() {
     return res.data;
   };
 
-  const {
-    status,
-    data,
-    isFetching,
-    isFetchingNextPage,
-    fetchNextPage,
-    hasNextPage,
-  } = useInfiniteQuery(['infiniteProducts', specificStore?._id], fetchArticles, {
+  const { status, data, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(['infiniteProducts', specificStore?._id], fetchArticles, {
     getNextPageParam: (lastPage) => lastPage.nextId ?? undefined,
-    getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined
+    getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined,
   });
-
-
 
   React.useEffect(() => {
     if (inView) {
@@ -41,7 +32,7 @@ function InfiniteProducts() {
   return (
     <div>
       {status === 'loading' ? (
-        <FullPageSpinner text='Da vidimo što se sve nalazi u ovoj trgovini...'/>
+        <FullPageSpinner text='Da vidimo što se sve nalazi u ovoj trgovini...' />
       ) : status === 'error' ? (
         <Text>Error</Text>
       ) : (
@@ -56,7 +47,7 @@ function InfiniteProducts() {
             </React.Fragment>
           ))}
           <div>
-            <Text textAlign='center' fontSize={{base:'md', md:'2xl'}} fontWeight='bold' my='8' ref={ref} onClick={() => fetchNextPage()}>
+            <Text textAlign='center' fontSize={{ base: 'md', md: '2xl' }} fontWeight='bold' my='8' ref={ref} onClick={() => fetchNextPage()}>
               {isFetchingNextPage ? 'Učitavamo još artikala...' : hasNextPage ? 'Momenat...' : 'Nema više artikala'}
             </Text>
           </div>
