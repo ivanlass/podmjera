@@ -7,13 +7,11 @@ import { useState } from 'react';
 import StoreHero from './components/StoreHero';
 
 const SpecificStore = () => {
-const [selectedCategory, setSelectedCategory ] = useState<string>('')
-
-
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
 
   return (
     <BasketProvider>
-      <Box mt="20">
+      <Box mt='20'>
         <StoreHero />
         <Basket />
         <ProductFilters selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />

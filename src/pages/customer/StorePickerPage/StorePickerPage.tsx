@@ -5,9 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import StorePickerCard from './components/StorePickerCard';
 
-
-
-
 const StorePickerPage = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -20,7 +17,6 @@ const StorePickerPage = () => {
       </Box>
     );
   if (isError) return <Box>Error</Box>;
-
 
   return (
     <Box mt='20' px='4'>
