@@ -87,7 +87,7 @@ const NewItemForm = () => {
       </Flex>
     );
   return (
-    <Box mt={4} w='60%' bg='neutral.10' p='4' borderRadius='xl' boxShadow='xl'>
+    <Box mt={4} w='60%' bg='neutral.10' p='4' borderRadius='xl' boxShadow='md'>
       {isLoading ? (
         <Flex justifyContent='center' alignItems='center' minH='200px'>
           <Spinner size='xl' />

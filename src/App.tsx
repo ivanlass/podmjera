@@ -11,7 +11,7 @@ import Sidebar from './components/Sidebar';
 import Orders from './pages/storeOwner/Orders/Orders';
 import ProtectedRoute from './pages/ProtectedRoute';
 import StoreName from './pages/storeOwner/StoreName/StoreName';
-import StorePickerPage from './pages/StorePickerPage';
+import StorePickerPage from './pages/customer/StorePickerPage/StorePickerPage';
 
 const App = () => {
   return (

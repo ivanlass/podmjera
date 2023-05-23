@@ -3,10 +3,10 @@ import axios from 'axios';
 import { useInView } from 'react-intersection-observer';
 import { SimpleGrid, Text } from '@chakra-ui/react';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { storeInterface } from '../../../interfaces/store.interface';
-import ProductCard from '../../../components/ProductCard';
-import FullPageSpinner from '../../../components/FullPageSpinner';
-import { articlesInterface } from '../../../interfaces/articles.interface';
+import { storeInterface } from '../../../../interfaces/store.interface';
+import ProductCard from '../../../../components/ProductCard';
+import { articlesInterface } from '../../../../interfaces/articles.interface';
+import PartialSpinner from '../../../../components/PartialSpinner';
 
 function InfiniteProducts() {
   const queryClient = useQueryClient();
@@ -32,16 +32,20 @@ function InfiniteProducts() {
   return (
     <div>
       {status === 'loading' ? (
-        <FullPageSpinner text='Da vidimo što se sve nalazi u ovoj trgovini...' />
+        <PartialSpinner text='Učitavanje artikala...' />
       ) : status === 'error' ? (
-        <Text>Error</Text>
+        <Text textAlign='center' fontSize={{ base: 'md', md: '2xl' }} fontWeight='bold'>
+          Dogodila se greška, molimo probajte kasnije.
+        </Text>
       ) : (
         <>
           {data.pages.map((page: any) => (
             <React.Fragment key={page.nextId}>
               <SimpleGrid mt={2} px='4' columns={{ base: 2, md: 3, lg: 4, '2xl': 5 }} spacing={{ base: 2, md: 4 }}>
                 {page.articles.map((article: articlesInterface) => (
-                  <ProductCard product={article} />
+                  <React.Fragment key={article._id}>
+                    <ProductCard product={article} />
+                  </React.Fragment>
                 ))}
               </SimpleGrid>
             </React.Fragment>

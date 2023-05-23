@@ -10,16 +10,17 @@ function Basket() {
 
   return (
     <>
-      <Box w='100%' textAlign='right' mt='20'>
-        <Button onClick={onOpen} size='null' p='4' bottom='0' borderRadius='full' right='4'>
+      <Box w='100%' textAlign='right'>
+        <Button onClick={onOpen} position='fixed' size='null' p='2' borderRadius='full' zIndex={10} right='24' top={3} transform='translate(50%)'>
           {basketContext?.basket && basketContext?.basket.length > 0 && (
-            <Text fontSize='xs' position='absolute' top='-10px' right='-10px' p='2' borderRadius='full' minW='32px' minH='32px' border='1px solid #fff' bg='primary.500'>
+            <Text fontSize='xs' position='absolute' top='-10px' right='-10px' p='3px' borderRadius='full' minW='22px' minH='22px' border='1px solid white' color='text.primary' bg='primary.500'>
               {basketContext.basket.length}
             </Text>
           )}
           <BsBasket fontSize='20' />
         </Button>
       </Box>
+
       <Drawer size={'md'} isOpen={isOpen} placement='right' onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent>
