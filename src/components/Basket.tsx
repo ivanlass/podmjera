@@ -11,9 +11,9 @@ function Basket() {
   return (
     <>
       <Box w='100%' textAlign='right'>
-        <Button onClick={onOpen} position='fixed' size='null' p='2' borderRadius='full' zIndex={10} right='24' top={3} transform='translate(50%)'>
+        <Button onClick={onOpen} position='fixed' size='null' p='2' borderRadius='full' zIndex={10} right={{base:'50%', md:32}} top={{base:'none', md:'2'}} bottom={{base:0, md:'none'}} transform='translate(50%)'>
           {basketContext?.basket && basketContext?.basket.length > 0 && (
-            <Text fontSize='xs' position='absolute' top='-10px' right='-10px' p='3px' borderRadius='full' minW='22px' minH='22px' border='1px solid white' color='text.primary' bg='primary.500'>
+            <Text fontSize='xs' position='absolute' top='-6px' right='-10px' p='3px' borderRadius='full' minW='22px' minH='22px' border='1px solid white' color='text.primary' bg='primary.500'>
               {basketContext.basket.length}
             </Text>
           )}
@@ -44,7 +44,7 @@ function Basket() {
           <DrawerFooter display='block' borderTop='1px solid' borderColor='neutral.50'>
             <Flex justifyContent='space-between' mt='4' mb='4'>
               <Text>Total</Text>
-              <Text fontWeight='bold'>{basketContext?.totalPrice} KM</Text>
+              <Text fontWeight='bold'>{(basketContext?.totalPrice)?.toFixed(2)} KM</Text>
             </Flex>
             <Flex justifyContent='flex-end'>
               <Button variant='outline' mr={3} onClick={onClose}>
