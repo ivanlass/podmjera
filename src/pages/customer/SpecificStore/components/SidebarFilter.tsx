@@ -1,14 +1,8 @@
 import React, { ReactNode } from 'react';
-import { IconButton, Box, CloseButton, Flex, Icon, useColorModeValue, Link, Drawer, DrawerContent, Text, useDisclosure, BoxProps, FlexProps, Button } from '@chakra-ui/react';
-import { FiHome, FiTrendingUp, FiCompass, FiStar, FiSettings, FiMenu } from 'react-icons/fi';
-import { IconType } from 'react-icons';
+import { IconButton, Box, CloseButton, Flex, useColorModeValue, Drawer, DrawerContent, Text, useDisclosure, BoxProps, FlexProps } from '@chakra-ui/react';
+import { FiMenu } from 'react-icons/fi';
 import { useGetSpecificStore } from '../../../../API/Queries';
 import { useParams } from 'react-router-dom';
-
-interface LinkItemProps {
-  name: string;
-  icon: IconType;
-}
 
 interface Props {
   children: ReactNode;
