@@ -8,14 +8,13 @@ import { articlesInterface } from '../../../../interfaces/articles.interface';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useQuery, useIsFetching, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useIsFetching } from '@tanstack/react-query';
 import DeleteArticleModal from './DeleteArticleModal';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import FavouriteSection from '../components/FavouriteSection';
 import SearchArticles from './SearchArticles';
 
 const ItemTable = () => {
-  const queryClient = useQueryClient();
   const { isOpen: isOpenEditItem, onOpen: onOpenEditItem, onClose: onCloseEditItem } = useDisclosure();
   const { isOpen: isOpenDeleteItem, onOpen: onOpenDeleteItem, onClose: onCloseDeleteItem } = useDisclosure();
   const { user } = useAuth0();
@@ -33,11 +32,10 @@ const ItemTable = () => {
     refetch: refetchArticles,
   } = useQuery(
     ['articles', page],
-    () => {
-      return axios.get(`/api/article/pagination/${page}`).then((res) => {
-        setTotalNumberOfPages(Math.ceil(res.data.totalNumberOfArticles / res.data.limit));
-        return res.data.articles;
-      });
+    async () => {
+      const res = await axios.get(`/api/article/pagination/${page}`);
+      setTotalNumberOfPages(Math.ceil(res.data.totalNumberOfArticles / res.data.limit));
+      return res.data.articles;
     },
     { staleTime: 1000 * 60 * 5, keepPreviousData: true }
   );
