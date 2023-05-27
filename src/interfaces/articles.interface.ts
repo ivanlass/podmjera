@@ -10,4 +10,5 @@ export interface articlesInterface {
   updatedAt: string;
   perPiece: boolean;
   position?: number;
+  tags: Array<string>;
 }

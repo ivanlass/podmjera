@@ -22,8 +22,9 @@ import { Controller, useForm } from 'react-hook-form';
 import { Select } from 'chakra-react-select';
 import { useEditArticle, useGetUser } from '../API/Queries';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useEffect } from 'react';
+import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import ChakraTagInput from '../components/ChakraTagInput';
 
 interface EditItemProps {
   isOpen: boolean;
@@ -38,6 +39,7 @@ const EditItem = ({ isOpen, onClose, article, selectOptions, storeID }: EditItem
   const queryClient = useQueryClient();
   const { user } = useAuth0();
   const { data: userMeta } = useGetUser(user?.sub);
+  const [tags, setTags] = useState<string[]>([...article.tags]);
   const { mutate: sendArticle } = useEditArticle({
     onSuccess: (updatedArticle: articlesInterface) => {
       console.log(updatedArticle);
@@ -63,7 +65,9 @@ const EditItem = ({ isOpen, onClose, article, selectOptions, storeID }: EditItem
       available: article.available,
       perPiece: article.perPiece,
       image: article.image,
+      tags: article.tags,
     });
+    setTags(article.tags);
   }, [article]);
 
   const {
@@ -88,9 +92,14 @@ const EditItem = ({ isOpen, onClose, article, selectOptions, storeID }: EditItem
       quantity: 0,
       storeID,
       perPiece: data.perPiece,
+      tags,
     };
     sendArticle({ userID: userMeta._id, ...dataForSend, slika: data.image[0] });
   };
+
+  const handleTagsChange = useCallback((event: SyntheticEvent, tags: string[]) => {
+    setTags(tags.length > 0 ? tags : []);
+  }, []);
 
   return (
     <Modal size='xl' isOpen={isOpen} onClose={onClose}>
@@ -174,6 +183,18 @@ const EditItem = ({ isOpen, onClose, article, selectOptions, storeID }: EditItem
                     <FormLabel htmlFor='perPiece' mt='4' ml='2'>
                       Na komad
                     </FormLabel>
+                    <FormErrorMessage>{error && error.message}</FormErrorMessage>
+                  </FormControl>
+                )}
+              />
+              <Controller
+                control={control}
+                name='tags'
+                defaultValue={true}
+                rules={{ required: 'Molimo definirajte cijenu proizvoda.' }}
+                render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+                  <FormControl isInvalid={!!error} id='dags' display='flex' alignItems='center'>
+                    <ChakraTagInput tags={tags} onTagsChange={handleTagsChange} wrapProps={{ direction: 'row', align: 'stretch' }} />
                     <FormErrorMessage>{error && error.message}</FormErrorMessage>
                   </FormControl>
                 )}

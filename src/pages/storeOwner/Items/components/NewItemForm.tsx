@@ -3,14 +3,17 @@ import { Box, Input, Text, Button, Flex, SimpleGrid, useToast, Spinner, FormCont
 import { Select } from 'chakra-react-select';
 import { useGetUser, useGetStore, useAddArticle } from '../../../../API/Queries';
 import { useForm, Controller } from 'react-hook-form';
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback, SyntheticEvent } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import ChakraTagInput from '../../../../components/ChakraTagInput';
 
 const NewItemForm = () => {
   const { user } = useAuth0();
   const queryClient = useQueryClient();
   const toast = useToast();
   const { data: userMeta, refetch: refetchUser } = useGetUser(user?.sub);
+  const [tags, setTags] = useState<string[]>([]);
+
   const { data: store, isLoading, refetch: refetchStore } = useGetStore(userMeta?._id);
   const { mutate: sendArticle } = useAddArticle({
     onSuccess: (data: any) => {
@@ -62,6 +65,10 @@ const NewItemForm = () => {
     reset,
   } = useForm();
 
+  const handleTagsChange = useCallback((event: SyntheticEvent, tags: string[]) => {
+    setTags(tags.length > 0 ? tags : []);
+  }, []);
+
   const onSubmit = (data: any) => {
     let formData = new FormData();
     formData.append('name', data.name);
@@ -75,6 +82,7 @@ const NewItemForm = () => {
       quantity: 0,
       storeID: store._id,
       perPiece: data.perPiece,
+      tags,
     };
 
     sendArticle({ id: userMeta._id, ...dataForSend, slika: data.image[0] });
@@ -141,6 +149,7 @@ const NewItemForm = () => {
               )}
             />
             <Input placeholder='Slika' accept='.jpg, .jpeg, .png' type='file' {...register('image')} />
+
             <Controller
               control={control}
               name='available'
@@ -155,6 +164,7 @@ const NewItemForm = () => {
                 </FormControl>
               )}
             />
+
             <Controller
               control={control}
               name='perPiece'
@@ -168,6 +178,18 @@ const NewItemForm = () => {
                   <FormLabel htmlFor='perPiece' mt='4' ml='2'>
                     Na komad
                   </FormLabel>
+                  <FormErrorMessage>{error && error.message}</FormErrorMessage>
+                </FormControl>
+              )}
+            />
+            <Controller
+              control={control}
+              name='tags'
+              defaultValue={true}
+              rules={{ required: 'Molimo definirajte cijenu proizvoda.' }}
+              render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+                <FormControl isInvalid={!!error} id='dags' display='flex' alignItems='center'>
+                  <ChakraTagInput tags={tags} onTagsChange={handleTagsChange} wrapProps={{ direction: 'row', align: 'stretch' }} />
                   <FormErrorMessage>{error && error.message}</FormErrorMessage>
                 </FormControl>
               )}
