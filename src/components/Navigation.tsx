@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Image, Flex, Button, Box, Avatar } from '@chakra-ui/react';
+import { Image, Flex, Button, Box, Avatar, Input } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
 import useOnClickOutside from '../hooks/useOnClickOutside';
 import { FiLogOut } from 'react-icons/fi';

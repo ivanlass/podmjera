@@ -15,7 +15,7 @@ const StoreHero = () => {
 
   if (!specificStore) return null;
   return (
-    <Accordion defaultIndex={defaultIndex} allowMultiple bg='neutral.10' boxShadow='md' borderRadius='xl' mx='4' mt='20' overflow='hidden'>
+    <Accordion defaultIndex={defaultIndex} allowMultiple bg='neutral.10' boxShadow='md' borderRadius='xl' mx='4' mb='8' overflow='hidden'>
       <AccordionItem border='none' outline='none'>
         <Text color='text.primary'>
           <AccordionButton p='4'>

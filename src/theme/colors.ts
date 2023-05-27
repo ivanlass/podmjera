@@ -117,8 +117,8 @@ export default {
   ...colors,
   primary: colors.yellow,
   text: {
-    primary: colors.neutral[800],
-    secondary: colors.neutral[100],
+    primary: colors.neutral[500],
+    secondary: colors.neutral[300],
   },
   heading: {
     secondary: colors.neutral[900],

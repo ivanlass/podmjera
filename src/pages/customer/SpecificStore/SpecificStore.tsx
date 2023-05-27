@@ -5,17 +5,20 @@ import InfiniteProducts from './components/InfiniteProducts';
 import ProductFilters from './components/ProductFilters';
 import { useState } from 'react';
 import StoreHero from './components/StoreHero';
+import SidebarFilter from './components/SidebarFilter';
 
 const SpecificStore = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('Sve');
 
   return (
     <BasketProvider>
-      <Box mt='20'>
-        <StoreHero />
+      <Box mt='56px'>
         <Basket />
-        <ProductFilters selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
-        <InfiniteProducts />
+        <SidebarFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}>
+          <ProductFilters />
+          <StoreHero />
+          <InfiniteProducts />
+        </SidebarFilter>
       </Box>
     </BasketProvider>
   );
