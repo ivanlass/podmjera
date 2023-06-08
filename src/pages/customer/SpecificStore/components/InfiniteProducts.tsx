@@ -14,7 +14,7 @@ function InfiniteProducts() {
   const specificStore = queryClient.getQueryData<storeInterface>(['specificStore']);
 
   const fetchArticles = async ({ pageParam = 0 }) => {
-    const res = await axios.get(`/api/article/pagination/${pageParam}/store=${specificStore?._id}`);
+    const res = await axios.get(`/api/article/pagination/${pageParam}/store=${specificStore?._id}/${undefined}`);
     return res.data;
   };
 
