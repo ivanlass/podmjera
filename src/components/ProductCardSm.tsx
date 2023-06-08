@@ -15,7 +15,15 @@ const ProductCardSm: FC<IProps> = ({ product }: IProps) => {
 
   return (
     <Box display='flex' py='4'>
-      <Image src={product.image} fallback={<Icon as={CiApple} boxSize={{ base: '2rem', md: '4rem' }} color='primary.500' height={{ base: '20px', md: '50px' }} alignSelf='center' />} alt='mlijeko' borderRadius='xl' height='60px' objectFit='contain' bgPosition='center' />
+      <Image
+        src={product.image}
+        fallback={<Icon as={CiApple} boxSize={{ base: '2rem', md: '4rem' }} color='primary.500' height={{ base: '20px', md: '50px' }} alignSelf='center' />}
+        alt='mlijeko'
+        borderRadius='xl'
+        height='60px'
+        objectFit='contain'
+        bgPosition='center'
+      />
       <Stack justifyContent='space-between' ms='4'>
         <Text color='primary.700' fontSize={{ base: 'md', md: 'xl' }}>
           {product.price} KM
