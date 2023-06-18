@@ -2,25 +2,27 @@ import React from 'react';
 import axios from 'axios';
 import { useInView } from 'react-intersection-observer';
 import { SimpleGrid, Text } from '@chakra-ui/react';
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
-import { storeInterface } from '../../../../interfaces/store.interface';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import ProductCard from '../../../../components/ProductCard';
 import { articlesInterface } from '../../../../interfaces/articles.interface';
 import PartialSpinner from '../../../../components/PartialSpinner';
+import { useGetSpecificStore } from '../../../../API/Queries';
+import { useParams } from 'react-router-dom';
 
 function InfiniteProducts() {
-  const queryClient = useQueryClient();
   const { ref, inView } = useInView();
-  const specificStore = queryClient.getQueryData<storeInterface>(['specificStore']);
+  let { storeID } = useParams();
+  const { data: specificStore } = useGetSpecificStore(storeID);
 
   const fetchArticles = async ({ pageParam = 0 }) => {
-    const res = await axios.get(`/api/article/pagination/${pageParam}/store=${specificStore?._id}/${undefined}`);
+    const res = await axios.get(`/api/article/pagination/${pageParam}/store=${specificStore?._id}`);
     return res.data;
   };
 
   const { status, data, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(['infiniteProducts', specificStore?._id], fetchArticles, {
     getNextPageParam: (lastPage) => lastPage.nextId ?? undefined,
     getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined,
+    enabled: !!specificStore?._id,
   });
 
   React.useEffect(() => {

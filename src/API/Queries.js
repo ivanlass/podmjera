@@ -1,6 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_SERVER_URL;
 
@@ -201,7 +201,6 @@ export const checkIfStoreHasItems = async (storeId) => {
   try {
     const response = await axios.get(`/api/article/check-store-items/${storeId}`);
     const items = response.data.message;
-    console.log(items);
     return items;
   } catch (error) {
     console.error(error);
@@ -211,7 +210,6 @@ export const checkIfStoreHasItems = async (storeId) => {
 
 export const useSearchArticles = (options) => {
   async function searchArticles({ storeID, searchQuery }) {
-    console.log(searchQuery);
     const response = await axios.get(`/api/article/search/${searchQuery}/${storeID}`);
     return response.data;
   }
@@ -306,6 +304,19 @@ export const useGetSpecificStore = (storeID, options) => {
   }
 
   return useQuery(['specificStore'], () => getSpecificStore(), {
+    ...options,
+  });
+};
+
+
+// get searched products. 
+export const useGetSearchedProducts = (searchQuery, storeID, options) => {
+  async function getSearchedProducts() {
+    const response = await axios.get(`/api/article/search/${searchQuery}/${storeID}`);
+    return response.data;
+  }
+
+  return useQuery(['searchedArticles'], () => getSearchedProducts(), {
     ...options,
   });
 };
