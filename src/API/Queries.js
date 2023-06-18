@@ -308,8 +308,7 @@ export const useGetSpecificStore = (storeID, options) => {
   });
 };
 
-
-// get searched products. 
+// get searched products.
 export const useGetSearchedProducts = (searchQuery, storeID, options) => {
   async function getSearchedProducts() {
     const response = await axios.get(`/api/article/search/${searchQuery}/${storeID}`);

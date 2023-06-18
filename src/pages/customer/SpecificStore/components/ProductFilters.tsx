@@ -14,7 +14,7 @@ interface ProductFiltersProps {
 const ProductFilters = ({ setMode, setSearchQuery, searchQuery, handleSearchArticles }: ProductFiltersProps) => {
   let { storeID } = useParams();
   const queryClient = useQueryClient();
-  const { data, refetch: searchArticles } = useGetSearchedProducts(searchQuery, storeID,{
+  const { data, refetch: searchArticles } = useGetSearchedProducts(searchQuery, storeID, {
     enabled: false,
   });
 
