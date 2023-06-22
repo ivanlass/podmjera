@@ -1,17 +1,19 @@
 import { Box, Grid, GridItem, Input, Text, Flex } from '@chakra-ui/react';
 import ChooseLocation from './components/ChooseLocation';
+import { useState } from 'react';
 
 const BillingProcedure = () => {
+  const [selectedAddress, setSelectedAddress] = useState<string>('');
   return (
-    <Box>
+    <Box mt={20}>
       <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={4} p={2} maxW='1800px' mx='auto'>
-        <GridItem w='100%' p={2} bg='neutral.10' borderRadius='xl'>
+        <GridItem w='100%' p={4} bg='neutral.10' borderRadius='xl'>
           <Text mt='4' mb='2' fontSize='2xl' fontWeight='bold'>
             Broj telefona
           </Text>
-          <Input placeholder='Broj telefona' width='50%' />
+          <Input placeholder='Broj telefona' width='50%' type='number' />
 
-          <ChooseLocation />
+          <ChooseLocation selectedAddress={selectedAddress} setSelectedAddress={setSelectedAddress} />
 
           <Text mt='8' mb='2' fontSize='2xl' fontWeight='bold'>
             Odaberite vrijeme dostave

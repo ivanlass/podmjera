@@ -3,5 +3,5 @@
   "jsxSingleQuote": true,
   "tabWidth": 2,
   "trailingComma": "es5",
-  "printWidth": 220
+  "printWidth": 180
 }

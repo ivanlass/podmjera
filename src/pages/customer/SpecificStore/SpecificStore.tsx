@@ -1,18 +1,20 @@
+import React, { useEffect } from 'react';
 import { Box, SimpleGrid } from '@chakra-ui/react';
 import Basket from '../../../components/Basket';
 import { BasketProvider } from '../../../store/Basket.Context';
 import InfiniteProducts from './components/InfiniteProducts';
 import ProductFilters from './components/ProductFilters';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import StoreHero from './components/StoreHero';
 import SidebarFilter from './components/SidebarFilter';
 import { Mode } from '../../../interfaces/general.interface';
-import { useGetSearchedProducts } from '../../../API/Queries';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useGetSearchedProducts, useGetSpecificStore } from '../../../API/Queries';
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { articlesInterface } from '../../../interfaces/articles.interface';
 import { useParams } from 'react-router-dom';
-import React from 'react';
 import ProductCard from '../../../components/ProductCard';
+import axios from 'axios';
+import { useInView } from 'react-intersection-observer';
 
 const SpecificStore = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('Sve');
@@ -20,28 +22,74 @@ const SpecificStore = () => {
   const queryClient = useQueryClient();
   let { storeID } = useParams();
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const { ref, inView } = useInView();
+  const { data: specificStore } = useGetSpecificStore(storeID);
   const { data: searchedArticles, refetch: searchArticles } = useGetSearchedProducts(searchQuery, storeID, { enabled: false });
 
-  const handleSearchArticles = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-    if (e.target.value === '') {
+  // handle search articles
+  useEffect(() => {
+    if (searchQuery === '') {
       queryClient.invalidateQueries(['searchedArticles']);
       setMode(Mode.Default);
     }
-    if (e.target.value.length > 2) {
+
+    if (searchQuery.length > 1) {
+      console.log(searchQuery);
+      console.log('query', searchQuery);
       searchArticles();
-      setMode(Mode.Search);
+      if (mode !== Mode.Search) {
+        setMode(Mode.Search);
+      }
     }
+  }, [searchQuery]);
+
+  // Mode.Default: list all products from specific store (default mode) in infinite scroll
+  const fetchArticles = async ({ pageParam = 0, category }: { pageParam: number; category: string }) => {
+    const res = await axios.get(`/api/article/pagination/${pageParam}/store=${specificStore?._id}/category=${category}`);
+    return res.data;
   };
+
+  const { status, data, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(
+    ['infiniteProducts', specificStore?._id, selectedCategory], // Include selectedCategory as a dependency
+    ({ pageParam }) => fetchArticles({ pageParam, category: selectedCategory }), // Pass the selectedCategory to fetchArticles
+    {
+      getNextPageParam: (lastPage) => lastPage.nextId ?? undefined,
+      getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined,
+      enabled: !!specificStore?._id,
+    }
+  );
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView]);
+
+  useEffect(() => {
+    queryClient.invalidateQueries(['infiniteProducts', specificStore?._id, selectedCategory]);
+    if (!inView && (mode === Mode.Default || mode === Mode.Category)) {
+      fetchNextPage({ pageParam: 0 }); // Reset the page parameter to 1 when changing category
+    }
+  }, [mode]);
 
   return (
     <BasketProvider>
       <Box mt='56px'>
         <Basket />
-        <SidebarFilter selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}>
-          <ProductFilters setMode={setMode} searchQuery={searchQuery} setSearchQuery={setSearchQuery} handleSearchArticles={handleSearchArticles} />
+        <SidebarFilter setMode={setMode} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}>
+          <ProductFilters searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           <StoreHero />
-          {mode === Mode.Default && <InfiniteProducts />}
+          {(mode === Mode.Default || mode === Mode.Category) && (
+            <InfiniteProducts
+              innerRef={ref}
+              status={status}
+              data={data}
+              isFetching={isFetching}
+              isFetchingNextPage={isFetchingNextPage}
+              hasNextPage={hasNextPage}
+              fetchNextPage={fetchNextPage}
+            />
+          )}
           {mode === Mode.Search && (
             <SimpleGrid mt={2} px='4' columns={{ base: 2, md: 3, lg: 4, '2xl': 5 }} spacing={{ base: 2, md: 4 }}>
               {searchedArticles &&
@@ -52,7 +100,6 @@ const SpecificStore = () => {
                 ))}
             </SimpleGrid>
           )}
-          {mode === Mode.Category && <p>ovde ide kategorije</p>}
         </SidebarFilter>
       </Box>
     </BasketProvider>

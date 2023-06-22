@@ -3,21 +3,23 @@ import { IconButton, Box, CloseButton, Flex, useColorModeValue, Drawer, DrawerCo
 import { FiMenu } from 'react-icons/fi';
 import { useGetSpecificStore } from '../../../../API/Queries';
 import { useParams } from 'react-router-dom';
+import { Mode } from '../../../../interfaces/general.interface';
 
 interface Props {
   children: ReactNode;
   selectedCategory: string;
   setSelectedCategory: (category: string) => void;
+  setMode: (mode: Mode) => void;
 }
 
-export default function SimpleSidebar({ selectedCategory, setSelectedCategory, children }: Props) {
+export default function SimpleSidebar({ selectedCategory, setSelectedCategory, setMode, children }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box minH='100vh' bg={useColorModeValue('gray.100', 'gray.900')}>
-      <SidebarContent selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
+      <SidebarContent setMode={setMode} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
       <Drawer autoFocus={false} isOpen={isOpen} placement='left' onClose={onClose} returnFocusOnClose={false} onOverlayClick={onClose} size='full'>
         <DrawerContent>
-          <SidebarContent onClose={onClose} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
+          <SidebarContent setMode={setMode} onClose={onClose} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
@@ -33,9 +35,10 @@ interface SidebarProps extends BoxProps {
   onClose: () => void;
   selectedCategory: string;
   setSelectedCategory: (category: string) => void;
+  setMode: (mode: Mode) => void;
 }
 
-const SidebarContent = ({ selectedCategory, setSelectedCategory, onClose, ...rest }: SidebarProps) => {
+const SidebarContent = ({ selectedCategory, setSelectedCategory, onClose, setMode, ...rest }: SidebarProps) => {
   let { storeID } = useParams();
   const { data: specificStore } = useGetSpecificStore(storeID, { enabled: !!storeID });
   return (
@@ -52,7 +55,10 @@ const SidebarContent = ({ selectedCategory, setSelectedCategory, onClose, ...res
         background={selectedCategory === 'Sve' ? 'primary.500' : 'neutral.10'}
         borderRadius='full'
         boxShadow={selectedCategory === 'Sve' ? 'lg' : ''}
-        onClick={() => setSelectedCategory('Sve')}
+        onClick={() => {
+          setSelectedCategory('Sve');
+          setMode(Mode.Default);
+        }}
         m='2'
         px='4'
         py='2'
@@ -70,7 +76,10 @@ const SidebarContent = ({ selectedCategory, setSelectedCategory, onClose, ...res
             borderRadius='full'
             boxShadow={selectedCategory === category ? 'lg' : ''}
             key={category}
-            onClick={() => setSelectedCategory(category)}
+            onClick={() => {
+              setSelectedCategory(category);
+              setMode(Mode.Category);
+            }}
             m='2'
             my={selectedCategory === category ? '6' : '2'}
             px='4'
