@@ -320,17 +320,20 @@ export const useGetSearchedProducts = (searchQuery, storeID, options) => {
   });
 };
 
-
 export const useSaveAddress = (options) => {
   const { getAccessTokenSilently } = useAuth0();
 
   async function saveAddress(payload) {
     const accessToken = await getAccessTokenSilently();
-    const response = await axios.post(`/api/user/saveaddress/`, {...payload}, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await axios.post(
+      `/api/user/saveaddress/`,
+      { ...payload },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
     return response.data;
   }
   return useMutation(saveAddress, { ...options });

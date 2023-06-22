@@ -25,7 +25,10 @@ const OrdersList = () => {
             <Tr key={item} _hover={{ bg: 'neutral.20' }}>
               <Td>
                 <Flex alignItems='center'>
-                  <Avatar me={4} src='https://img.freepik.com/premium-psd/3d-illustration-man-cartoon-close-up-portrait-standing-man-with-sunglasses-mustache-pink-background-3d-avatar-ui-ux_1020-5093.jpg?w=2000' />
+                  <Avatar
+                    me={4}
+                    src='https://img.freepik.com/premium-psd/3d-illustration-man-cartoon-close-up-portrait-standing-man-with-sunglasses-mustache-pink-background-3d-avatar-ui-ux_1020-5093.jpg?w=2000'
+                  />
                   Marko Markovic
                 </Flex>
               </Td>

@@ -27,7 +27,20 @@ export type ChakraTagInputProps = InputProps & {
 };
 
 export default forwardRef(function ChakraTagInput(
-  { tags = [], onTagsChange, onTagAdd, onTagRemove, vertical = false, addKeys = ['Enter'], wrapProps, wrapItemProps, tagProps, tagLabelProps, tagCloseButtonProps, ...props }: ChakraTagInputProps,
+  {
+    tags = [],
+    onTagsChange,
+    onTagAdd,
+    onTagRemove,
+    vertical = false,
+    addKeys = ['Enter'],
+    wrapProps,
+    wrapItemProps,
+    tagProps,
+    tagLabelProps,
+    tagCloseButtonProps,
+    ...props
+  }: ChakraTagInputProps,
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const addTag = useCallback(

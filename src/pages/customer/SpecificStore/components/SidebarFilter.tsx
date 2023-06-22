@@ -16,7 +16,13 @@ export default function SimpleSidebar({ selectedCategory, setSelectedCategory, s
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box minH='100vh' bg={useColorModeValue('gray.100', 'gray.900')}>
-      <SidebarContent setMode={setMode} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
+      <SidebarContent
+        setMode={setMode}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        onClose={() => onClose}
+        display={{ base: 'none', md: 'block' }}
+      />
       <Drawer autoFocus={false} isOpen={isOpen} placement='left' onClose={onClose} returnFocusOnClose={false} onOverlayClick={onClose} size='full'>
         <DrawerContent>
           <SidebarContent setMode={setMode} onClose={onClose} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />
@@ -42,7 +48,16 @@ const SidebarContent = ({ selectedCategory, setSelectedCategory, onClose, setMod
   let { storeID } = useParams();
   const { data: specificStore } = useGetSpecificStore(storeID, { enabled: !!storeID });
   return (
-    <Box overflow='auto' bg={useColorModeValue('white', 'gray.900')} borderRight='1px' borderRightColor={useColorModeValue('gray.200', 'gray.700')} w={{ base: 'full', md: 60 }} pos='fixed' h='full' {...rest}>
+    <Box
+      overflow='auto'
+      bg={useColorModeValue('white', 'gray.900')}
+      borderRight='1px'
+      borderRightColor={useColorModeValue('gray.200', 'gray.700')}
+      w={{ base: 'full', md: 60 }}
+      pos='fixed'
+      h='full'
+      {...rest}
+    >
       <Flex alignItems='center' p='4' justifyContent='flex-end'>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
@@ -99,5 +114,18 @@ interface MobileProps extends FlexProps {
   onOpen: () => void;
 }
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
-  return <IconButton display={{ base: 'flex', md: 'none' }} position='fixed' top='2' left='2' zIndex={100} variant='ghost' onClick={onOpen} aria-label='open menu' color='text.primary' icon={<FiMenu size='30px' />} />;
+  return (
+    <IconButton
+      display={{ base: 'flex', md: 'none' }}
+      position='fixed'
+      top='2'
+      left='2'
+      zIndex={100}
+      variant='ghost'
+      onClick={onOpen}
+      aria-label='open menu'
+      color='text.primary'
+      icon={<FiMenu size='30px' />}
+    />
+  );
 };

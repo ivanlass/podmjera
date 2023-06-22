@@ -25,7 +25,18 @@ const StorePickerCard = ({ store }: StoreCard) => {
   };
 
   return (
-    <Box key={store._id} onClick={() => goToStore(store)} p='4' cursor={'pointer'} w='max-content' textAlign='center' bg='neutral.10' boxShadow='md' borderRadius='xl' _hover={{ boxShadow: '2xl' }}>
+    <Box
+      key={store._id}
+      onClick={() => goToStore(store)}
+      p='4'
+      cursor={'pointer'}
+      w='max-content'
+      textAlign='center'
+      bg='neutral.10'
+      boxShadow='md'
+      borderRadius='xl'
+      _hover={{ boxShadow: '2xl' }}
+    >
       <Image src={store.image} alt={store.name} fallback={<Icon as={BiStore} boxSize='8em' />} />
       <Text fontSize='3xl'>{store.name}</Text>
 
@@ -37,7 +48,11 @@ const StorePickerCard = ({ store }: StoreCard) => {
           {store[currentDayKeyOpen]} - {store[currentDayKeyClose]}
         </Text>
       </Box>
-      {isOpen(store[currentDayKeyOpen], store[currentDayKeyClose]) && !isTodayDayOff(store.nonWorkingDay) ? <Badge colorScheme='green'>Otvoreno</Badge> : <Badge colorScheme='red'>Zatvoreno</Badge>}
+      {isOpen(store[currentDayKeyOpen], store[currentDayKeyClose]) && !isTodayDayOff(store.nonWorkingDay) ? (
+        <Badge colorScheme='green'>Otvoreno</Badge>
+      ) : (
+        <Badge colorScheme='red'>Zatvoreno</Badge>
+      )}
     </Box>
   );
 };

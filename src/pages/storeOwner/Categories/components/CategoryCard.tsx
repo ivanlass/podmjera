@@ -44,7 +44,14 @@ const CategoryCard = ({ id, name, storeID }: CategoryCardProps) => {
         <Text textTransform='capitalize'>{name}</Text>
       </Box>
       <Box>
-        <IconButton disabled={isDeletingCategory} variant='ghost' width='fit-content' aria-label='Delete store' size='sm' icon={<DeleteIcon onClick={deleteCategoryHandler} fontSize='xl' />} />
+        <IconButton
+          disabled={isDeletingCategory}
+          variant='ghost'
+          width='fit-content'
+          aria-label='Delete store'
+          size='sm'
+          icon={<DeleteIcon onClick={deleteCategoryHandler} fontSize='xl' />}
+        />
       </Box>
     </Box>
   );

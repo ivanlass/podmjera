@@ -38,7 +38,15 @@ const ProductCardSm: FC<IProps> = ({ product }: IProps) => {
           {(product.price * product.quantity).toFixed(2)} KM
         </Text>
       </Flex>
-      <IconButton variant='outline' size='xs' borderRadius='full' ms='4' icon={<AiOutlineClose />} aria-label='delete' onClick={() => basketContext?.removeFromBasket(product._id)} />
+      <IconButton
+        variant='outline'
+        size='xs'
+        borderRadius='full'
+        ms='4'
+        icon={<AiOutlineClose />}
+        aria-label='delete'
+        onClick={() => basketContext?.removeFromBasket(product._id)}
+      />
     </Box>
   );
 };
