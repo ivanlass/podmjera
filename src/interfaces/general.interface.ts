@@ -4,7 +4,6 @@ export enum Mode {
   Category = 'category', //when user click on category it will be category mode and display category result
 }
 
-
 export enum TimeArrivalOptions {
   Odmah = 'Odmah',
   PoslijePodne = 'Poslije podne',
