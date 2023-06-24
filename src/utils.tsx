@@ -85,3 +85,5 @@ export function isTodayDayOff(nonWorkingDay: string) {
   const today = format(new Date(), 'yyyy-MM-dd');
   return nonWorkingDay.includes(today);
 }
+
+export const daysOrder = ['ponedjeljak', 'utorak', 'srijeda', 'četvrtak', 'petak', 'subota', 'nedjelja'];

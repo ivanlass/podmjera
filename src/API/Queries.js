@@ -338,3 +338,22 @@ export const useSaveAddress = (options) => {
   }
   return useMutation(saveAddress, { ...options });
 };
+
+export const useSavePhoneNumber = (options) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  async function useSavePhoneNumber(payload) {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.post(
+      `/api/user/savephonenumber/`,
+      { ...payload },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  }
+  return useMutation(useSavePhoneNumber, { ...options });
+};

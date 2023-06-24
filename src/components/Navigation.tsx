@@ -51,7 +51,7 @@ const Navigation = () => {
     <Flex as='nav' justifyContent='flex-end' px='4' py='2' bg='primary.500' w='100%' position='fixed' top='0' zIndex='docked' boxShadow='md'>
       <Flex alignItems='center' gap='2'>
         {user ? (
-          <Avatar onClick={() => setIsDropdownOpen((prev) => !prev)} h='40px' w='40px' src={user?.picture} name='user' cursor='pointer' />
+          <Avatar onClick={() => setIsDropdownOpen((prev) => !prev)} h='40px' w='40px' src={user?.picture} cursor='pointer' />
         ) : (
           <Button onClick={login} variant='none'>
             Login

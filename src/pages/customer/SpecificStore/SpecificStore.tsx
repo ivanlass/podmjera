@@ -34,8 +34,6 @@ const SpecificStore = () => {
     }
 
     if (searchQuery.length > 1) {
-      console.log(searchQuery);
-      console.log('query', searchQuery);
       searchArticles();
       if (mode !== Mode.Search) {
         setMode(Mode.Search);

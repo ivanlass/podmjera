@@ -1,7 +1,7 @@
 import { useBreakpointValue, Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex, Icon, Image, Text } from '@chakra-ui/react';
 import { BiStore } from 'react-icons/bi';
 import { useParams } from 'react-router-dom';
-import { currentDayInCroatian, currentDayKeyClose, currentDayKeyOpen, englishToCroatian, isFutureDate, isOpen, isTodayDayOff } from '../../../../utils';
+import { currentDayInCroatian, currentDayKeyClose, currentDayKeyOpen, englishToCroatian, isFutureDate, isOpen, isTodayDayOff, daysOrder } from '../../../../utils';
 import { useGetSpecificStore } from '../../../../API/Queries';
 import { format, isTomorrow } from 'date-fns';
 

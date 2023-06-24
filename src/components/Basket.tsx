@@ -103,7 +103,7 @@ function Basket() {
                     navigate(
                       createPath({
                         path: ROUTE.NAPLATA,
-                        params: { store: storeID! },
+                        params: { storeID: storeID! },
                       })
                     )
                   }

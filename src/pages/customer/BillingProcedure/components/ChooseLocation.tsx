@@ -19,7 +19,6 @@ const ChooseLocation = ({ selectedAddress, setSelectedAddress }: Props) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { mutate: saveAddress } = useSaveAddress({
     onSuccess: (data: any) => {
-      console.log(data);
       setIsOpenForm(false);
       toast({
         title: 'Adresa spremljena',
@@ -40,7 +39,7 @@ const ChooseLocation = ({ selectedAddress, setSelectedAddress }: Props) => {
 
   return (
     <Box>
-      <Flex justifyContent='space-between' alignItems='center' mt='8' mb='2'>
+      <Flex justifyContent='space-between' alignItems='center' mb='2'>
         <Text fontSize='2xl' fontWeight='bold'>
           Odaberite lokaciju
         </Text>
@@ -61,13 +60,13 @@ const ChooseLocation = ({ selectedAddress, setSelectedAddress }: Props) => {
           </Button>
         </Box>
       ) : (
-        <Flex gap='8' rowGap={8} flexWrap='wrap'>
+        <Flex gap='8' rowGap={8} flexWrap='wrap' flexDir={{ base: 'column', md: 'row' }}>
           {userMeta &&
             userMeta.adresses &&
             userMeta?.adresses.map((address: string) => {
               return (
                 <Box
-                  width='calc(50% - 16px)'
+                  width={{ base: '100%', md: 'calc(50% - 16px)' }}
                   key={address}
                   height='50px'
                   display='flex'
@@ -89,49 +88,6 @@ const ChooseLocation = ({ selectedAddress, setSelectedAddress }: Props) => {
               );
             })}
         </Flex>
-        // <Flex gap='2'>
-        //   <Box
-        //     width='100%'
-        //     height='100px'
-        //     display='flex'
-        //     justifyContent='center'
-        //     alignItems='center'
-        //     flexDir='column'
-        //     p={2}
-        //     borderRadius='xl'
-        //     border='1px solid'
-        //     borderColor='neutral.50'
-        //     cursor='pointer'
-        //     _hover={{ borderColor: 'primary.400', bg: 'transparent' }}
-        //     bg='neutral.20'
-        //   >
-        //     <Text fontSize='xl'>Titova bb</Text>
-        //     <Text color='grey' fontSize='sm' cursor='pointer'>
-        //       Odzak
-        //     </Text>
-        //   </Box>
-        //   <Box
-        //     width='100%'
-        //     height='100px'
-        //     display='flex'
-        //     justifyContent='center'
-        //     alignItems='center'
-        //     flexDir='column'
-        //     p={2}
-        //     borderRadius='xl'
-        //     border='1px solid'
-        //     borderColor='primary.400'
-        //     cursor='pointer'
-        //     _hover={{ borderColor: 'primary.400', bg: 'transparent' }}
-        //   >
-        //     <Text fontWeight='bold' fontSize='xl'>
-        //       Titova bb
-        //     </Text>
-        //     <Text color='grey' fontSize='sm' cursor='pointer'>
-        //       Odzak
-        //     </Text>
-        //   </Box>
-        // </Flex>
       )}
     </Box>
   );

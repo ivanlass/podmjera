@@ -3,3 +3,16 @@ export enum Mode {
   Search = 'search', //when user type something in search bar it will be search mode and display search result
   Category = 'category', //when user click on category it will be category mode and display category result
 }
+
+
+export enum TimeArrivalOptions {
+  Odmah = 'Odmah',
+  PoslijePodne = 'Poslije podne',
+  Predvecer = 'Predvečer',
+}
+
+export enum TimeArrivalOptionsValues {
+  Odmah = 'U roku od 90 minuta',
+  PoslijePodne = '14:00 - 16:00',
+  Predvecer = '17:00 - 20:00',
+}

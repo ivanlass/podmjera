@@ -36,6 +36,8 @@ export const BasketProvider = ({ children }: Props) => {
       const newBasket = basket?.map((item: articlesInterface) => {
         if (item._id === product._id) {
           const qty = (item.quantity + 0.1).toFixed(3);
+          //TODO save _id and quantity of product in localstorage but quantity based on product.perPiece
+
           return {
             ...item,
             quantity: product.perPiece ? item.quantity + 1 : Number(qty),
@@ -46,6 +48,7 @@ export const BasketProvider = ({ children }: Props) => {
       setBasket(newBasket);
     } else {
       const qty = (0.1).toFixed(3);
+
       setBasket((prev: articlesInterface[]) => [...prev, { ...product, quantity: product.perPiece ? 1 : Number(qty) }]);
     }
   };
