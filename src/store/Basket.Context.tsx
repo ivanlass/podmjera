@@ -11,6 +11,7 @@ interface Context {
   increaseQuantity: (product: articlesInterface) => void;
   productQuantity: (id: string) => number;
   removeFromBasket: (id: string) => void;
+  setBasketFromLocalStorage: (basket: articlesInterface[]) => void;
   totalPrice: number;
 }
 
@@ -21,11 +22,29 @@ export const BasketProvider = ({ children }: Props) => {
 
   const decreaseQuantity = (product: articlesInterface) => {
     const productInBasket = basket.find((item) => item._id === product._id);
+
     if (productInBasket) {
       if (product.perPiece ? productInBasket.quantity > 1 : productInBasket.quantity > 0.1) {
-        setBasket(basket.map((item) => (item._id === product._id ? { ...item, quantity: product.perPiece ? item.quantity - 1 : Number((item.quantity - 0.1).toFixed(3)) } : item)));
+        const newBasket = basket.map((item) =>
+          item._id === product._id
+            ? {
+                ...item,
+                quantity: product.perPiece ? item.quantity - 1 : Number((item.quantity - 0.1).toFixed(3)),
+              }
+            : item
+        );
+        setBasket(newBasket);
+
+        // Store updated basket in localStorage
+        localStorage.setItem('basket', JSON.stringify(newBasket));
+        localStorage.setItem('basketTimestamp', new Date().getTime().toString());
       } else {
-        setBasket(basket.filter((item) => item._id !== product._id));
+        const updatedBasket = basket.filter((item) => item._id !== product._id);
+        setBasket(updatedBasket);
+
+        // Store updated basket in localStorage
+        localStorage.setItem('basket', JSON.stringify(updatedBasket));
+        localStorage.setItem('basketTimestamp', new Date().getTime().toString());
       }
     }
   };
@@ -36,8 +55,6 @@ export const BasketProvider = ({ children }: Props) => {
       const newBasket = basket?.map((item: articlesInterface) => {
         if (item._id === product._id) {
           const qty = (item.quantity + 0.1).toFixed(3);
-          //TODO save _id and quantity of product in localstorage but quantity based on product.perPiece
-
           return {
             ...item,
             quantity: product.perPiece ? item.quantity + 1 : Number(qty),
@@ -46,10 +63,14 @@ export const BasketProvider = ({ children }: Props) => {
         return item;
       });
       setBasket(newBasket);
+      localStorage.setItem('basket', JSON.stringify(newBasket));
+      localStorage.setItem('basketTimestamp', new Date().getTime().toString());
     } else {
       const qty = (0.1).toFixed(3);
-
-      setBasket((prev: articlesInterface[]) => [...prev, { ...product, quantity: product.perPiece ? 1 : Number(qty) }]);
+      const updatedBasket = [...basket, { ...product, quantity: product.perPiece ? 1 : Number(qty) }];
+      setBasket(updatedBasket);
+      localStorage.setItem('basket', JSON.stringify(updatedBasket));
+      localStorage.setItem('basketTimestamp', new Date().getTime().toString());
     }
   };
 
@@ -62,8 +83,15 @@ export const BasketProvider = ({ children }: Props) => {
     }
   };
 
+  const setBasketFromLocalStorage = (products: articlesInterface[]) => {
+    setBasket(products);
+  };
+
   const removeFromBasket = (id: string) => {
-    setBasket(basket.filter((item) => item._id !== id));
+    const updatedBasket = basket.filter((item) => item._id !== id);
+    setBasket(updatedBasket);
+    localStorage.setItem('basket', JSON.stringify(updatedBasket));
+    localStorage.setItem('basketTimestamp', new Date().getTime().toString());
   };
 
   const totalPrice = basket.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -76,6 +104,7 @@ export const BasketProvider = ({ children }: Props) => {
         increaseQuantity,
         productQuantity,
         removeFromBasket,
+        setBasketFromLocalStorage,
         totalPrice,
       }}
     >

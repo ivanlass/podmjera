@@ -357,3 +357,24 @@ export const useSavePhoneNumber = (options) => {
   }
   return useMutation(useSavePhoneNumber, { ...options });
 };
+
+
+
+export const useMakeOrder = (options) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  async function createOrder(payload) {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.post(
+      `/api/orders/createorder/`,
+      { ...payload },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  }
+  return useMutation(createOrder, { ...options });
+};

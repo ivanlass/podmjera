@@ -1,5 +1,5 @@
 import { useDisclosure, Button, Drawer, DrawerOverlay, DrawerContent, DrawerCloseButton, Text, DrawerHeader, DrawerBody, DrawerFooter, Box, Flex } from '@chakra-ui/react';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BsBasket } from 'react-icons/bs';
 import { BasketContext } from '../store/Basket.Context';
 import ProductCardSm from './ProductCardSm';
@@ -17,10 +17,38 @@ function Basket() {
   const { data: specificStore }: { data?: storeInterface } = useGetSpecificStore(storeID);
   const { user, loginWithPopup } = useAuth0();
 
-  console.log(storeID);
   const login = async () => {
     loginWithPopup();
   };
+
+  useEffect(() => {
+    // get basket from localStorage and basketTimestamp, if basketTimestamp is older than 36 hours, clear basket
+    const basket = JSON.parse(localStorage.getItem('basket') || '[]');
+    const basketTimestamp = localStorage.getItem('basketTimestamp');
+    if (basketTimestamp) {
+      const basketTimestampDate = new Date(Number(basketTimestamp));
+      const now = new Date();
+      const diff = now.getTime() - basketTimestampDate.getTime();
+      const hours = Math.floor(diff / 1000 / 60 / 60);
+      if (hours > 36) {
+        localStorage.removeItem('basket');
+        localStorage.removeItem('basketTimestamp');
+      } else {
+        if (basket.length > 0) {
+          // loop through basket and check if every item storeID is the same as the current storeID
+          // if not, clear basket
+          basket.forEach((item: any) => {
+            if (item.storeID !== storeID) {
+              localStorage.removeItem('basket');
+              localStorage.removeItem('basketTimestamp');
+            }
+          });
+          const newBasket = JSON.parse(localStorage.getItem('basket') || '[]');
+          basketContext?.setBasketFromLocalStorage(newBasket);
+        }
+      }
+    }
+  }, []);
 
   return (
     <>
