@@ -358,8 +358,6 @@ export const useSavePhoneNumber = (options) => {
   return useMutation(useSavePhoneNumber, { ...options });
 };
 
-
-
 export const useMakeOrder = (options) => {
   const { getAccessTokenSilently } = useAuth0();
 
