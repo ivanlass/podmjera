@@ -112,14 +112,29 @@ function Basket() {
             {specificStore?.deliveryFee && (
               <Flex justifyContent='space-between' mt='4' mb='4'>
                 <Text>Cijena dostave</Text>
-                <Text fontWeight='bold'>{specificStore?.deliveryFee?.toFixed(2)} KM</Text>
+                <Text fontWeight='bold'>{Number(basketContext?.totalPrice) > Number(specificStore?.freeDelivery) ? 0 : specificStore?.deliveryFee?.toFixed(2)} KM</Text>
               </Flex>
             )}
             {basketContext && basketContext?.totalPrice > 0 && specificStore?.deliveryFee && (
-              <Flex justifyContent='space-between' mt='4' mb='4'>
-                <Text>Total</Text>
-                <Text fontWeight='bold'>{(Number(specificStore?.deliveryFee) + basketContext?.totalPrice).toFixed(2)} KM</Text>
+              <Flex justifyContent='space-between' mt='8' mb='4'>
+                <Text fontWeight='bold' fontSize='xl'>
+                  Total
+                </Text>
+                {Number(basketContext?.totalPrice) > Number(specificStore.freeDelivery) ? (
+                  <Text fontWeight='bold' fontSize='xl'>
+                    {basketContext?.totalPrice.toFixed(2)} KM
+                  </Text>
+                ) : (
+                  <Text fontWeight='bold' fontSize='xl'>
+                    {(Number(specificStore?.deliveryFee) + basketContext?.totalPrice).toFixed(2)} KM
+                  </Text>
+                )}
               </Flex>
+            )}
+            {Number(basketContext?.totalPrice) <= Number(specificStore?.minimalOrder) && (
+              <Text textAlign='center' color='red.500'>
+                Minimalna narudzba je {specificStore?.minimalOrder} KM
+              </Text>
             )}
             <Flex justifyContent='flex-end'>
               <Button variant='outline' mr={3} onClick={onClose}>

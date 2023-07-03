@@ -12,6 +12,7 @@ import Orders from './pages/storeOwner/Orders/Orders';
 import ProtectedRoute from './pages/ProtectedRoute';
 import StoreName from './pages/storeOwner/StoreName/StoreName';
 import StorePickerPage from './pages/customer/StorePickerPage/StorePickerPage';
+import OrdersPage from './pages/customer/OrdersPage/OrdersPage';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path={ROUTE.HOME} element={<StorePickerPage />} />
         <Route path={ROUTE.STORE} element={<SpecificStore />} />
         <Route path={ROUTE.NAPLATA} element={<BillingProcedure />} />
+        <Route path={ROUTE.ORDERSCUSTOMER} element={<OrdersPage />} />
         <Route
           path={ROUTE.NAME}
           element={

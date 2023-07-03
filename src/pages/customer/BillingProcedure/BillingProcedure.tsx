@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { Box, Text, Flex, Textarea, Grid, Button, useToast } from '@chakra-ui/react';
+import { Box, Text, Flex, Textarea, Grid, Button } from '@chakra-ui/react';
 import ChooseLocation from './components/ChooseLocation';
 import { useState } from 'react';
 import ChoosePhoneNumber from './components/ChoosePhoneNumber';
@@ -8,26 +8,28 @@ import { useGetSpecificStore, useGetUser, useMakeOrder } from '../../../API/Quer
 import ChooseTimeOfArrival from './components/ChooseTimeOfArrival';
 import { TimeArrivalOptions } from '../../../interfaces/general.interface';
 import { BasketContext, BasketProvider } from '../../../store/Basket.Context';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ProductCardSm from '../../../components/ProductCardSm';
 import { storeInterface } from '../../../interfaces/store.interface';
+import { articlesInterface } from '../../../interfaces/articles.interface';
+import { ROUTE, createPath } from '../../../interfaces/routes.interface';
 
 const BillingProcedureInner = () => {
-  const toast = useToast();
   let { storeID } = useParams();
   const basketContext = useContext(BasketContext);
   const { user } = useAuth0();
+  const navigate = useNavigate();
   const { data: specificStore }: { data?: storeInterface } = useGetSpecificStore(storeID);
   const { mutate: createOrder } = useMakeOrder({
-    onSuccess: (data: any) => {
-      console.log(data);
-      toast({
-        title: 'Narudžba uspješno kreirana',
-        description: 'Narudžba je uspješno kreirana i poslana na obradu, al dobit ces kurcinu',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
+    onSuccess: () => {
+      navigate(
+        createPath({
+          path: ROUTE.ORDERSCUSTOMER,
+          params: { newOrder: true },
+        })
+      );
+      localStorage.removeItem('basket');
+      localStorage.removeItem('basketTimestamp');
     },
   });
   const { data: userMeta } = useGetUser(user?.sub);
@@ -77,9 +79,10 @@ const BillingProcedureInner = () => {
   const makeOrder = () => {
     const order = {
       storeID: storeID,
+      storeName: specificStore?.name,
       userID: userMeta?._id,
       articles: basketContext?.basket,
-      total: basketContext?.totalPrice,
+      total: basketContext?.totalPrice.toFixed(2),
       description: descriptionRef.current?.value,
       address: selectedAddress,
       phoneNumber: selectedPhoneNumber,
@@ -124,8 +127,10 @@ const BillingProcedureInner = () => {
                 Pregled narudžbe
               </Text>
               <Box mt='4' maxH='500px' overflow='auto'>
-                {basketContext?.basket.map((item: any) => (
-                  <ProductCardSm product={item} />
+                {basketContext?.basket.map((item: articlesInterface) => (
+                  <Box key={item._id}>
+                    <ProductCardSm product={item} />
+                  </Box>
                 ))}
               </Box>
               <Flex justifyContent='space-between' mt='4' mb='4'>
@@ -135,13 +140,23 @@ const BillingProcedureInner = () => {
               {specificStore?.deliveryFee && (
                 <Flex justifyContent='space-between' mt='4' mb='4'>
                   <Text>Cijena dostave</Text>
-                  <Text fontWeight='bold'>{specificStore?.deliveryFee?.toFixed(2)} KM</Text>
+                  <Text fontWeight='bold'>{Number(basketContext?.totalPrice) > Number(specificStore?.freeDelivery) ? 0 : specificStore?.deliveryFee?.toFixed(2)} KM</Text>
                 </Flex>
               )}
               {basketContext && basketContext?.totalPrice > 0 && specificStore?.deliveryFee && (
-                <Flex justifyContent='space-between' mt='4' mb='4'>
-                  <Text>Total</Text>
-                  <Text fontWeight='bold'>{(Number(specificStore?.deliveryFee) + basketContext?.totalPrice).toFixed(2)} KM</Text>
+                <Flex justifyContent='space-between' mt='8' mb='4'>
+                  <Text fontWeight='bold' fontSize='xl'>
+                    Total
+                  </Text>
+                  {Number(basketContext?.totalPrice) > Number(specificStore.freeDelivery) ? (
+                    <Text fontWeight='bold' fontSize='xl'>
+                      {basketContext?.totalPrice.toFixed(2)} KM
+                    </Text>
+                  ) : (
+                    <Text fontWeight='bold' fontSize='xl'>
+                      {(Number(specificStore?.deliveryFee) + basketContext?.totalPrice).toFixed(2)} KM
+                    </Text>
+                  )}
                 </Flex>
               )}
               <Button onClick={makeOrder} w='100%' colorScheme='primary' size='lg'>

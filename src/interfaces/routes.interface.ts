@@ -8,6 +8,7 @@ export enum ROUTE {
   NAPLATA = '/store/:storeID/naplata',
   STORE = '/store/:storeID/:store',
   NAME = '/store/name',
+  ORDERSCUSTOMER = '/store/narudzbe/:new',
 }
 
 type TArgs =
@@ -19,6 +20,7 @@ type TArgs =
   | { path: ROUTE.NAPLATA; params: { storeID: string } }
   | { path: ROUTE.STORE; params: { storeID: string; store: string } }
   | { path: ROUTE.NAME }
+  | { path: ROUTE.ORDERSCUSTOMER; params: { newOrder: boolean } }
   | { path: ROUTE.DASHBOARD; params: { store: string } };
 
 type TArgsWithParams = Extract<TArgs, { path: any; params: any }>;

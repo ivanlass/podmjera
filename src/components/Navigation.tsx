@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Image, Flex, Button, Box, Avatar, Input } from '@chakra-ui/react';
+import { Flex, Button, Box, Avatar } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
 import useOnClickOutside from '../hooks/useOnClickOutside';
 import { FiLogOut } from 'react-icons/fi';
+import { AiOutlineUnorderedList } from 'react-icons/ai';
 import { BsShop } from 'react-icons/bs';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { createPath, ROUTE } from '../interfaces/routes.interface';
 import { useCreateUser, useGetStore, useGetUser } from '../API/Queries';
 
@@ -15,6 +16,7 @@ const Navigation = () => {
   const { data: userMeta, refetch: refetchGetUser } = useGetUser(user?.sub);
   const navigate = useNavigate();
   const ref = useRef(null);
+
   const { data: store, refetch } = useGetStore(userMeta?._id, {
     enabled: false,
   });
@@ -48,7 +50,8 @@ const Navigation = () => {
   useOnClickOutside(ref, handleClickOutside);
 
   return (
-    <Flex as='nav' justifyContent='flex-end' px='4' py='2' bg='primary.500' w='100%' position='fixed' top='0' zIndex='docked' boxShadow='md'>
+    <Flex as='nav' justifyContent='space-between' alignItems={'center'} px='4' py='2' bg='primary.500' w='100%' position='fixed' top='0' zIndex='docked' boxShadow='md'>
+      <Link to='/'>Podmjera.ba</Link>
       <Flex alignItems='center' gap='2'>
         {user ? (
           <Avatar onClick={() => setIsDropdownOpen((prev) => !prev)} h='40px' w='40px' src={user?.picture} cursor='pointer' />
@@ -77,6 +80,24 @@ const Navigation = () => {
               </Button>
             )}
 
+            {user && (
+              <Button
+                leftIcon={<AiOutlineUnorderedList />}
+                onClick={() =>
+                  navigate(
+                    createPath({
+                      path: ROUTE.ORDERSCUSTOMER,
+                      params: { newOrder: false },
+                    })
+                  )
+                }
+                variant='ghost'
+                p='0'
+              >
+                Narudžbe
+              </Button>
+            )}
+
             <Button onClick={handleLogout} leftIcon={<FiLogOut />} variant='ghost' p='0'>
               Logout
             </Button>
@@ -88,3 +109,6 @@ const Navigation = () => {
 };
 
 export default Navigation;
+function getAccessTokenSilently() {
+  throw new Error('Function not implemented.');
+}
