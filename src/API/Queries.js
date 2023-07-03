@@ -377,13 +377,12 @@ export const useMakeOrder = (options) => {
   return useMutation(createOrder, { ...options });
 };
 
-
 // get ordeers that will user see in the orders page
 export const useGetMyOrders = (userID, options) => {
   const { getAccessTokenSilently } = useAuth0();
 
   async function getMyOrders() {
-    console.log('ideee', userID)
+    console.log('ideee', userID);
     const accessToken = await getAccessTokenSilently();
     const response = await axios.get(`/api/orders/myorders/${userID}`, {
       headers: {
