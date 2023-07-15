@@ -22,14 +22,15 @@ const BillingProcedureInner = () => {
   const { data: specificStore }: { data?: storeInterface } = useGetSpecificStore(storeID);
   const { mutate: createOrder } = useMakeOrder({
     onSuccess: () => {
-      navigate(
-        createPath({
-          path: ROUTE.ORDERSCUSTOMER,
-          params: { newOrder: true },
-        })
-      );
-      localStorage.removeItem('basket');
-      localStorage.removeItem('basketTimestamp');
+      // navigate(
+      //   createPath({
+      //     path: ROUTE.ORDERSCUSTOMER,
+      //     params: { newOrder: true },
+      //   })
+      // );
+      // localStorage.removeItem('basket');
+      // localStorage.removeItem('basketTimestamp');
+      console.log('success');
     },
   });
   const { data: userMeta } = useGetUser(user?.sub);

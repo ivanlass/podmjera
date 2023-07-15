@@ -382,7 +382,6 @@ export const useGetMyOrders = (userID, options) => {
   const { getAccessTokenSilently } = useAuth0();
 
   async function getMyOrders() {
-    console.log('ideee', userID);
     const accessToken = await getAccessTokenSilently();
     const response = await axios.get(`/api/orders/myorders/${userID}`, {
       headers: {
