@@ -26,11 +26,8 @@ export const orderStatus: OrderStatus = {
   delivered: 'Dostavljeno',
 };
 
-export const reversedOrderStatus: OrderStatus = Object.keys(orderStatus).reduce(
-  (acc: OrderStatus, key: string) => {
-    const value = orderStatus[key];
-    acc[value] = key;
-    return acc;
-  },
-  {}
-);
+export const reversedOrderStatus: OrderStatus = Object.keys(orderStatus).reduce((acc: OrderStatus, key: string) => {
+  const value = orderStatus[key];
+  acc[value] = key;
+  return acc;
+}, {});

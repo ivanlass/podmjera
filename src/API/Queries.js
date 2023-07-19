@@ -277,7 +277,6 @@ export const useGetStores = (options) => {
   });
 };
 
-
 // get specific store. For example, when user click on store name in the store picker
 export const useGetSpecificStore = (storeID, options) => {
   async function getSpecificStore() {
@@ -397,21 +396,17 @@ export const useGetStoreOrders = (storeID, userID, options) => {
   });
 };
 
-
 // change status of order
 export const useChangeOrderStatus = (options) => {
   const { getAccessTokenSilently } = useAuth0();
 
-  async function changeOrderStatus({storeID, orderID, status}) {
+  async function changeOrderStatus({ storeID, orderID, status }) {
     const accessToken = await getAccessTokenSilently();
-    const response = await axios.get(
-      `/api/orders/changestatus/${storeID}/${orderID}/${status}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    const response = await axios.get(`/api/orders/changestatus/${storeID}/${orderID}/${status}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return response.data;
   }
   return useMutation(changeOrderStatus, { ...options });
