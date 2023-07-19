@@ -1,11 +1,22 @@
-import { Table, TableContainer, Tbody, Td, Avatar, Th, Button, Thead, Tr, IconButton, useDisclosure, Flex } from '@chakra-ui/react';
+import React from 'react';
+import { Table, TableContainer, Tbody, Td, Avatar, Th, Button, Thead, Tr, IconButton, useDisclosure, Flex, Text } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import OrderDetailsForOwner from '../../../../modals/OrderDetailsForOwner/OrderDetailsForOwner';
+import { ordersInterface } from '../../../../interfaces/orders.interface';
+import { orderStatus } from '../../../../interfaces/general.interface';
 
-const OrdersList = () => {
+interface Props {
+  orders: ordersInterface[];
+}
+
+const OrdersList = ({ orders }: Props) => {
+  const [selectedOrder, setSelectedOrder] = React.useState<ordersInterface | null>(null);
   const { isOpen: isOpenOrderDetails, onOpen: onOpenOrderDetails, onClose: onCloseOrderDetails } = useDisclosure();
 
-  const testArr = Array.from(Array(10).keys());
+  const handleOpenOrderDetails = (order: ordersInterface) => {
+    setSelectedOrder(order);
+    onOpenOrderDetails();
+  };
 
   return (
     <TableContainer bg='neutral.10' borderRadius='xl' boxShadow='md' mt='4'>
@@ -17,36 +28,44 @@ const OrdersList = () => {
             <Th>Cijena</Th>
             <Th>Datum</Th>
             <Th>Status</Th>
+            <Th>Vrijeme isporuke</Th>
             <Th>Opcije</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {testArr.map((item) => (
-            <Tr key={item} _hover={{ bg: 'neutral.20' }}>
-              <Td>
-                <Flex alignItems='center'>
-                  <Avatar
-                    me={4}
-                    src='https://img.freepik.com/premium-psd/3d-illustration-man-cartoon-close-up-portrait-standing-man-with-sunglasses-mustache-pink-background-3d-avatar-ui-ux_1020-5093.jpg?w=2000'
-                  />
-                  Marko Markovic
-                </Flex>
-              </Td>
-              <Td>Titova bb</Td>
-              <Td>25.4 KM</Td>
-              <Td>2022/12/13 13:45</Td>
-              <Td>Pristiglo</Td>
-              <Td>
-                <Button variant='ghost' onClick={onOpenOrderDetails}>
-                  Otvori
-                </Button>
-                <IconButton ms='4' fontSize='xl' variant='ghost' aria-label='delete' icon={<DeleteIcon />} />
-              </Td>
-            </Tr>
-          ))}
+          {orders &&
+            orders.length > 0 &&
+            orders.map((order: ordersInterface, index) => (
+              <Tr key={order._id} _hover={{ bg: 'neutral.20' }}>
+                <Td>
+                  <Flex alignItems='center'>
+                    <Avatar me={4} src={order.picture && order.picture} />
+                    Marko Markovic
+                  </Flex>
+                </Td>
+                <Td>{order.address}</Td>
+                <Td>
+                  <Text display='inline-block' fontWeight='bold'>
+                    {Number(order.total).toFixed(2)}
+                  </Text>
+                  <Text ml='1' display='inline-block'>
+                    KM
+                  </Text>
+                </Td>
+                <Td>{new Date(order.createdAt).toLocaleString('de-DE')}</Td>
+                <Td>{orderStatus[order.status]}</Td>
+                <Td>{order.timeOfArrival}</Td>
+                <Td>
+                  <Button variant='ghost' onClick={() => handleOpenOrderDetails(order)}>
+                    Otvori
+                  </Button>
+                  <IconButton ms='4' fontSize='xl' variant='ghost' aria-label='delete' icon={<DeleteIcon />} />
+                </Td>
+              </Tr>
+            ))}
         </Tbody>
       </Table>
-      <OrderDetailsForOwner isOpen={isOpenOrderDetails} onClose={onCloseOrderDetails} />
+      {selectedOrder && <OrderDetailsForOwner isOpen={isOpenOrderDetails} onClose={onCloseOrderDetails} order={selectedOrder} />}
     </TableContainer>
   );
 };

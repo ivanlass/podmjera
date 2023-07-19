@@ -23,7 +23,7 @@ const ProductCard: FC<IProps> = ({ product }: IProps) => {
         />
         <Box bottom='0' w='100%'>
           <Box p={{ base: '2', md: '4' }} display='flex' flexDir='column' justifyContent='space-between'>
-            <Text textTransform='capitalize' fontSize={{ base: 'sm', md: 'lg' }} color='text.primary' fontWeight='light'>
+            <Text textTransform='capitalize' fontSize={{ base: 'md', md: 'lg' }} color='text.secondary' fontWeight='bold'>
               {product.name}
             </Text>
             <Box pt='2' display='flex' justifyContent='space-between' alignItems='flex-end' flexDir={{ base: 'column', md: 'row' }}>

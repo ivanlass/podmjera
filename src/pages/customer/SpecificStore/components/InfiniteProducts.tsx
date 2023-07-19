@@ -2,7 +2,6 @@ import React from 'react';
 import { SimpleGrid, Text } from '@chakra-ui/react';
 import ProductCard from '../../../../components/ProductCard';
 import { articlesInterface } from '../../../../interfaces/articles.interface';
-import PartialSpinner from '../../../../components/PartialSpinner';
 
 interface Props {
   status: string;

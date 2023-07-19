@@ -8,13 +8,15 @@ import { useState } from 'react';
 import StoreHero from './components/StoreHero';
 import SidebarFilter from './components/SidebarFilter';
 import { Mode } from '../../../interfaces/general.interface';
-import { useGetSearchedProducts, useGetSpecificStore } from '../../../API/Queries';
+import { useGetSearchedProducts, useGetSpecificStore, useGetAllFavouriteArticles } from '../../../API/Queries';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { articlesInterface } from '../../../interfaces/articles.interface';
 import { useParams } from 'react-router-dom';
 import ProductCard from '../../../components/ProductCard';
 import axios from 'axios';
 import { useInView } from 'react-intersection-observer';
+import 'keen-slider/keen-slider.min.css';
+import FavouriteProducts from './components/FavouriteProducts';
 
 const SpecificStore = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('Sve');
@@ -25,6 +27,7 @@ const SpecificStore = () => {
   const { ref, inView } = useInView();
   const { data: specificStore } = useGetSpecificStore(storeID);
   const { data: searchedArticles, refetch: searchArticles } = useGetSearchedProducts(searchQuery, storeID, { enabled: false });
+  const { data: favouriteArticles } = useGetAllFavouriteArticles(storeID);
 
   // handle search articles
   useEffect(() => {
@@ -43,17 +46,17 @@ const SpecificStore = () => {
 
   // Mode.Default: list all products from specific store (default mode) in infinite scroll
   const fetchArticles = async ({ pageParam = 0, category }: { pageParam: number; category: string }) => {
-    const res = await axios.get(`/api/article/pagination/${pageParam}/store=${specificStore?._id}/category=${category}`);
+    const res = await axios.get(`/api/article/pagination/${pageParam}/store=${storeID}/category=${category}`);
     return res.data;
   };
 
   const { status, data, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery(
-    ['infiniteProducts', specificStore?._id, selectedCategory], // Include selectedCategory as a dependency
+    ['infiniteProducts', storeID, selectedCategory], // Include selectedCategory as a dependency
     ({ pageParam }) => fetchArticles({ pageParam, category: selectedCategory }), // Pass the selectedCategory to fetchArticles
     {
       getNextPageParam: (lastPage) => lastPage.nextId ?? undefined,
       getPreviousPageParam: (firstPage) => firstPage.previousId ?? undefined,
-      enabled: !!specificStore?._id,
+      enabled: !!storeID,
     }
   );
 
@@ -64,7 +67,8 @@ const SpecificStore = () => {
   }, [inView]);
 
   useEffect(() => {
-    queryClient.invalidateQueries(['infiniteProducts', specificStore?._id, selectedCategory]);
+    // queryClient.invalidateQueries(['infiniteProducts', specificStore?._id, selectedCategory]);
+    queryClient.removeQueries(['infiniteProducts', specificStore?._id, selectedCategory]);
     if (!inView && (mode === Mode.Default || mode === Mode.Category)) {
       fetchNextPage({ pageParam: 0 }); // Reset the page parameter to 1 when changing category
     }
@@ -77,6 +81,9 @@ const SpecificStore = () => {
         <SidebarFilter setMode={setMode} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}>
           <ProductFilters searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           <StoreHero />
+
+          {favouriteArticles && <FavouriteProducts articles={favouriteArticles} title='Istaknuto' />}
+
           {(mode === Mode.Default || mode === Mode.Category) && (
             <InfiniteProducts
               innerRef={ref}

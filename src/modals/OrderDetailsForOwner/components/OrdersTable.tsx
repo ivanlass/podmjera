@@ -1,11 +1,16 @@
-import { Table, TableContainer, Tbody, Td, Image, Th, Thead, Tr, IconButton, Tfoot } from '@chakra-ui/react';
-import { DeleteIcon } from '@chakra-ui/icons';
+import { Table, TableContainer, Tbody, Td, Image, Th, Thead, Tr, Checkbox } from '@chakra-ui/react';
+import { ordersInterface } from '../../../interfaces/orders.interface';
+import { articlesInterface } from '../../../interfaces/articles.interface';
 
-const OrdersTable = () => {
+interface Props {
+  order: ordersInterface;
+}
+
+const OrdersTable = ({ order }: Props) => {
   const testArr = Array.from(Array(10).keys());
 
   return (
-    <TableContainer bg='neutral.10' borderRadius='xl' boxShadow='md' height='700px' overflowY='auto'>
+    <TableContainer bg='neutral.10' borderRadius='xl' boxShadow='md' maxH='700px' overflowY='auto'>
       <Table variant='unstyled'>
         <Thead>
           <Tr>
@@ -14,37 +19,27 @@ const OrdersTable = () => {
             <Th>Količina</Th>
             <Th>Cijena</Th>
             <Th>Ukupno</Th>
-            <Th>Opcije</Th>
+            <Th>U korpi</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {testArr.map((item) => (
-            <Tr key={item} _hover={{ bg: 'neutral.20' }}>
+          {order.articles.map((article: articlesInterface) => (
+            <Tr key={article._id} _hover={{ bg: 'neutral.20' }}>
               <Td>
                 <Image src='https://www.konzumshop.ba/images/products/022/02230013_1l.gif' alt='mlijeko' borderRadius='xl' height='80px' objectFit='contain' bgPosition='center' />
               </Td>
-              <Td>Meggle Mlijeko 2.8%</Td>
-              <Td>3</Td>
-              <Td>2.00 KM</Td>
-              <Td>6.00 KM</Td>
+              <Td>{article.name}</Td>
               <Td>
-                <IconButton ms='4' fontSize='xl' variant='ghost' aria-label='delete' icon={<DeleteIcon />} />
+                {article.quantity} {article.perPiece ? 'kom' : 'kg'}
+              </Td>
+              <Td>{article.price} KM</Td>
+              <Td>{article.price * article.quantity} KM</Td>
+              <Td>
+                <Checkbox />
               </Td>
             </Tr>
           ))}
         </Tbody>
-        <Tfoot>
-          <Tr>
-            <Th></Th>
-            <Th></Th>
-            <Th></Th>
-            <Th></Th>
-            <Th>Ukupno</Th>
-            <Th fontSize='md' fontWeight='bold'>
-              145.50 KM
-            </Th>
-          </Tr>
-        </Tfoot>
       </Table>
     </TableContainer>
   );

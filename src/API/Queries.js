@@ -255,16 +255,8 @@ export const useRemoveFavouriteArticle = (options) => {
 };
 
 export const useGetAllFavouriteArticles = (storeID, options) => {
-  const { getAccessTokenSilently } = useAuth0();
-
   async function getAllFavouriteArticles() {
-    const accessToken = await getAccessTokenSilently();
-    console.log('asdasd', storeID);
-    const response = await axios.get(`/api/article/favourites/${storeID}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await axios.get(`/api/article/favourites/${storeID}`);
     return response.data;
   }
 
@@ -285,16 +277,6 @@ export const useGetStores = (options) => {
   });
 };
 
-export const useGetStoreArticles = (storeID, options) => {
-  async function getStoreArticles() {
-    const response = await axios.get(`/api/article/${storeID}/`);
-    return response.data;
-  }
-
-  return useQuery(['articles'], () => getStoreArticles(), {
-    ...options,
-  });
-};
 
 // get specific store. For example, when user click on store name in the store picker
 export const useGetSpecificStore = (storeID, options) => {
@@ -377,7 +359,7 @@ export const useMakeOrder = (options) => {
   return useMutation(createOrder, { ...options });
 };
 
-// get ordeers that will user see in the orders page
+// get orders that will user see in the orders page
 export const useGetMyOrders = (userID, options) => {
   const { getAccessTokenSilently } = useAuth0();
 
@@ -391,7 +373,46 @@ export const useGetMyOrders = (userID, options) => {
     return response.data;
   }
 
-  return useQuery(['favourites'], () => getMyOrders(), {
+  return useQuery(['myOrders'], () => getMyOrders(), {
     ...options,
   });
+};
+
+// get ordeers for specific store
+export const useGetStoreOrders = (storeID, userID, options) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  async function getStoreOrders() {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.get(`/api/orders/storeOrders/${storeID}/${userID}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  }
+
+  return useQuery(['storeOrders'], () => getStoreOrders(), {
+    ...options,
+  });
+};
+
+
+// change status of order
+export const useChangeOrderStatus = (options) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  async function changeOrderStatus({storeID, orderID, status}) {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.get(
+      `/api/orders/changestatus/${storeID}/${orderID}/${status}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  }
+  return useMutation(changeOrderStatus, { ...options });
 };

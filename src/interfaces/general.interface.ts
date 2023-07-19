@@ -15,3 +15,22 @@ export enum TimeArrivalOptionsValues {
   PoslijePodne = '14:00 - 16:00',
   Predvecer = '17:00 - 20:00',
 }
+
+type OrderStatus = {
+  [key: string]: string;
+};
+
+export const orderStatus: OrderStatus = {
+  pending: 'Prispjelo',
+  shipped: 'Otpremljeno',
+  delivered: 'Dostavljeno',
+};
+
+export const reversedOrderStatus: OrderStatus = Object.keys(orderStatus).reduce(
+  (acc: OrderStatus, key: string) => {
+    const value = orderStatus[key];
+    acc[value] = key;
+    return acc;
+  },
+  {}
+);

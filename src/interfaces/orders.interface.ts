@@ -5,6 +5,7 @@ export interface ordersInterface {
   storeID: string;
   storeName: string;
   userID: string;
+  picture: string;
   articles: Array<articlesInterface>;
   total: number;
   description: string;

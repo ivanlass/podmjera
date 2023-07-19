@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef } from 'react';
-import { Box, Text, Flex, Textarea, Grid, Button } from '@chakra-ui/react';
+import { Box, Text, Flex, Textarea, Grid, Button, useToast } from '@chakra-ui/react';
 import ChooseLocation from './components/ChooseLocation';
 import { useState } from 'react';
 import ChoosePhoneNumber from './components/ChoosePhoneNumber';
@@ -13,8 +13,10 @@ import ProductCardSm from '../../../components/ProductCardSm';
 import { storeInterface } from '../../../interfaces/store.interface';
 import { articlesInterface } from '../../../interfaces/articles.interface';
 import { ROUTE, createPath } from '../../../interfaces/routes.interface';
+import ShakeBox from '../../../components/ShakeBox';
 
 const BillingProcedureInner = () => {
+  const toast = useToast();
   let { storeID } = useParams();
   const basketContext = useContext(BasketContext);
   const { user } = useAuth0();
@@ -25,12 +27,11 @@ const BillingProcedureInner = () => {
       // navigate(
       //   createPath({
       //     path: ROUTE.ORDERSCUSTOMER,
-      //     params: { newOrder: true },
+      //     params: { newOrder: 'true' },
       //   })
       // );
       // localStorage.removeItem('basket');
       // localStorage.removeItem('basketTimestamp');
-      console.log('success');
     },
   });
   const { data: userMeta } = useGetUser(user?.sub);
@@ -38,6 +39,8 @@ const BillingProcedureInner = () => {
   const [selectedPhoneNumber, setSelectedphoneNumber] = useState<string>('');
   const [selectedTimeOfArrival, setSelectedTimeOfArrival] = useState<TimeArrivalOptions>(TimeArrivalOptions.Odmah);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const [phoneNumberError, setPhoneNumberError] = useState<boolean>(false);
+  const [addressError, setAddressError] = useState<boolean>(false);
 
   useEffect(() => {
     // get basket from localStorage and basketTimestamp, if basketTimestamp is older than 36 hours, clear basket
@@ -78,10 +81,34 @@ const BillingProcedureInner = () => {
   }, [userMeta]);
 
   const makeOrder = () => {
+    if (selectedPhoneNumber === '') {
+      toast({
+        title: 'Izaberite broj telefona',
+        status: 'error',
+        duration: 6000,
+        isClosable: true,
+      });
+      setPhoneNumberError(true);
+      return;
+    }
+    if (selectedAddress === '') {
+      toast({
+        title: 'Izaberite adresu',
+        status: 'error',
+        duration: 6000,
+        isClosable: true,
+      });
+      setAddressError(true);
+      return;
+    }
+
     const order = {
       storeID: storeID,
       storeName: specificStore?.name,
       userID: userMeta?._id,
+      givenName: userMeta?.givenName,
+      familyName: userMeta?.familyName,
+      picture: userMeta?.picture,
       articles: basketContext?.basket,
       total: basketContext?.totalPrice.toFixed(2),
       description: descriptionRef.current?.value,
@@ -96,12 +123,12 @@ const BillingProcedureInner = () => {
     <Box mt={20} px='4'>
       <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={8}>
         <Box>
-          <Box p={4} mb={8} bg='neutral.10' borderRadius='xl' boxShadow='md'>
+          <ShakeBox shake={phoneNumberError} setShake={setPhoneNumberError}>
             <ChoosePhoneNumber selectedPhoneNumber={selectedPhoneNumber} setSelectedPhoneNumber={setSelectedphoneNumber} />
-          </Box>
-          <Box p={4} mb={8} bg='neutral.10' borderRadius='xl' boxShadow='md'>
+          </ShakeBox>
+          <ShakeBox shake={addressError} setShake={setAddressError}>
             <ChooseLocation selectedAddress={selectedAddress} setSelectedAddress={setSelectedAddress} />
-          </Box>
+          </ShakeBox>
           <Box p={4} mb={8} bg='neutral.10' borderRadius='xl' boxShadow='md'>
             <ChooseTimeOfArrival selectedTimeOfArrival={selectedTimeOfArrival} setSelectedTimeOfArrival={setSelectedTimeOfArrival} />
           </Box>

@@ -87,7 +87,7 @@ const Navigation = () => {
                   navigate(
                     createPath({
                       path: ROUTE.ORDERSCUSTOMER,
-                      params: { newOrder: false },
+                      params: { newOrder: 'false' },
                     })
                   )
                 }
