@@ -58,10 +58,11 @@ function Basket() {
           position='fixed'
           size='null'
           p='2'
-          borderRadius='full'
+          borderRadius={{ base: 'md', md: 'full' }}
+          height={{ base: '80px', md: 'unset' }}
           zIndex={10}
-          right={{ base: '50%', md: 32 }}
-          top={{ base: 'none', md: '2' }}
+          right={{ base: '4', md: 32 }}
+          top={{ base: 20, md: 3 }}
           transform='translate(50%)'
         >
           {basketContext?.basket && basketContext?.basket.length > 0 && (
@@ -69,7 +70,8 @@ function Basket() {
               fontSize='xs'
               position='absolute'
               top='-6px'
-              right='-10px'
+              right={{ base: 'unset', md: '-10px' }}
+              left={{ base: '-10px', md: 'unset' }}
               p='3px'
               borderRadius='full'
               minW='22px'
@@ -89,9 +91,9 @@ function Basket() {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Vasa korpa</DrawerHeader>
+          <DrawerHeader>Vaša korpa</DrawerHeader>
 
-          <DrawerBody position='relative'>
+          <DrawerBody position='relative' bg='neutral.30'>
             {basketContext?.basket && basketContext?.basket.length > 0 ? (
               basketContext.basket.map((product) => (
                 <Box key={product._id}>
@@ -104,24 +106,28 @@ function Basket() {
               </Text>
             )}
           </DrawerBody>
-          <DrawerFooter display='block' borderTop='1px solid' borderColor='neutral.50'>
+          <DrawerFooter display='block' borderTop='1px solid' borderColor='primary.500'>
             <Flex justifyContent='space-between' mt='4' mb='4'>
-              <Text>Ukupna cijena artikala</Text>
-              <Text fontWeight='bold'>{basketContext?.totalPrice?.toFixed(2)} KM</Text>
+              <Text color='text.primary'>Ukupna cijena artikala</Text>
+              <Text color='text.primary' fontWeight='bold'>
+                {basketContext?.totalPrice?.toFixed(2)} KM
+              </Text>
             </Flex>
             {specificStore?.deliveryFee && (
               <Flex justifyContent='space-between' mt='4' mb='4'>
-                <Text>Cijena dostave</Text>
-                <Text fontWeight='bold'>{Number(basketContext?.totalPrice) > Number(specificStore?.freeDelivery) ? 0 : specificStore?.deliveryFee?.toFixed(2)} KM</Text>
+                <Text color='text.primary'>Cijena dostave</Text>
+                <Text color='text.primary' fontWeight='bold'>
+                  {Number(basketContext?.totalPrice) > Number(specificStore?.freeDelivery) ? 0 : specificStore?.deliveryFee?.toFixed(2)} KM
+                </Text>
               </Flex>
             )}
             {basketContext && basketContext?.totalPrice > 0 && specificStore?.deliveryFee && (
               <Flex justifyContent='space-between' mt='8' mb='4'>
-                <Text fontWeight='bold' fontSize='xl'>
+                <Text fontWeight='bold' fontSize='xl' color='text.secondary'>
                   Total
                 </Text>
                 {Number(basketContext?.totalPrice) > Number(specificStore.freeDelivery) ? (
-                  <Text fontWeight='bold' fontSize='xl'>
+                  <Text fontWeight='bold' fontSize='xl' color='text.secondary'>
                     {basketContext?.totalPrice.toFixed(2)} KM
                   </Text>
                 ) : (

@@ -10,24 +10,24 @@ interface IProps {
 
 const ProductCard: FC<IProps> = ({ product }: IProps) => {
   return (
-    <Card key={product._id} bg='neutral.10' overflow='hidden' borderRadius='xl' boxShadow='md' _hover={{ boxShadow: 'xl' }}>
+    <Card key={product._id} bg='neutral.10' overflow='hidden' borderRadius='xl' boxShadow='none' _hover={{ boxShadow: 'md' }}>
       <Box display='flex' alignItems={{ base: 'center', lg: 'flex-start' }} flexDirection={{ base: 'column', lg: 'column' }}>
         <Image
           src={product.image}
           alt='mlijeko'
-          height={{ base: '180px', md: '250px' }}
+          height={{ base: '180px', md: '200px' }}
           w='100%'
           objectFit='cover'
           bgPosition='center'
-          fallback={<Icon as={CiApple} boxSize={{ base: '4rem', md: '8rem' }} color='primary.500' height={{ base: '180px', md: '250px' }} alignSelf='center' />}
+          fallback={<Icon as={CiApple} boxSize={{ base: '4rem', md: '8rem' }} color='primary.500' height={{ base: '180px', md: '200px' }} alignSelf='center' />}
         />
         <Box bottom='0' w='100%'>
           <Box p={{ base: '2', md: '4' }} display='flex' flexDir='column' justifyContent='space-between'>
-            <Text textTransform='capitalize' fontSize={{ base: 'md', md: 'lg' }} color='text.secondary' fontWeight='bold'>
+            <Text textTransform='capitalize' fontSize='md' color='text.secondary' fontWeight='700'>
               {product.name}
             </Text>
             <Box pt='2' display='flex' justifyContent='space-between' alignItems='flex-end' flexDir={{ base: 'column', md: 'row' }}>
-              <Text color='text.secondary' fontSize={{ base: 'sm', md: 'md' }} fontWeight='thin' alignSelf='flex-start'>
+              <Text color='primary.700' fontSize='sm' alignSelf='flex-start'>
                 {product.price} KM / {product.perPiece ? 'komad' : 'kg'}
               </Text>
             </Box>

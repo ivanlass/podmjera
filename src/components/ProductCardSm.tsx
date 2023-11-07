@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react';
-import { Text, Box, Stack, Image, Flex, IconButton, Icon } from '@chakra-ui/react';
+import { Text, Box, Stack, Image, Flex, IconButton, Icon, Tooltip } from '@chakra-ui/react';
 import Counter from './Counter';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BasketContext } from '../store/Basket.Context';
@@ -14,22 +14,24 @@ const ProductCardSm: FC<IProps> = ({ product }: IProps) => {
   const basketContext = useContext(BasketContext);
 
   return (
-    <Box display='flex' py='4'>
+    <Box display='flex' py='4' position='relative' bg='neutral.10' borderRadius='md' p='4' my={{ base: 6, md: 4 }} flexWrap={{ base: 'wrap', md: 'nowrap' }}>
       <Image
         src={product.image}
-        fallback={<Icon as={CiApple} boxSize={{ base: '2rem', md: '4rem' }} color='primary.500' height={{ base: '20px', md: '50px' }} alignSelf='center' />}
+        fallback={<Icon as={CiApple} boxSize='3rem' color='primary.500' bg='neutral.30' borderRadius='full' height='50px' alignSelf='center' />}
         alt='mlijeko'
         borderRadius='xl'
-        height='60px'
+        height='50px'
         objectFit='contain'
         bgPosition='center'
       />
       <Stack justifyContent='space-between' ms='4'>
-        <Text color='primary.700' fontSize={{ base: 'md', md: 'xl' }}>
+        <Tooltip label={product.name}>
+          <Text fontSize='sm' fontWeight={700} color='text.primary' whiteSpace='nowrap' overflow='hidden' textOverflow='ellipsis' w={{ base: '80px', md: '180px' }}>
+            {product.name}
+          </Text>
+        </Tooltip>
+        <Text color='text.secondary' fontSize='sm'>
           {product.price} KM
-        </Text>
-        <Text fontSize='sm' color='text.secondary'>
-          {product.name}
         </Text>
       </Stack>
       <Flex ml='auto' flexDir='column' alignItems='flex-end' justifyContent='space-between'>
@@ -45,6 +47,10 @@ const ProductCardSm: FC<IProps> = ({ product }: IProps) => {
         ms='4'
         icon={<AiOutlineClose />}
         aria-label='delete'
+        position={{ base: 'absolute', md: 'relative' }}
+        top='-10px'
+        left='-10px'
+        bg='neutral.10'
         onClick={() => basketContext?.removeFromBasket(product._id)}
       />
     </Box>

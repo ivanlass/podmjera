@@ -47,7 +47,7 @@ interface Props {
 
 const ShakeBox = ({ shake, setShake, children }: Props) => {
   return (
-    <Box p={4} mb={8} bg='neutral.10' borderRadius='xl' boxShadow='md' animation={`${shake ? shakeAnimation : ''} 2s linear`} onAnimationEnd={() => setShake(false)}>
+    <Box p={4} mb={4} bg='neutral.10' borderRadius='xl' boxShadow='md' animation={`${shake ? shakeAnimation : ''} 2s linear`} onAnimationEnd={() => setShake(false)}>
       {children}
     </Box>
   );

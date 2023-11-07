@@ -96,7 +96,7 @@ const SpecificStore = () => {
             />
           )}
           {mode === Mode.Search && (
-            <SimpleGrid mt={2} px='4' columns={{ base: 2, md: 3, lg: 4, '2xl': 5 }} spacing={{ base: 2, md: 4 }}>
+            <SimpleGrid mt={2} px='4' columns={{ base: 2, md: 3, lg: 5, '2xl': 6 }} spacing={{ base: 2, md: 4 }}>
               {searchedArticles &&
                 searchedArticles.map((article: articlesInterface) => (
                   <React.Fragment key={article._id}>

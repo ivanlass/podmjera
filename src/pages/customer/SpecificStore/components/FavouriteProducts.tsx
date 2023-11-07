@@ -40,22 +40,22 @@ const FavouriteProducts = ({ articles, title }: Props) => {
             <>
               <IconButton
                 icon={<AiOutlineLeft size='20px' />}
-                h='50%'
                 aria-label='go back'
                 position='absolute'
                 left='10px'
                 top='50%'
+                borderRadius='full'
                 zIndex={1}
                 transform='translate(0, -50%)'
                 onClick={(e) => instanceRef.current?.prev()}
               />
               <IconButton
                 icon={<AiOutlineRight size='20px' />}
-                h='50%'
                 aria-label='go next'
                 position='absolute'
                 right='10px'
                 top='50%'
+                borderRadius='full'
                 zIndex={1}
                 transform='translate(0, -50%)'
                 onClick={(e) => instanceRef.current?.next()}

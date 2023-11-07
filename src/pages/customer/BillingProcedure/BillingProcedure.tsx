@@ -24,14 +24,14 @@ const BillingProcedureInner = () => {
   const { data: specificStore }: { data?: storeInterface } = useGetSpecificStore(storeID);
   const { mutate: createOrder } = useMakeOrder({
     onSuccess: () => {
-      // navigate(
-      //   createPath({
-      //     path: ROUTE.ORDERSCUSTOMER,
-      //     params: { newOrder: 'true' },
-      //   })
-      // );
-      // localStorage.removeItem('basket');
-      // localStorage.removeItem('basketTimestamp');
+      navigate(
+        createPath({
+          path: ROUTE.ORDERSCUSTOMER,
+          params: { newOrder: 'true' },
+        })
+      );
+      localStorage.removeItem('basket');
+      localStorage.removeItem('basketTimestamp');
     },
   });
   const { data: userMeta } = useGetUser(user?.sub);
@@ -121,7 +121,7 @@ const BillingProcedureInner = () => {
 
   return (
     <Box mt={20} px='4'>
-      <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={8}>
+      <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)' }} gap={4}>
         <Box>
           <ShakeBox shake={phoneNumberError} setShake={setPhoneNumberError}>
             <ChoosePhoneNumber selectedPhoneNumber={selectedPhoneNumber} setSelectedPhoneNumber={setSelectedphoneNumber} />
@@ -129,10 +129,10 @@ const BillingProcedureInner = () => {
           <ShakeBox shake={addressError} setShake={setAddressError}>
             <ChooseLocation selectedAddress={selectedAddress} setSelectedAddress={setSelectedAddress} />
           </ShakeBox>
-          <Box p={4} mb={8} bg='neutral.10' borderRadius='xl' boxShadow='md'>
+          <Box p={4} mb={4} bg='neutral.10' borderRadius='xl' boxShadow='md'>
             <ChooseTimeOfArrival selectedTimeOfArrival={selectedTimeOfArrival} setSelectedTimeOfArrival={setSelectedTimeOfArrival} />
           </Box>
-          <Box p={4} mb={{ base: 0, md: 8 }} bg='neutral.10' borderRadius='xl' boxShadow='md'>
+          <Box p={4} mb={{ base: 0, md: 4 }} bg='neutral.10' borderRadius='xl' boxShadow='md'>
             <Text fontSize='2xl' fontWeight='bold'>
               Napomena
             </Text>

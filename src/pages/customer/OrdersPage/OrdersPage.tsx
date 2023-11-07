@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Flex, Text, useToast } from '@chakra-ui/react';
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Center, Flex, Text, useToast } from '@chakra-ui/react';
 import { useGetMyOrders, useGetUser } from '../../../API/Queries';
 import FullpageSpinner from '../../../components/FullPageSpinner';
 import { ordersInterface } from '../../../interfaces/orders.interface';
@@ -13,7 +13,6 @@ const OrdersPage = () => {
   const {
     data: myOrders,
     isLoading,
-    isFetched,
     isError,
   } = useGetMyOrders(userMeta?._id, {
     enabled: !!userMeta?._id,
@@ -55,7 +54,7 @@ const OrdersPage = () => {
   }
 
   return (
-    <Box mt={20} px='4'>
+    <Box mt={20} mx='4'>
       <Text>Narudžbe</Text>
       <Accordion allowToggle>
         {myOrders.length > 0 &&

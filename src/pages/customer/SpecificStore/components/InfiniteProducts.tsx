@@ -25,7 +25,7 @@ function InfiniteProducts({ status, data, isFetching, isFetchingNextPage, hasNex
     <>
       {data.pages.map((page: any) => (
         <React.Fragment key={page.nextId}>
-          <SimpleGrid mt={2} px='4' columns={{ base: 2, md: 3, lg: 4, '2xl': 5 }} spacing={{ base: 2, md: 4 }}>
+          <SimpleGrid mt={2} px='4' columns={{ base: 2, md: 2, lg: 3, xl: 4, '2xl': 6 }} spacing={{ base: 2, md: 4 }}>
             {page.articles.map((article: articlesInterface) => (
               <React.Fragment key={article._id}>
                 <ProductCard product={article} />

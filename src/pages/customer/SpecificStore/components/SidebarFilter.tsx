@@ -48,16 +48,7 @@ const SidebarContent = ({ selectedCategory, setSelectedCategory, onClose, setMod
   let { storeID } = useParams();
   const { data: specificStore } = useGetSpecificStore(storeID, { enabled: !!storeID });
   return (
-    <Box
-      overflow='auto'
-      bg={useColorModeValue('white', 'gray.900')}
-      borderRight='1px'
-      borderRightColor={useColorModeValue('gray.200', 'gray.700')}
-      w={{ base: 'full', md: 60 }}
-      pos='fixed'
-      h='full'
-      {...rest}
-    >
+    <Box overflow='auto' bg={useColorModeValue('white', 'gray.900')} borderRight='1px' borderRightColor='primary.200' w={{ base: 'full', md: 60 }} pos='fixed' h='full' {...rest}>
       <Flex alignItems='center' p='4' justifyContent='flex-end'>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
@@ -70,6 +61,9 @@ const SidebarContent = ({ selectedCategory, setSelectedCategory, onClose, setMod
         background={selectedCategory === 'Sve' ? 'primary.500' : 'neutral.10'}
         borderRadius='full'
         boxShadow={selectedCategory === 'Sve' ? 'lg' : ''}
+        color={selectedCategory === 'Sve' ? 'white' : 'primary.600'}
+        border='1px solid'
+        borderColor='primary.500'
         onClick={() => {
           setSelectedCategory('Sve');
           setMode(Mode.Default);
@@ -90,18 +84,26 @@ const SidebarContent = ({ selectedCategory, setSelectedCategory, onClose, setMod
             background={selectedCategory === category ? 'primary.500' : 'neutral.10'}
             borderRadius='full'
             boxShadow={selectedCategory === category ? 'lg' : ''}
+            border='1px solid'
+            borderColor='primary.500'
             key={category}
             onClick={() => {
               setSelectedCategory(category);
               setMode(Mode.Category);
             }}
             m='2'
-            my={selectedCategory === category ? '6' : '2'}
+            my={4}
             px='4'
             py='2'
             textTransform='capitalize'
             transition={'all .3s ease'}
-            color='neutral.500'
+            color={selectedCategory === category ? 'white' : 'primary.600'}
+            fontWeight={700}
+            _hover={{
+              boxShadow: 'lg',
+              background: 'primary.300',
+              color: 'primary.600',
+            }}
           >
             {category}
           </Text>

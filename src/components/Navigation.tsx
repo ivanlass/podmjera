@@ -51,7 +51,9 @@ const Navigation = () => {
 
   return (
     <Flex as='nav' justifyContent='space-between' alignItems={'center'} px='4' py='2' bg='primary.500' w='100%' position='fixed' top='0' zIndex='docked' boxShadow='md'>
-      <Link to='/'>Podmjera.ba</Link>
+      <Box ml={{ base: 12, md: 0 }}>
+        <Link to='/'>Podmjera.ba</Link>
+      </Box>
       <Flex alignItems='center' gap='2'>
         {user ? (
           <Avatar onClick={() => setIsDropdownOpen((prev) => !prev)} h='40px' w='40px' src={user?.picture} cursor='pointer' />

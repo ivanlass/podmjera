@@ -127,7 +127,7 @@ const NavItem = ({ icon, children, to, ...rest }: NavItemProps) => {
         borderRadius='lg'
         role='group'
         cursor='pointer'
-        color='neutral.500'
+        color='primary.700'
         background={pathname === to ? 'primary.500' : 'transparent'}
         _hover={{
           bg: 'primary.300',

@@ -6,8 +6,8 @@ const theme = extendTheme(
   {
     colors,
     fonts: {
-      heading: `'Space Grotesk', sans-serif`,
-      body: `'Space Grotesk', sans-serif`,
+      heading: `'Rubik', sans-serif`,
+      body: `'Rubik', sans-serif`,
     },
     shadows: {
       shadow: {

@@ -24,6 +24,7 @@ export const Button = {
     primary: {
       bg: 'primary.500',
       color: 'primary.800',
+      boxShadow: 'sm',
       _hover: {
         bg: 'primary.400',
         boxShadow: 'xl',
