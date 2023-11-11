@@ -101,14 +101,13 @@ const BillingProcedureInner = () => {
       setAddressError(true);
       return;
     }
-
     const order = {
       storeID: storeID,
       storeName: specificStore?.name,
       userID: userMeta?._id,
       givenName: userMeta?.givenName,
       familyName: userMeta?.familyName,
-      picture: userMeta?.picture,
+      picture: user?.picture,
       articles: basketContext?.basket,
       total: basketContext?.totalPrice.toFixed(2),
       description: descriptionRef.current?.value,

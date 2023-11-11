@@ -17,7 +17,7 @@ const OrdersList = ({ orders }: Props) => {
     setSelectedOrder(order);
     onOpenOrderDetails();
   };
-  if (orders.length === 0)
+  if (orders?.length === 0)
     return (
       <Text textAlign='center' mt='30%' fontSize='2xl'>
         U zadnjih 30 dana niste imali narudžbi
@@ -45,7 +45,7 @@ const OrdersList = ({ orders }: Props) => {
                 <Td>
                   <Flex alignItems='center'>
                     <Avatar me={4} src={order.picture && order.picture} />
-                    marko markovic lass
+                    {order.givenName} {order.familyName}
                   </Flex>
                 </Td>
                 <Td>{order.address}</Td>

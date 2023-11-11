@@ -1,6 +1,7 @@
-import { Table, TableContainer, Tbody, Td, Image, Th, Thead, Tr, Checkbox } from '@chakra-ui/react';
+import { Table, TableContainer, Tbody, Td, Image, Th, Thead, Tr, Checkbox, Icon } from '@chakra-ui/react';
 import { ordersInterface } from '../../../interfaces/orders.interface';
 import { articlesInterface } from '../../../interfaces/articles.interface';
+import { CiApple } from 'react-icons/ci';
 
 interface Props {
   order: ordersInterface;
@@ -26,7 +27,15 @@ const OrdersTable = ({ order }: Props) => {
           {order.articles.map((article: articlesInterface) => (
             <Tr key={article._id} _hover={{ bg: 'neutral.20' }}>
               <Td>
-                <Image src='https://www.konzumshop.ba/images/products/022/02230013_1l.gif' alt='mlijeko' borderRadius='xl' height='80px' objectFit='contain' bgPosition='center' />
+                <Image
+                  src={article?.image}
+                  alt='mlijeko'
+                  borderRadius='xl'
+                  height='80px'
+                  objectFit='contain'
+                  bgPosition='center'
+                  fallback={<Icon as={CiApple} boxSize={{ base: '2rem', md: '3rem' }} color='primary.500' height='80px' alignSelf='center' />}
+                />
               </Td>
               <Td>{article.name}</Td>
               <Td>

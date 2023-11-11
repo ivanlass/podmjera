@@ -7,8 +7,9 @@ import { useAuth0 } from '@auth0/auth0-react';
 import bell from '../../../assets/bell.mp3';
 import { useGetStoreOrders } from '../../../API/Queries';
 import { useQueryClient } from '@tanstack/react-query';
+import axios from 'axios';
 
-const socket = io('http://localhost:6060');
+const socket = io(axios.defaults.baseURL || 'http://localhost:6000');
 
 const Orders = () => {
   const queryClient = useQueryClient();

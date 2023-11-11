@@ -54,59 +54,63 @@ const OrdersPage = () => {
   }
 
   return (
-    <Box mt={20} mx='4'>
-      <Text>Narudžbe</Text>
-      <Accordion allowToggle>
-        {myOrders.length > 0 &&
-          myOrders?.map((order: ordersInterface) => (
-            <AccordionItem key={order._id} bg='neutral.10' borderRadius='md' boxShadow='md' mb='4'>
-              <AccordionButton>
-                <Box as='span' flex='1' textAlign='left'>
-                  Broj narudžbe: {order._id}
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-              <AccordionPanel pb={4}>
-                <Text>
-                  Datum narudžbe:{' '}
-                  {new Date(order.createdAt).toLocaleString('de-DE', {
-                    timeZone: 'Europe/Sarajevo',
-                    hour12: false,
-                  })}
-                </Text>
-                <Text>Ukupna cijena: {order.total} KM</Text>
-                <Text>Status: {orderStatus[order.status]}</Text>
-              </AccordionPanel>
-              <AccordionItem>
-                <h2>
-                  <AccordionButton>
-                    <Box as='span' flex='1' textAlign='left'>
-                      Artikli
-                    </Box>
-                    <AccordionIcon />
-                  </AccordionButton>
-                </h2>
-                <AccordionPanel pb={4}>
-                  <Box mt='2'>
-                    {order.articles.map((item) => (
-                      <Flex key={item._id} justifyContent='space-between' alignItems='center' mb='2'>
-                        <Text>{item.name}</Text>
-                        <Box display='flex' justifyContent='space-between' alignItems='center'>
-                          <Text mr='2'>{item.quantity}</Text>
-                          <Text fontSize='sm' mr='2' color='neutral.100'>
-                            X
-                          </Text>
-                          <Text>{item.price} KM</Text>
-                        </Box>
-                      </Flex>
-                    ))}
+    <>
+      <Text as='h1' fontSize='2xl' mt={20} textAlign='center'>
+        Narudžbe
+      </Text>
+      <Center mt={4}>
+        <Accordion allowToggle>
+          {myOrders.length > 0 &&
+            myOrders?.map((order: ordersInterface) => (
+              <AccordionItem key={order._id} bg='neutral.10' borderRadius='md' boxShadow='md' mb='4'>
+                <AccordionButton>
+                  <Box as='span' flex='1' textAlign='left'>
+                    Broj narudžbe: {order._id}
                   </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+                <AccordionPanel pb={4}>
+                  <Text>
+                    Datum narudžbe:{' '}
+                    {new Date(order.createdAt).toLocaleString('de-DE', {
+                      timeZone: 'Europe/Sarajevo',
+                      hour12: false,
+                    })}
+                  </Text>
+                  <Text>Ukupna cijena: {order.total} KM</Text>
+                  <Text>Status: {orderStatus[order.status]}</Text>
                 </AccordionPanel>
+                <AccordionItem>
+                  <h2>
+                    <AccordionButton>
+                      <Box as='span' flex='1' textAlign='left'>
+                        Artikli
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                  </h2>
+                  <AccordionPanel pb={4}>
+                    <Box mt='2'>
+                      {order.articles.map((item) => (
+                        <Flex key={item._id} justifyContent='space-between' alignItems='center' mb='2'>
+                          <Text>{item.name}</Text>
+                          <Box display='flex' justifyContent='space-between' alignItems='center'>
+                            <Text mr='2'>{item.quantity}</Text>
+                            <Text fontSize='sm' mr='2' color='neutral.100'>
+                              X
+                            </Text>
+                            <Text>{item.price} KM</Text>
+                          </Box>
+                        </Flex>
+                      ))}
+                    </Box>
+                  </AccordionPanel>
+                </AccordionItem>
               </AccordionItem>
-            </AccordionItem>
-          ))}
-      </Accordion>
-    </Box>
+            ))}
+        </Accordion>
+      </Center>
+    </>
   );
 };
 

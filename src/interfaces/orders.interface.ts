@@ -4,6 +4,8 @@ export interface ordersInterface {
   _id: string;
   storeID: string;
   storeName: string;
+  givenName: string;
+  familyName: string;
   userID: string;
   picture: string;
   articles: Array<articlesInterface>;
