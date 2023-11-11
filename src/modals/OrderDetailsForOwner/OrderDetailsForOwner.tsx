@@ -59,7 +59,7 @@ const OrderDetailsForOwner = ({ isOpen, onClose, order }: EditItemProps) => {
     <Modal size='full' isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Narudžba od Anto</ModalHeader>
+        <ModalHeader>{order.address}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <SimpleGrid columns={12} spacing={4}>

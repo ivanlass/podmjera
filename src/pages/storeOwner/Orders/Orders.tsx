@@ -52,7 +52,7 @@ const Orders = () => {
   }, [store]);
 
   return (
-    <Box mt={12}>
+    <Box mt={{ base: 0, md: 12 }}>
       <Heading>Narudžbe</Heading>
       {storeOrders?.length > 0 && (
         <Heading fontSize='md' color='gray.500'>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, TableContainer, Tbody, Td, Avatar, Th, Button, Thead, Tr, IconButton, useDisclosure, Flex, Text } from '@chakra-ui/react';
+import { Table, TableContainer, Tbody, Td, Avatar, Th, Button, Thead, Tr, IconButton, useDisclosure, Flex, Text, Box } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import OrderDetailsForOwner from '../../../../modals/OrderDetailsForOwner/OrderDetailsForOwner';
 import { ordersInterface } from '../../../../interfaces/orders.interface';
@@ -17,7 +17,12 @@ const OrdersList = ({ orders }: Props) => {
     setSelectedOrder(order);
     onOpenOrderDetails();
   };
-
+  if (orders.length === 0)
+    return (
+      <Text textAlign='center' mt='30%' fontSize='2xl'>
+        U zadnjih 30 dana niste imali narudžbi
+      </Text>
+    );
   return (
     <TableContainer bg='neutral.10' borderRadius='xl' boxShadow='md' mt='4'>
       <Table variant='unstyled'>
@@ -40,7 +45,7 @@ const OrdersList = ({ orders }: Props) => {
                 <Td>
                   <Flex alignItems='center'>
                     <Avatar me={4} src={order.picture && order.picture} />
-                    Marko Markovic
+                    marko markovic lass
                   </Flex>
                 </Td>
                 <Td>{order.address}</Td>
