@@ -17,6 +17,7 @@ const StoreName = () => {
     onSuccess: (store: any) => {
       if (store?.store?.name) {
         queryClient.setQueryData(['store'], store.store);
+        queryClient.refetchQueries(['userMeta']);
         navigate(
           createPath({
             path: ROUTE.DASHBOARD,
@@ -24,6 +25,9 @@ const StoreName = () => {
           })
         );
       }
+    },
+    onError: (err: any) => {
+      console.log('errr');
     },
   });
 

@@ -10,22 +10,23 @@ import { useEffect } from 'react';
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useAuth0();
-  const {
-    data: userMeta,
-    refetch,
-    isStale,
-  } = useGetUser(user?.sub, {
+  const { data: userMeta, refetch } = useGetUser(user?.sub, {
     onSuccess: (data: any) => {
       if (!(data && data.storeID)) {
         return navigate(ROUTE.NAME);
       }
     },
-    staleTime: 1000 * 60 * 24,
   });
 
   useEffect(() => {
-    if (userMeta && isStale) {
+    if (userMeta) {
       refetch();
+      console.log('adkl');
+    }
+    if (userMeta && !userMeta?.storeID) {
+      console.log(userMeta);
+      console.log('ovde');
+      navigate(ROUTE.NAME);
     }
   }, [userMeta]);
 
