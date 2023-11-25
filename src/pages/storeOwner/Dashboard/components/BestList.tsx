@@ -15,7 +15,9 @@ const BestList = ({ list, sufix }: BestListProps) => {
       {list.map((item: Ilist) => (
         <Flex key={item.name + item.price} justifyContent='space-between' borderBottom='1px solid' borderColor='neutral.50' p='2'>
           <Box>{item.name}</Box>
-          <Box>{item.price} {sufix}</Box>
+          <Box>
+            {item.price} {sufix}
+          </Box>
         </Flex>
       ))}
     </Box>

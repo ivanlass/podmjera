@@ -412,7 +412,6 @@ export const useChangeOrderStatus = (options) => {
   return useMutation(changeOrderStatus, { ...options });
 };
 
-
 // `useStoreStatistics` is a custom hook that fetches the statistics of a specific store.
 export const useStoreStatistics = (storeID, options) => {
   const { getAccessTokenSilently } = useAuth0();

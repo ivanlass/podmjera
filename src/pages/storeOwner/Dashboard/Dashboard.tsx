@@ -9,7 +9,6 @@ import { useEffect } from 'react';
 import { articlesInterface } from '../../../interfaces/articles.interface';
 import FullPageSpinner from '../../../components/FullPageSpinner';
 
-
 interface User {
   givenName: string;
   totalSpent: number;
@@ -42,55 +41,54 @@ const Dashboard = () => {
     }
   }, [userMeta]);
 
-  if(isLoading) {
-    return <FullPageSpinner />
+  if (isLoading) {
+    return <FullPageSpinner />;
   }
 
   // fake array of objects with name and price
   const bestProducts = storeStatistics.topArticles
-  .map((article: articlesInterface) => ({
-    name: article.name,
-    price: article.count,
-  }))
-  .sort((a: Product, b: Product) => b.price - a.price);
-  
+    .map((article: articlesInterface) => ({
+      name: article.name,
+      price: article.count,
+    }))
+    .sort((a: Product, b: Product) => b.price - a.price);
+
   const bestCustomers = storeStatistics.topUsers.map((user: User) => ({
     name: user.givenName,
     price: user.totalSpent,
   }));
 
-
   return (
     <Box mt={12}>
       <Heading>Dashboard</Heading>
-      {storeStatistics && 
-      <Grid
-        templateColumns={{
-          base: 'repeat(1, 1fr)',
-          sm: 'repeat(2, 1fr)',
-          md: 'repeat(3, 1fr)',
-          lg: 'repeat(5, 1fr)',
-        }}
-        gap={4}
-      >
-        <GridItem w='100%'>
-          <Statistics label='Danas' number={storeStatistics.totalToday} helpText='Današnji prihod' />
-        </GridItem>
-        <GridItem w='100%'>
-          <Statistics label='Jučer' number={storeStatistics.totalYesterday} helpText='Prihod od jučer' />
-        </GridItem>
-        <GridItem w='100%'>
-          <Statistics label='Tjedan' number={storeStatistics.totalThisWeek} helpText='Prihod za ovaj tjedan' />
-        </GridItem>
-        <GridItem w='100%'>
-          <Statistics label='Mjesec' number={storeStatistics.totalThisMonth} helpText='Prihod za ovaj mjesec' />
-        </GridItem>
-        <GridItem w='100%'>
-          <Statistics label='Prošli mjesec' number={storeStatistics.totalLastMonth} helpText='Prihod za prošli mjesec' />
-        </GridItem>
-      </Grid>
-      }
-      
+      {storeStatistics && (
+        <Grid
+          templateColumns={{
+            base: 'repeat(1, 1fr)',
+            sm: 'repeat(2, 1fr)',
+            md: 'repeat(3, 1fr)',
+            lg: 'repeat(5, 1fr)',
+          }}
+          gap={4}
+        >
+          <GridItem w='100%'>
+            <Statistics label='Danas' number={storeStatistics.totalToday} helpText='Današnji prihod' />
+          </GridItem>
+          <GridItem w='100%'>
+            <Statistics label='Jučer' number={storeStatistics.totalYesterday} helpText='Prihod od jučer' />
+          </GridItem>
+          <GridItem w='100%'>
+            <Statistics label='Tjedan' number={storeStatistics.totalThisWeek} helpText='Prihod za ovaj tjedan' />
+          </GridItem>
+          <GridItem w='100%'>
+            <Statistics label='Mjesec' number={storeStatistics.totalThisMonth} helpText='Prihod za ovaj mjesec' />
+          </GridItem>
+          <GridItem w='100%'>
+            <Statistics label='Prošli mjesec' number={storeStatistics.totalLastMonth} helpText='Prihod za prošli mjesec' />
+          </GridItem>
+        </Grid>
+      )}
+
       <SimpleGrid columns={12} spacing={4} mt='4'>
         <GridItem colStart={1} colEnd={{ base: 13, lg: 10 }}>
           Ovde mozda neki graf
@@ -100,13 +98,13 @@ const Dashboard = () => {
             <Text fontSize='md' fontWeight='bold'>
               Najprodavaniji artikli
             </Text>
-            <BestList list={bestProducts} sufix="x"/>
+            <BestList list={bestProducts} sufix='x' />
           </Box>
           <Box w='100%'>
             <Text fontSize='md' fontWeight='bold'>
               Najbolji kupci
             </Text>
-            <BestList list={bestCustomers} sufix="KM"/>
+            <BestList list={bestCustomers} sufix='KM' />
           </Box>
         </GridItem>
       </SimpleGrid>
