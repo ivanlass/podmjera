@@ -30,14 +30,15 @@ const StorePickerCard = ({ store }: StoreCard) => {
       onClick={() => goToStore(store)}
       p='4'
       cursor={'pointer'}
-      w='max-content'
+      w='100%'
+      h='100%'
       textAlign='center'
       bg='neutral.10'
       boxShadow='md'
       borderRadius='xl'
       _hover={{ boxShadow: '2xl' }}
     >
-      <Image src={store.image} alt={store.name} fallback={<Icon as={BiStore} boxSize='8em' />} />
+      <Image width='100%' height='100px' src={store.image} alt={store.name} fallback={<Icon as={BiStore} height='100px' boxSize='7em' />} />
       <Text fontSize='3xl'>{store.name}</Text>
 
       <Box display='flex' mt='4'>

@@ -12,12 +12,12 @@ const Counter: FC<IProps> = ({ product }: IProps) => {
   const basketContext = useContext(BasketContext);
 
   return (
-    <Box bg='primary.500' borderRadius='xl'>
+    <Box bg='primary.500' borderRadius='xl' w={{ base: basketContext && basketContext?.productQuantity(product._id) > 0 ? '100%' : 'fit-content', md: 'auto' }}>
       {basketContext?.productQuantity(product._id) === undefined || basketContext?.productQuantity(product._id) > 0 ? (
-        <Flex alignItems='center'>
+        <Flex alignItems='center' justifyContent='space-between'>
           <IconButton aria-label='minus' size='sm' onClick={() => basketContext?.decreaseQuantity(product)} icon={<MinusIcon />} />
 
-          <Text px='4' fontWeight='bold' color='primary.800'>
+          <Text px='4' fontSize={{ base: 'sm', md: 'md' }} fontWeight='bold' color='primary.800'>
             {basketContext?.productQuantity(product._id)} {product.perPiece ? 'kom' : 'kg'}
           </Text>
           <IconButton size='sm' aria-label='plus' onClick={() => basketContext?.increaseQuantity(product)} icon={<SmallAddIcon fontSize='2xl' />} />

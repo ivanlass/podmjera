@@ -49,7 +49,7 @@ const ProductCardSm: FC<IProps> = ({ product }: IProps) => {
         aria-label='delete'
         position={{ base: 'absolute', md: 'relative' }}
         top='-10px'
-        left='-10px'
+        left='-20px'
         bg='neutral.10'
         onClick={() => basketContext?.removeFromBasket(product._id)}
       />

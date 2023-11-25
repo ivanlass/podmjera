@@ -1,6 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 axios.defaults.baseURL = process.env.REACT_APP_API_SERVER_URL;
 
@@ -377,7 +377,7 @@ export const useGetMyOrders = (userID, options) => {
   });
 };
 
-// get ordeers for specific store
+// get orders for specific store
 export const useGetStoreOrders = (storeID, userID, options) => {
   const { getAccessTokenSilently } = useAuth0();
 
@@ -410,4 +410,22 @@ export const useChangeOrderStatus = (options) => {
     return response.data;
   }
   return useMutation(changeOrderStatus, { ...options });
+};
+
+
+// `useStoreStatistics` is a custom hook that fetches the statistics of a specific store.
+export const useStoreStatistics = (storeID, options) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  const fetchStoreStatistics = async () => {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.get(`/api/store/${storeID}/statistics`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  };
+
+  return useQuery(['storeStatistics', storeID], fetchStoreStatistics, { staleTime: 1000 * 60 * 5, ...options });
 };

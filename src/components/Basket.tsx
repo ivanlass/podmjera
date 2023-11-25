@@ -107,22 +107,18 @@ function Basket() {
             )}
           </DrawerBody>
           <DrawerFooter display='block' borderTop='1px solid' borderColor='primary.500'>
-            <Flex justifyContent='space-between' mt='4' mb='4'>
+            <Flex justifyContent='space-between' mt={{ base: 2, md: 4 }} mb={{ base: 2, md: 4 }}>
               <Text color='text.primary'>Ukupna cijena artikala</Text>
-              <Text color='text.primary' fontWeight='bold'>
-                {basketContext?.totalPrice?.toFixed(2)} KM
-              </Text>
+              <Text color='text.primary'>{basketContext?.totalPrice?.toFixed(2)} KM</Text>
             </Flex>
             {specificStore?.deliveryFee && (
-              <Flex justifyContent='space-between' mt='4' mb='4'>
+              <Flex justifyContent='space-between' mt={{ base: 2, md: 4 }} mb={{ base: 2, md: 4 }}>
                 <Text color='text.primary'>Cijena dostave</Text>
-                <Text color='text.primary' fontWeight='bold'>
-                  {Number(basketContext?.totalPrice) > Number(specificStore?.freeDelivery) ? 0 : specificStore?.deliveryFee?.toFixed(2)} KM
-                </Text>
+                <Text color='text.primary'>{Number(basketContext?.totalPrice) > Number(specificStore?.freeDelivery) ? 0 : specificStore?.deliveryFee?.toFixed(2)} KM</Text>
               </Flex>
             )}
             {basketContext && basketContext?.totalPrice > 0 && specificStore?.deliveryFee && (
-              <Flex justifyContent='space-between' mt='8' mb='4'>
+              <Flex justifyContent='space-between' mt={{ base: 4, md: 8 }} mb='4'>
                 <Text fontWeight='bold' fontSize='xl' color='text.secondary'>
                   Total
                 </Text>

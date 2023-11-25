@@ -31,7 +31,7 @@ const ProductCard: FC<IProps> = ({ product }: IProps) => {
                 {product.price} KM / {product.perPiece ? 'komad' : 'kg'}
               </Text>
             </Box>
-            <Flex justifyContent='flex-end' mt='2'>
+            <Flex justifyContent='flex-end' w='100%' mt='2'>
               <Counter product={product} />
             </Flex>
           </Box>

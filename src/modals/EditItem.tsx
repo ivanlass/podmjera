@@ -1,6 +1,7 @@
 import {
   Button,
   Flex,
+  Box,
   FormControl,
   FormErrorMessage,
   useToast,
@@ -41,8 +42,7 @@ const EditItem = ({ isOpen, onClose, article, selectOptions, storeID }: EditItem
   const { data: userMeta } = useGetUser(user?.sub);
   const [tags, setTags] = useState<string[]>([...article.tags]);
   const { mutate: sendArticle } = useEditArticle({
-    onSuccess: (updatedArticle: articlesInterface) => {
-      console.log(updatedArticle);
+    onSuccess: () => {
       queryClient.invalidateQueries(['articles']);
       toast({
         description: 'Uspješno ste uredili artikal.',
@@ -81,7 +81,9 @@ const EditItem = ({ isOpen, onClose, article, selectOptions, storeID }: EditItem
   const onSubmit = (data: any) => {
     let formData = new FormData();
     formData.append('name', data.name);
-    formData.append('image', data.image[0]);
+    if (data.image && Array.isArray(data.image) && data.image.length > 0) {
+      formData.append('image', data.image[0]);
+    }
     const category = data.category.map((category: any) => category.label);
     const dataForSend = {
       articleID: article._id,
@@ -109,9 +111,6 @@ const EditItem = ({ isOpen, onClose, article, selectOptions, storeID }: EditItem
         <ModalCloseButton />
         <ModalBody>
           <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
-            <Text fontSize='xl' fontWeight='bold'>
-              Novi artikal
-            </Text>
             <SimpleGrid mt='4' columns={{ base: 1, md: 2 }} spacing={4}>
               <Input placeholder='Ime artikla' defaultValue={article.name} {...register('name', { required: true })} />
               <Controller
@@ -190,8 +189,7 @@ const EditItem = ({ isOpen, onClose, article, selectOptions, storeID }: EditItem
               <Controller
                 control={control}
                 name='tags'
-                defaultValue={true}
-                rules={{ required: 'Molimo definirajte cijenu proizvoda.' }}
+                defaultValue={[...article.tags]}
                 render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
                   <FormControl isInvalid={!!error} id='dags' display='flex' alignItems='center'>
                     <ChakraTagInput tags={tags} onTagsChange={handleTagsChange} wrapProps={{ direction: 'row', align: 'stretch' }} />
@@ -204,7 +202,7 @@ const EditItem = ({ isOpen, onClose, article, selectOptions, storeID }: EditItem
               <Button variant='ghost' onClick={onClose}>
                 Odbaci
               </Button>
-              <Button type='submit'>Spremi novu kategoriju</Button>
+              <Button type='submit'>Spremi izmjene</Button>
             </ModalFooter>
           </form>
         </ModalBody>

@@ -13,7 +13,7 @@ const SearchArticles = ({ storeID }: SearchArticleProps) => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const { mutate: searchArticles } = useSearchArticles({
     onSuccess: (articles: any) => {
-      queryClient.setQueryData(['articles', 1], articles.articles);
+      queryClient.setQueryData(['articles', 1], articles);
     },
   });
 

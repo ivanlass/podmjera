@@ -70,7 +70,7 @@ const ItemTable = () => {
 
   if (isLoadingArticles) return <p>Loading...</p>;
   if (isError) return <p>Error...</p>;
-
+  console.log(page);
   return (
     <>
       {articles?.length > 0 ? (
@@ -130,9 +130,17 @@ const ItemTable = () => {
           <Flex my='4' justifyContent='center'>
             <Box bg='neutral.10' p={4} borderRadius='xl' boxShadow='md' display='flex' columnGap={2}>
               <IconButton variant='outline' aria-label='Next page' onClick={() => setPage(page - 1)} disabled={page === 1} icon={<BsChevronLeft />} />
-              {page > 1 && totalNumberOfPages != page && <Button variant='outline'>{page - 1}</Button>}
+              {page > 1 && totalNumberOfPages != page && (
+                <Button onClick={() => setPage(page - 1)} variant='outline'>
+                  {page - 1}
+                </Button>
+              )}
               <Button variant='primary'>{page}</Button>
-              {totalNumberOfPages != page && <Button variant='outline'>{page + 1}</Button>}
+              {totalNumberOfPages != page && (
+                <Button onClick={() => setPage(page + 1)} variant='outline'>
+                  {page + 1}
+                </Button>
+              )}
               <IconButton variant='outline' aria-label='Previous page' onClick={() => setPage(page + 1)} disabled={totalNumberOfPages === page} icon={<BsChevronRight />} />
             </Box>
           </Flex>

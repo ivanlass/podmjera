@@ -73,7 +73,7 @@ const SpecificStore = () => {
       fetchNextPage({ pageParam: 0 }); // Reset the page parameter to 1 when changing category
     }
   }, [mode]);
-
+  console.log(favouriteArticles);
   return (
     <BasketProvider>
       <Box mt='56px'>
@@ -82,7 +82,7 @@ const SpecificStore = () => {
           <ProductFilters searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           <StoreHero />
 
-          {favouriteArticles && <FavouriteProducts articles={favouriteArticles} title='Istaknuto' />}
+          {favouriteArticles?.length > 0 && <FavouriteProducts articles={favouriteArticles} title='Istaknuto' />}
 
           {(mode === Mode.Default || mode === Mode.Category) && (
             <InfiniteProducts

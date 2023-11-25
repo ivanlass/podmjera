@@ -69,21 +69,6 @@ const FavouriteProducts = ({ articles, title }: Props) => {
                 <ProductCard product={article} />
               </Box>
             ))}
-            {articles.map((article: articlesInterface) => (
-              <Box className='keen-slider__slide' mr='2' key={article._id} scrollSnapAlign='start'>
-                <ProductCard product={article} />
-              </Box>
-            ))}
-            {articles.map((article: articlesInterface) => (
-              <Box className='keen-slider__slide' mr='2' key={article._id} scrollSnapAlign='start'>
-                <ProductCard product={article} />
-              </Box>
-            ))}
-            {articles.map((article: articlesInterface) => (
-              <Box className='keen-slider__slide' mr='2' key={article._id} scrollSnapAlign='start'>
-                <ProductCard product={article} />
-              </Box>
-            ))}
           </Box>
           {/* </SimpleGrid> */}
         </Box>
