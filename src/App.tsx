@@ -13,6 +13,7 @@ import ProtectedRoute from './pages/ProtectedRoute';
 import StoreName from './pages/storeOwner/StoreName/StoreName';
 import StorePickerPage from './pages/customer/StorePickerPage/StorePickerPage';
 import OrdersPage from './pages/customer/OrdersPage/OrdersPage';
+import Workers from './pages/storeOwner/Workers/Workers';
 
 const App = () => {
   return (
@@ -69,6 +70,14 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <Orders />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTE.WORKERS}
+            element={
+              <ProtectedRoute>
+                <Workers />
               </ProtectedRoute>
             }
           />

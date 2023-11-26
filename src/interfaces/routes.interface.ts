@@ -4,6 +4,7 @@ export enum ROUTE {
   DASHBOARD = '/store/:store/dashboard',
   CATEGORIES = '/store/:store/kategorije',
   ARTICLES = '/store/:store/artikli',
+  WORKERS = '/store/:store/radnici',
   ORDERS = '/store/:store/narudzbe',
   NAPLATA = '/store/:storeID/naplata',
   STORE = '/store/:storeID/:store',
@@ -16,6 +17,7 @@ type TArgs =
   | { path: ROUTE.SETTINGS; params: { store: string } }
   | { path: ROUTE.CATEGORIES; params: { store: string } }
   | { path: ROUTE.ARTICLES; params: { store: string } }
+  | { path: ROUTE.WORKERS; params: { store: string } }
   | { path: ROUTE.ORDERS; params: { store: string } }
   | { path: ROUTE.NAPLATA; params: { storeID: string } }
   | { path: ROUTE.STORE; params: { storeID: string; store: string } }

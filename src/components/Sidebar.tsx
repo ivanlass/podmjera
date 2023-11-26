@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { IconButton, Box, CloseButton, Flex, Icon, useColorModeValue, Drawer, DrawerContent, useDisclosure, BoxProps, FlexProps } from '@chakra-ui/react';
-import { FiSettings, FiMenu, FiList } from 'react-icons/fi';
+import { FiSettings, FiMenu, FiList  } from 'react-icons/fi';
+import { RxAvatar } from "react-icons/rx";
 import { BiCategory } from 'react-icons/bi';
 import { TbBread } from 'react-icons/tb';
 import { IconType } from 'react-icons';
@@ -55,10 +56,10 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
   const linkItems: Array<LinkItemProps> = [
     {
-      name: 'Postavke',
-      icon: FiSettings,
+      name: 'Dashboard',
+      icon: AiOutlineDashboard,
       to: createPath({
-        path: ROUTE.SETTINGS,
+        path: ROUTE.DASHBOARD,
         params: { store: store?.name || '' },
       }),
     },
@@ -78,19 +79,28 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         params: { store: store?.name || '' },
       }),
     },
-    {
-      name: 'Dashboard',
-      icon: AiOutlineDashboard,
-      to: createPath({
-        path: ROUTE.DASHBOARD,
-        params: { store: store?.name || '' },
-      }),
-    },
+
     {
       name: 'Narudžbe',
       icon: FiList,
       to: createPath({
         path: ROUTE.ORDERS,
+        params: { store: store?.name || '' },
+      }),
+    },
+    {
+      name: 'Postavke',
+      icon: FiSettings,
+      to: createPath({
+        path: ROUTE.SETTINGS,
+        params: { store: store?.name || '' },
+      }),
+    },
+    {
+      name: 'Radnici',
+      icon: RxAvatar,
+      to: createPath({
+        path: ROUTE.WORKERS,
         params: { store: store?.name || '' },
       }),
     },
