@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { IconButton, Box, CloseButton, Flex, Icon, useColorModeValue, Drawer, DrawerContent, useDisclosure, BoxProps, FlexProps } from '@chakra-ui/react';
-import { FiSettings, FiMenu, FiList  } from 'react-icons/fi';
-import { RxAvatar } from "react-icons/rx";
+import { FiSettings, FiMenu, FiList } from 'react-icons/fi';
+import { RxAvatar } from 'react-icons/rx';
 import { BiCategory } from 'react-icons/bi';
 import { TbBread } from 'react-icons/tb';
 import { IconType } from 'react-icons';
