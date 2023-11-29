@@ -16,7 +16,6 @@ const Navigation = () => {
   const { data: userMeta, refetch: refetchGetUser } = useGetUser(user?.sub);
   const navigate = useNavigate();
   const ref = useRef(null);
-
   const { data: store, refetch } = useGetStore(userMeta?._id, {
     enabled: false,
   });
@@ -46,9 +45,8 @@ const Navigation = () => {
       refetchGetUser();
     }
   }, [user]);
-
+  console.log(userMeta);
   useOnClickOutside(ref, handleClickOutside);
-
   return (
     <Flex as='nav' justifyContent='space-between' alignItems={'center'} px='4' py='2' bg='primary.500' w='100%' position='fixed' top='0' zIndex='docked' boxShadow='md'>
       <Box ml={{ base: 12, md: 0 }}>
@@ -64,7 +62,7 @@ const Navigation = () => {
         )}
         {isDropdownOpen && (
           <Box ref={ref} position='absolute' top='50px' right={4} bg='neutral.10' boxShadow={'md'} zIndex='dropdown' p='4' w='150px' borderRadius='xl'>
-            {user && user['http://demozero.net/roles'].includes('storeOwner') && (
+            {user && (user['http://demozero.net/roles'].includes('storeOwner') || user['http://demozero.net/roles'].includes('worker')) && (
               <Button
                 leftIcon={<BsShop />}
                 onClick={() =>

@@ -428,3 +428,50 @@ export const useStoreStatistics = (storeID, options) => {
 
   return useQuery(['storeStatistics', storeID], fetchStoreStatistics, { staleTime: 1000 * 60 * 5, ...options });
 };
+
+
+export const useCreateWorker = (options) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  async function createWorker(payload) {
+    console.log(payload)
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.post(
+      `/api/user/create-worker`,
+      { 
+        username: payload.username,
+        password: payload.password,
+        storeName: payload.storeName,
+        storeID: payload.storeID,
+        connection: 'Username-Password-Authentication'
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  }
+  return useMutation(createWorker, { ...options });
+};
+
+
+// get all workers for specific store
+export const useGetWorkers = (storeID, options) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  async function getWorkers() {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.get(`/api/user/get-workers/${storeID}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  }
+
+  return useQuery(['workers'], () => getWorkers(), {
+    ...options,
+  });
+};

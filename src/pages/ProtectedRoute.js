@@ -20,7 +20,7 @@ const ProtectedRoute = ({ children }) => {
   if (user === undefined && !isLoading) {
     return <Navigate to='/' replace />;
   }
-  if (user && !user['http://demozero.net/roles'].includes('storeOwner')) {
+  if (user && !(user['http://demozero.net/roles'].includes('storeOwner') || user['http://demozero.net/roles'].includes('worker'))) {
     return <Navigate to='/' replace />;
   }
 

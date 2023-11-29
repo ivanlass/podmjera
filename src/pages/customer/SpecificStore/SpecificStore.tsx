@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Box, SimpleGrid } from '@chakra-ui/react';
+import { Box, Button, IconButton, SimpleGrid } from '@chakra-ui/react';
 import Basket from '../../../components/Basket';
 import { BasketProvider } from '../../../store/Basket.Context';
 import InfiniteProducts from './components/InfiniteProducts';
@@ -11,12 +11,13 @@ import { Mode } from '../../../interfaces/general.interface';
 import { useGetSearchedProducts, useGetSpecificStore, useGetAllFavouriteArticles } from '../../../API/Queries';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import { articlesInterface } from '../../../interfaces/articles.interface';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ProductCard from '../../../components/ProductCard';
 import axios from 'axios';
 import { useInView } from 'react-intersection-observer';
 import 'keen-slider/keen-slider.min.css';
 import FavouriteProducts from './components/FavouriteProducts';
+import { CiHome } from 'react-icons/ci';
 
 const SpecificStore = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('Sve');
@@ -77,7 +78,9 @@ const SpecificStore = () => {
   return (
     <BasketProvider>
       <Box mt='56px'>
-        <Basket />
+        <Box display={{ base: 'none', md: 'block' }}>
+          <Basket />
+        </Box>
         <SidebarFilter setMode={setMode} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}>
           <ProductFilters searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           <StoreHero />
@@ -85,15 +88,17 @@ const SpecificStore = () => {
           {favouriteArticles?.length > 0 && <FavouriteProducts articles={favouriteArticles} title='Istaknuto' />}
 
           {(mode === Mode.Default || mode === Mode.Category) && (
-            <InfiniteProducts
-              innerRef={ref}
-              status={status}
-              data={data}
-              isFetching={isFetching}
-              isFetchingNextPage={isFetchingNextPage}
-              hasNextPage={hasNextPage}
-              fetchNextPage={fetchNextPage}
-            />
+            <Box mb='20'>
+              <InfiniteProducts
+                innerRef={ref}
+                status={status}
+                data={data}
+                isFetching={isFetching}
+                isFetchingNextPage={isFetchingNextPage}
+                hasNextPage={hasNextPage}
+                fetchNextPage={fetchNextPage}
+              />
+            </Box>
           )}
           {mode === Mode.Search && (
             <SimpleGrid mt={2} px='4' columns={{ base: 2, md: 3, lg: 5, '2xl': 6 }} spacing={{ base: 2, md: 4 }}>
@@ -105,6 +110,14 @@ const SpecificStore = () => {
                 ))}
             </SimpleGrid>
           )}
+          <Box position='fixed' bottom='0' p='4' bg='neutral.10' boxShadow='lg' w='100%' display={{ base: 'flex', md: 'none' }} justifyContent='space-around'>
+            <Link to='/'>
+              <Button variant='ghost' aria-label='Home' p='0'>
+                <CiHome fontSize='25' />
+              </Button>
+            </Link>
+            <Basket />
+          </Box>
         </SidebarFilter>
       </Box>
     </BasketProvider>

@@ -22,7 +22,7 @@ root.render(
           <Auth0ProviderWithNavigate>
             <QueryClientProvider client={queryClient}>
               <App />
-              <ReactQueryDevtools initialIsOpen={false} />
+              <ReactQueryDevtools initialIsOpen={false} position='top-left' />
             </QueryClientProvider>
           </Auth0ProviderWithNavigate>
         </BrowserRouter>

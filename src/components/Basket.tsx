@@ -52,26 +52,25 @@ function Basket() {
 
   return (
     <>
-      <Box w='100%' textAlign='right'>
+      <Box w='100%' textAlign={{ md: 'right' }}>
         <Button
           onClick={onOpen}
-          position='fixed'
+          position={{ base: 'static', md: 'fixed' }}
           size='null'
           p='2'
           borderRadius={{ base: 'md', md: 'full' }}
-          height={{ base: '80px', md: 'unset' }}
           zIndex={10}
-          right={{ base: '4', md: 32 }}
-          top={{ base: 20, md: 3 }}
-          transform='translate(50%)'
+          right='32'
+          top='7'
+          variant={{ base: 'ghost', md: 'unset' }}
+          transform={{ base: 'translateY(0)', md: 'translateY(-50%)' }}
         >
           {basketContext?.basket && basketContext?.basket.length > 0 && (
             <Text
               fontSize='xs'
               position='absolute'
               top='-6px'
-              right={{ base: 'unset', md: '-10px' }}
-              left={{ base: '-10px', md: 'unset' }}
+              right='-10px'
               p='3px'
               borderRadius='full'
               minW='22px'
