@@ -478,16 +478,13 @@ export const useGetWorkers = (storeID, options) => {
 export const useDeleteWorker = (options) => {
   const { getAccessTokenSilently } = useAuth0();
 
-  async function deleteWorker({workerID, workerEmail}) {
+  async function deleteWorker({ workerID, workerEmail }) {
     const accessToken = await getAccessTokenSilently();
-    const response = await axios.delete(
-      `/api/user/delete-worker/${workerID}/${workerEmail}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    const response = await axios.delete(`/api/user/delete-worker/${workerID}/${workerEmail}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return response.data;
   }
   return useMutation(deleteWorker, { ...options });

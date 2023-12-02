@@ -1,5 +1,23 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Box, Button, Center, Flex, IconButton, Input, InputGroup, InputRightAddon, Text, useDisclosure, useToast } from '@chakra-ui/react';
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  Box,
+  Button,
+  Center,
+  Flex,
+  IconButton,
+  Input,
+  InputGroup,
+  InputRightAddon,
+  Text,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useCreateWorker, useDeleteWorker, useGetStore, useGetUser, useGetWorkers } from '../../../API/Queries';
 import { useForm } from 'react-hook-form';
@@ -10,22 +28,22 @@ import { useQueryClient } from '@tanstack/react-query';
 const Workers = () => {
   const toast = useToast();
   const queryClient = useQueryClient();
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef<any | null>();
   const { user } = useAuth0();
   const { data: userMeta } = useGetUser(user?.sub, {});
   const { data: store } = useGetStore(userMeta?._id);
   const { data: storeWorkers } = useGetWorkers(store?._id);
-  const [ workerIDForDelete, setWorkerIDForDelete ] = useState('');
+  const [workerIDForDelete, setWorkerIDForDelete] = useState('');
   const [workerEmailForDelete, setWorkerEmailForDelete] = useState('');
-  const {mutate: deleteWorker, isLoading: isDeletingWorker} = useDeleteWorker({
+  const { mutate: deleteWorker, isLoading: isDeletingWorker } = useDeleteWorker({
     onSuccess: () => {
       toast({
         title: 'Radnik uspješno obrisan.',
         status: 'success',
         duration: 9000,
         isClosable: true,
-      })
+      });
       queryClient.invalidateQueries(['workers']);
       onClose();
     },
@@ -37,8 +55,8 @@ const Workers = () => {
         isClosable: true,
       });
       onClose();
-    }
-  })
+    },
+  });
   const { mutate: createWorker, isLoading } = useCreateWorker({
     onSuccess: () => {
       toast({
@@ -88,17 +106,15 @@ const Workers = () => {
     createWorker({ username: `${data.username}${generatedNumber}`, storeName: sanitazeString(store.name), password: data.password, storeID: store?._id });
   };
 
-
-  const openDeleteDialog = (id:string, email:string) => {
+  const openDeleteDialog = (id: string, email: string) => {
     setWorkerIDForDelete(id);
     setWorkerEmailForDelete(email);
     onOpen();
-  }
+  };
 
   const deleteWorkerHandler = () => {
-    deleteWorker({workerID: workerIDForDelete, workerEmail: workerEmailForDelete})
-  }
-
+    deleteWorker({ workerID: workerIDForDelete, workerEmail: workerEmailForDelete });
+  };
 
   return (
     <>
@@ -167,20 +183,14 @@ const Workers = () => {
         </Center>
       </Center>
 
-      <AlertDialog
-        isOpen={isOpen}
-        leastDestructiveRef={cancelRef}
-        onClose={onClose}
-      >
+      <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize='lg' fontWeight='bold'>
               Brisanje radnika
             </AlertDialogHeader>
 
-            <AlertDialogBody>
-              Jeste li sigurni da zelite obrisati radnika?
-            </AlertDialogBody>
+            <AlertDialogBody>Jeste li sigurni da zelite obrisati radnika?</AlertDialogBody>
 
             <AlertDialogFooter>
               <Button variant='outline' ref={cancelRef} onClick={onClose}>

@@ -105,24 +105,21 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       }),
     },
   ];
-  console.log(user)
+  console.log(user);
   return (
     <Box bg='neutral.10' w={{ base: 'full', md: 60 }} pos='fixed' h='full' mt={10} {...rest}>
       <Flex alignItems='center' mx='8' my='4' justifyContent='flex-end'>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
 
-      {
-  user &&
-    linkItems
-      .filter(link => user['http://demozero.net/roles']?.includes('storeOwner') || link.name !== 'Radnici')
-      .map(link => (
-        <NavItem key={link.name} icon={link.icon} to={link.to}>
-          {link.name}
-        </NavItem>
-      ))
-}
-
+      {user &&
+        linkItems
+          .filter((link) => user['http://demozero.net/roles']?.includes('storeOwner') || link.name !== 'Radnici')
+          .map((link) => (
+            <NavItem key={link.name} icon={link.icon} to={link.to}>
+              {link.name}
+            </NavItem>
+          ))}
     </Box>
   );
 };
