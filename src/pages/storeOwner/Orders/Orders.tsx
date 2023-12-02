@@ -20,7 +20,7 @@ const Orders = () => {
   const { data: store } = useGetStore(userMeta?._id, {
     enabled: false,
   });
-  const { data: storeOrders } = useGetStoreOrders(store?._id, userMeta?._id, {
+  const { data: storeOrders } = useGetStoreOrders(store?._id, {
     enabled: !!store?._id && !!userMeta?._id,
     refetchIntervalInBackground: true,
   });

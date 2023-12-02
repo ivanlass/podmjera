@@ -45,7 +45,7 @@ const Navigation = () => {
       refetchGetUser();
     }
   }, [user]);
-  console.log(userMeta);
+
   useOnClickOutside(ref, handleClickOutside);
   return (
     <Flex as='nav' justifyContent='space-between' alignItems={'center'} px='4' py='2' bg='primary.500' w='100%' position='fixed' top='0' zIndex='docked' boxShadow='md'>

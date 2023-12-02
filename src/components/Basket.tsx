@@ -137,12 +137,19 @@ function Basket() {
                 Minimalna narudzba je {specificStore?.minimalOrder} KM
               </Text>
             )}
+              {user && Array.isArray(user['http://demozero.net/roles']) && user['http://demozero.net/roles'].includes('worker') && 
+              <Box textAlign='center' my='4'>
+              <Text fontWeight='bold'>Ne možete kupovati sa radnim nalogom.</Text>
+              <Text fontSize='sm' color='text.secondary'>Molimo prijavite se sa privatnim nalogom.</Text>
+              </Box>}
             <Flex justifyContent='flex-end'>
-              <Button variant='outline' mr={3} onClick={onClose}>
+              <Button variant='outline' onClick={onClose}>
                 Zatvori
               </Button>
-              {storeID && basketContext && user && (
+
+              {storeID && basketContext && user && user && Array.isArray(user['http://demozero.net/roles']) && !user['http://demozero.net/roles'].includes('worker') && (
                 <Button
+                ml={3}
                   onClick={() =>
                     navigate(
                       createPath({

@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
-import { Box, Button, Center, IconButton, Input, InputGroup, InputRightAddon, Text, useToast } from '@chakra-ui/react';
+import React, { useMemo, useRef, useState } from 'react';
+import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, Box, Button, Center, Flex, IconButton, Input, InputGroup, InputRightAddon, Text, useDisclosure, useToast } from '@chakra-ui/react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useCreateWorker, useGetStore, useGetUser, useGetWorkers } from '../../../API/Queries';
+import { useCreateWorker, useDeleteWorker, useGetStore, useGetUser, useGetWorkers } from '../../../API/Queries';
 import { useForm } from 'react-hook-form';
 import { UserInterface } from '../../../interfaces/user.interface';
 import { DeleteIcon } from '@chakra-ui/icons';
@@ -10,10 +10,35 @@ import { useQueryClient } from '@tanstack/react-query';
 const Workers = () => {
   const toast = useToast();
   const queryClient = useQueryClient();
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const cancelRef = useRef<any | null>();
   const { user } = useAuth0();
   const { data: userMeta } = useGetUser(user?.sub, {});
   const { data: store } = useGetStore(userMeta?._id);
   const { data: storeWorkers } = useGetWorkers(store?._id);
+  const [ workerIDForDelete, setWorkerIDForDelete ] = useState('');
+  const [workerEmailForDelete, setWorkerEmailForDelete] = useState('');
+  const {mutate: deleteWorker, isLoading: isDeletingWorker} = useDeleteWorker({
+    onSuccess: () => {
+      toast({
+        title: 'Radnik uspješno obrisan.',
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+      })
+      queryClient.invalidateQueries(['workers']);
+      onClose();
+    },
+    onError: () => {
+      toast({
+        title: 'Greška prilikom brisanja radnika.',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+      onClose();
+    }
+  })
   const { mutate: createWorker, isLoading } = useCreateWorker({
     onSuccess: () => {
       toast({
@@ -62,7 +87,19 @@ const Workers = () => {
   const onSubmit = async (data: any) => {
     createWorker({ username: `${data.username}${generatedNumber}`, storeName: sanitazeString(store.name), password: data.password, storeID: store?._id });
   };
-  console.log(storeWorkers);
+
+
+  const openDeleteDialog = (id:string, email:string) => {
+    setWorkerIDForDelete(id);
+    setWorkerEmailForDelete(email);
+    onOpen();
+  }
+
+  const deleteWorkerHandler = () => {
+    deleteWorker({workerID: workerIDForDelete, workerEmail: workerEmailForDelete})
+  }
+
+
   return (
     <>
       <Center>
@@ -110,25 +147,52 @@ const Workers = () => {
         </Box>
       </Center>
       <Center>
-        <Box mt={8} borderRadius='md' bg='neutral.10' p='4' width='100%'>
+        <Center flexDirection='column' mt={8} borderRadius='md' bg='neutral.10' p='4'>
           <Text mb='4' fontSize='lg'>
             Radnici
           </Text>
           {storeWorkers?.map((worker: UserInterface) => {
             return (
-              <Box key={worker._id} mb='4' display='flex' alignItems='center' justifyContent='space-between' width='100%'>
+              <Box maxW='800px' key={worker._id} borderBottom='1px groove' py='2' display='flex' alignItems='center' justifyContent='space-between' width='100%'>
                 <Box>
-                  <Text fontSize='xl'>{worker.name}</Text>
-                  <Text fontSize='sm' color='neutral.100'>
+                  <Text fontSize='md'>{worker.name}</Text>
+                  <Text fontSize='xs' color='neutral.100'>
                     {worker.email}
                   </Text>
                 </Box>
-                <IconButton ms='4' fontSize='xl' variant='ghost' aria-label='delete' icon={<DeleteIcon />} />
+                <IconButton onClick={() => openDeleteDialog(worker._id, worker.email)} ms='4' fontSize='xl' variant='ghost' aria-label='delete' icon={<DeleteIcon />} />
               </Box>
             );
           })}
-        </Box>
+        </Center>
       </Center>
+
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+              Brisanje radnika
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Jeste li sigurni da zelite obrisati radnika?
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button variant='outline' ref={cancelRef} onClick={onClose}>
+                Otkaži
+              </Button>
+              <Button isLoading={isDeletingWorker} colorScheme='red' onClick={deleteWorkerHandler} ml={3}>
+                Obriši
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </>
   );
 };

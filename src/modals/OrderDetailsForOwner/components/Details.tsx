@@ -28,7 +28,7 @@ const Details = ({ order, selectedStatusRef }: Props) => {
         )}
       </Box>
 
-      <Select mt={8} borderColor='primary.500' ref={selectedStatusRef}>
+      <Select defaultValue={order.status} mt={8} borderColor='primary.500' ref={selectedStatusRef}>
         {Object.entries(orderStatus).map(([statusKey, statusValue]) => (
           <option key={statusKey} defaultValue={statusKey} selected={statusKey === order.status}>
             {statusValue}

@@ -378,12 +378,12 @@ export const useGetMyOrders = (userID, options) => {
 };
 
 // get orders for specific store
-export const useGetStoreOrders = (storeID, userID, options) => {
+export const useGetStoreOrders = (storeID, options) => {
   const { getAccessTokenSilently } = useAuth0();
 
   async function getStoreOrders() {
     const accessToken = await getAccessTokenSilently();
-    const response = await axios.get(`/api/orders/storeOrders/${storeID}/${userID}`, {
+    const response = await axios.get(`/api/orders/storeOrders/${storeID}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -472,4 +472,23 @@ export const useGetWorkers = (storeID, options) => {
   return useQuery(['workers'], () => getWorkers(), {
     ...options,
   });
+};
+
+// delete worker /delete-worker/:id
+export const useDeleteWorker = (options) => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  async function deleteWorker({workerID, workerEmail}) {
+    const accessToken = await getAccessTokenSilently();
+    const response = await axios.delete(
+      `/api/user/delete-worker/${workerID}/${workerEmail}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    return response.data;
+  }
+  return useMutation(deleteWorker, { ...options });
 };
