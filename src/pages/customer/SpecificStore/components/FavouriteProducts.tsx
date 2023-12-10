@@ -34,7 +34,7 @@ const FavouriteProducts = ({ articles, title }: Props) => {
       {articles && (
         <Box mx='4' my='16' p={{ base: 0, md: '8' }} position='relative'>
           <Text fontSize='xl' mb='4'>
-            Istaknuto
+            {title}
           </Text>
           {loaded && instanceRef.current && !isLessThan600 && (
             <>
@@ -62,7 +62,6 @@ const FavouriteProducts = ({ articles, title }: Props) => {
               />
             </>
           )}
-          {/* <SimpleGrid mt={2} px='4' columns={{ base: 2, md: 3, lg: 4, '2xl': 5 }} spacing={{ base: 2, md: 4 }}> */}
           <Box ref={sliderRef} className='keen-slider'>
             {articles.map((article: articlesInterface) => (
               <Box className='keen-slider__slide' mr='2' key={article._id} scrollSnapAlign='start' mb='4'>
@@ -70,7 +69,6 @@ const FavouriteProducts = ({ articles, title }: Props) => {
               </Box>
             ))}
           </Box>
-          {/* </SimpleGrid> */}
         </Box>
       )}
     </>

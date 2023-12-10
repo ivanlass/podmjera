@@ -28,7 +28,11 @@ const SpecificStore = () => {
   const { ref, inView } = useInView();
   const { data: specificStore } = useGetSpecificStore(storeID);
   const { data: searchedArticles, refetch: searchArticles } = useGetSearchedProducts(searchQuery, storeID, { enabled: false });
-  const { data: favouriteArticles } = useGetAllFavouriteArticles(storeID);
+  const { data: favouriteArticles, refetch: refetchFavouriteArticles } = useGetAllFavouriteArticles(storeID);
+
+  useEffect(() => {
+    refetchFavouriteArticles();
+  }, [storeID]);
 
   // handle search articles
   useEffect(() => {
@@ -74,7 +78,7 @@ const SpecificStore = () => {
       fetchNextPage({ pageParam: 0 }); // Reset the page parameter to 1 when changing category
     }
   }, [mode]);
-  console.log(favouriteArticles);
+
   return (
     <BasketProvider>
       <Box mt='56px'>
