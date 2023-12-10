@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Box, IconButton, Input, Text, Flex, Button, useToast } from '@chakra-ui/react';
 import { AiOutlinePlus, AiOutlineClose } from 'react-icons/ai';
 import { useGetUser, useSavePhoneNumber } from '../../../../API/Queries';
@@ -14,7 +14,7 @@ const ChoosePhoneNumber = ({ selectedPhoneNumber, setSelectedPhoneNumber }: Prop
   const queryClient = useQueryClient();
   const toast = useToast();
   const { user } = useAuth0();
-  const { data: userMeta } = useGetUser(user?.sub);
+  const { data: userMeta, refetch: refetchUserMeta } = useGetUser(user?.sub);
   const [isOpenForm, setIsOpenForm] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const { mutate: savePhoneNumber } = useSavePhoneNumber({
@@ -32,7 +32,13 @@ const ChoosePhoneNumber = ({ selectedPhoneNumber, setSelectedPhoneNumber }: Prop
     },
   });
 
+  useEffect(() => {
+    refetchUserMeta();
+  }, [user]);
+
   const saveNewAddress = () => {
+    console.log('sadsad', user);
+
     savePhoneNumber({ phoneNumber: inputRef.current?.value, userID: userMeta?._id });
     setIsOpenForm(false);
   };
