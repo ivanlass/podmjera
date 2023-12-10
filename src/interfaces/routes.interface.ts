@@ -22,7 +22,7 @@ type TArgs =
   | { path: ROUTE.NAPLATA; params: { storeID: string } }
   | { path: ROUTE.STORE; params: { storeID: string; store: string } }
   | { path: ROUTE.NAME }
-  | { path: ROUTE.ORDERSCUSTOMER; }
+  | { path: ROUTE.ORDERSCUSTOMER }
   | { path: ROUTE.DASHBOARD; params: { store: string } };
 
 type TArgsWithParams = Extract<TArgs, { path: any; params: any }>;
