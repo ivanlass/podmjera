@@ -40,7 +40,7 @@ const ChoosePhoneNumber = ({ selectedPhoneNumber, setSelectedPhoneNumber }: Prop
   return (
     <Box>
       <Flex justifyContent='space-between' alignItems='center' mb='2'>
-        <Text fontSize='2xl' fontWeight='bold'>
+        <Text fontSize={{ base: 'lg', md: '2xl' }} fontWeight='bold'>
           Odaberite broj telefona
         </Text>
         <IconButton
@@ -60,7 +60,7 @@ const ChoosePhoneNumber = ({ selectedPhoneNumber, setSelectedPhoneNumber }: Prop
           </Button>
         </Box>
       ) : (
-        <Flex gap='8' rowGap={8} flexWrap='wrap'>
+        <Flex gap={{ base: 4, md: 8 }} rowGap={{ base: 4, md: 8 }} flexWrap='wrap'>
           {userMeta &&
             userMeta.phoneNumbers &&
             userMeta?.phoneNumbers.map((phoneNumber: string) => {
@@ -68,7 +68,7 @@ const ChoosePhoneNumber = ({ selectedPhoneNumber, setSelectedPhoneNumber }: Prop
                 <Box
                   width='calc(50% - 16px)'
                   key={phoneNumber}
-                  height='50px'
+                  height={{ base: '30px', md: '50px' }}
                   display='flex'
                   justifyContent='center'
                   alignItems='center'
@@ -83,7 +83,7 @@ const ChoosePhoneNumber = ({ selectedPhoneNumber, setSelectedPhoneNumber }: Prop
                   bg='neutral.20'
                   onClick={() => setSelectedPhoneNumber(phoneNumber)}
                 >
-                  <Text fontSize='xl'>{phoneNumber}</Text>
+                  <Text fontSize={{ base: 'md', md: 'lg' }}>{phoneNumber}</Text>
                 </Box>
               );
             })}

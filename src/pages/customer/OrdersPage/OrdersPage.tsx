@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Center, Flex, Text, useToast } from '@chakra-ui/react';
 import { useGetMyOrders, useGetUser } from '../../../API/Queries';
 import FullpageSpinner from '../../../components/FullPageSpinner';
 import { ordersInterface } from '../../../interfaces/orders.interface';
-import { useParams } from 'react-router-dom';
 import { orderStatus } from '../../../interfaces/general.interface';
 
 const OrdersPage = () => {
-  const toast = useToast();
-  let { newOrder } = useParams();
   const { data: userMeta } = useGetUser();
   const {
     data: myOrders,
@@ -17,17 +14,6 @@ const OrdersPage = () => {
   } = useGetMyOrders(userMeta?._id, {
     enabled: !!userMeta?._id,
   });
-
-  useEffect(() => {
-    if (newOrder && newOrder === 'true') {
-      toast({
-        title: 'Uspješno ste izvršili narudžbu',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
-    }
-  }, []);
 
   if (isLoading) {
     return <FullpageSpinner />;

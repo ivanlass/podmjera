@@ -14,7 +14,18 @@ const ProductCardSm: FC<IProps> = ({ product }: IProps) => {
   const basketContext = useContext(BasketContext);
 
   return (
-    <Box display='flex' py='4' position='relative' bg='neutral.10' borderRadius='md' p='4' my={{ base: 6, md: 4 }} flexWrap={{ base: 'wrap', md: 'nowrap' }}>
+    <Box
+      display='flex'
+      py='4'
+      justifyContent='space-between'
+      position='relative'
+      bg='neutral.10'
+      borderRadius='md'
+      p={{ base: 2, md: 4 }}
+      my={{ base: 6, md: 4 }}
+      boxShadow={{ base: 'md', md: 'none' }}
+      flexWrap={{ base: 'wrap', md: 'nowrap' }}
+    >
       <Image
         src={product.image}
         fallback={<Icon as={CiApple} boxSize='3rem' color='primary.500' bg='neutral.30' borderRadius='full' height='50px' alignSelf='center' />}
@@ -47,9 +58,9 @@ const ProductCardSm: FC<IProps> = ({ product }: IProps) => {
         ms='4'
         icon={<AiOutlineClose />}
         aria-label='delete'
-        position={{ base: 'absolute', md: 'relative' }}
+        position='absolute'
         top='-10px'
-        left='-20px'
+        left='-25px'
         bg='neutral.10'
         onClick={() => basketContext?.removeFromBasket(product._id)}
       />

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Box, Button, IconButton, SimpleGrid } from '@chakra-ui/react';
+import { Box, Button, SimpleGrid } from '@chakra-ui/react';
 import Basket from '../../../components/Basket';
 import { BasketProvider } from '../../../store/Basket.Context';
 import InfiniteProducts from './components/InfiniteProducts';
@@ -114,7 +114,17 @@ const SpecificStore = () => {
                 ))}
             </SimpleGrid>
           )}
-          <Box position='fixed' bottom='0' p='4' bg='neutral.10' boxShadow='lg' w='100%' display={{ base: 'flex', md: 'none' }} justifyContent='space-around'>
+          <Box
+            position='fixed'
+            bottom='0'
+            p='4'
+            bg='neutral.10'
+            borderTop='1px solid'
+            borderColor='primary.500'
+            w='100%'
+            display={{ base: 'flex', md: 'none' }}
+            justifyContent='space-around'
+          >
             <Link to='/'>
               <Button variant='ghost' aria-label='Home' p='0'>
                 <CiHome fontSize='25' />

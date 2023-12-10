@@ -27,7 +27,6 @@ const BillingProcedureInner = () => {
       navigate(
         createPath({
           path: ROUTE.ORDERSCUSTOMER,
-          params: { newOrder: 'true' },
         })
       );
       localStorage.removeItem('basket');
@@ -132,7 +131,7 @@ const BillingProcedureInner = () => {
             <ChooseTimeOfArrival selectedTimeOfArrival={selectedTimeOfArrival} setSelectedTimeOfArrival={setSelectedTimeOfArrival} />
           </Box>
           <Box p={4} mb={{ base: 0, md: 4 }} bg='neutral.10' borderRadius='xl' boxShadow='md'>
-            <Text fontSize='2xl' fontWeight='bold'>
+            <Text fontSize={{ base: 'lg', md: '2xl' }} fontWeight='bold'>
               Napomena
             </Text>
             <Text fontSize='sm' color='text.secondary'>
@@ -145,51 +144,49 @@ const BillingProcedureInner = () => {
           </Box>
         </Box>
         {basketContext?.basket?.length! > 0 ? (
-          <Box maxWidth={{ base: '100%', md: '100%' }}>
-            <Box w='100%' p={4} bg='neutral.10' borderRadius='xl' boxShadow='md'>
-              <Text fontSize='2xl' fontWeight='bold'>
-                Narudžba
-              </Text>
-              <Text fontSize='sm' color='text.secondary'>
-                Pregled narudžbe
-              </Text>
-              <Box mt='4' maxH='500px' overflow='auto'>
-                {basketContext?.basket.map((item: articlesInterface) => (
-                  <Box key={item._id}>
-                    <ProductCardSm product={item} />
-                  </Box>
-                ))}
-              </Box>
-              <Flex justifyContent='space-between' mt='4' mb='4'>
-                <Text>Ukupna cijena artikala</Text>
-                <Text fontWeight='bold'>{basketContext?.totalPrice?.toFixed(2)} KM</Text>
-              </Flex>
-              {specificStore?.deliveryFee && (
-                <Flex justifyContent='space-between' mt='4' mb='4'>
-                  <Text>Cijena dostave</Text>
-                  <Text fontWeight='bold'>{Number(basketContext?.totalPrice) > Number(specificStore?.freeDelivery) ? 0 : specificStore?.deliveryFee?.toFixed(2)} KM</Text>
-                </Flex>
-              )}
-              {basketContext && basketContext?.totalPrice > 0 && specificStore?.deliveryFee && (
-                <Flex justifyContent='space-between' mt='8' mb='4'>
-                  <Text fontWeight='bold' fontSize='xl'>
-                    Total
-                  </Text>
-                  {Number(basketContext?.totalPrice) > Number(specificStore.freeDelivery) ? (
-                    <Text fontWeight='bold' fontSize='xl'>
-                      {basketContext?.totalPrice.toFixed(2)} KM
-                    </Text>
-                  ) : (
-                    <Text fontWeight='bold' fontSize='xl'>
-                      {(Number(specificStore?.deliveryFee) + basketContext?.totalPrice).toFixed(2)} KM
-                    </Text>
-                  )}
-                </Flex>
-              )}
-              <Button onClick={makeOrder} w='100%' colorScheme='primary' size='lg'>
-                Naruči
-              </Button>
+          <Box maxWidth={{ base: '100%', md: '100%' }} w='100%' p={4} bg='neutral.10' borderRadius='xl' boxShadow='md'>
+            <Text fontSize={{ base: 'lg', md: '2xl' }} fontWeight='bold'>
+              Narudžba
+            </Text>
+            <Text fontSize='sm' color='text.secondary'>
+              Pregled narudžbe
+            </Text>
+            <Box mt='4' maxH='500px' overflow='visible'>
+              {basketContext?.basket.map((item: articlesInterface) => (
+                <Box key={item._id}>
+                  <ProductCardSm product={item} />
+                </Box>
+              ))}
             </Box>
+            <Flex justifyContent='space-between' mt='4' mb='4'>
+              <Text>Ukupna cijena artikala</Text>
+              <Text fontWeight='bold'>{basketContext?.totalPrice?.toFixed(2)} KM</Text>
+            </Flex>
+            {specificStore?.deliveryFee && (
+              <Flex justifyContent='space-between' mt='4' mb='4'>
+                <Text>Cijena dostave</Text>
+                <Text fontWeight='bold'>{Number(basketContext?.totalPrice) > Number(specificStore?.freeDelivery) ? 0 : specificStore?.deliveryFee?.toFixed(2)} KM</Text>
+              </Flex>
+            )}
+            {basketContext && basketContext?.totalPrice > 0 && specificStore?.deliveryFee && (
+              <Flex justifyContent='space-between' mt='8' mb='4'>
+                <Text fontWeight='bold' fontSize='xl'>
+                  Total
+                </Text>
+                {Number(basketContext?.totalPrice) > Number(specificStore.freeDelivery) ? (
+                  <Text fontWeight='bold' fontSize='xl'>
+                    {basketContext?.totalPrice.toFixed(2)} KM
+                  </Text>
+                ) : (
+                  <Text fontWeight='bold' fontSize='xl'>
+                    {(Number(specificStore?.deliveryFee) + basketContext?.totalPrice).toFixed(2)} KM
+                  </Text>
+                )}
+              </Flex>
+            )}
+            <Button onClick={makeOrder} w='100%' colorScheme='primary' size='lg'>
+              Naruči
+            </Button>
           </Box>
         ) : null}
       </Grid>

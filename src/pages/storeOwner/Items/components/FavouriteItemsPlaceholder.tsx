@@ -1,10 +1,11 @@
-import { Box, IconButton, Image, Text } from '@chakra-ui/react';
+import { Box, Icon, IconButton, Image, Text } from '@chakra-ui/react';
 import type { FC } from 'react';
 import { useDrop } from 'react-dnd';
 import { articlesInterface } from '../../../../interfaces/articles.interface';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useRemoveFavouriteArticle } from '../../../../API/Queries';
 import { useQueryClient } from '@tanstack/react-query';
+import { TbSoup } from 'react-icons/tb';
 
 export const ItemTypes = {
   BOX: 'box',
@@ -23,7 +24,6 @@ export const FavouriteItemsPlaceholder: FC<IProps> = ({ orderNum, article }) => 
         const filteredData = old.filter((item: articlesInterface) => item._id !== data._id);
         return filteredData;
       });
-      console.log(data);
     },
   });
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -56,15 +56,15 @@ export const FavouriteItemsPlaceholder: FC<IProps> = ({ orderNum, article }) => 
       borderColor='neutral.50'
       p='4'
       boxShadow='md'
-      minH={'200px'}
+      h={'200px'}
       borderRadius='xl'
       ref={article ? null : drop}
       bg={backgroundColor}
     >
       {article?.name ? (
-        <Box w='100%' height='100%'>
+        <Box w='100%' height='100%' display='flex' alignItems='center' justifyContent='flex-start' flexDir='column'>
           <Text textAlign='center'>{article?.name}</Text>
-          <Image borderRadius='xl' w='100%' src={article?.image} />
+          <Image borderRadius='xl' w='100%' height='140px' objectFit='cover' src={article?.image} alt={article?.name} fallback={<Icon as={TbSoup} mt='10' boxSize='2em' />} />
         </Box>
       ) : isActive ? (
         'Release to drop'

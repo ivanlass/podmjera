@@ -52,7 +52,7 @@ function Basket() {
 
   return (
     <>
-      <Box w='100%' textAlign={{ md: 'right' }}>
+      <Box w={{ base: 'auto', md: '100%' }} textAlign={{ md: 'right' }}>
         <Button
           onClick={onOpen}
           position={{ base: 'static', md: 'fixed' }}
@@ -92,7 +92,7 @@ function Basket() {
           <DrawerCloseButton />
           <DrawerHeader>Vaša korpa</DrawerHeader>
 
-          <DrawerBody position='relative' bg='neutral.30'>
+          <DrawerBody position='relative' bg='neutral.30' px='4'>
             {basketContext?.basket && basketContext?.basket.length > 0 ? (
               basketContext.basket.map((product) => (
                 <Box key={product._id}>
@@ -133,7 +133,7 @@ function Basket() {
               </Flex>
             )}
             {Number(basketContext?.totalPrice) <= Number(specificStore?.minimalOrder) && (
-              <Text textAlign='center' color='red.500'>
+              <Text my='4' textAlign='center' color='red.500'>
                 Minimalna narudzba je {specificStore?.minimalOrder} KM
               </Text>
             )}
@@ -167,7 +167,11 @@ function Basket() {
                   Kupi
                 </Button>
               )}
-              {!user && <Button onClick={login}>Login</Button>}
+              {!user && (
+                <Button ml='4' onClick={login}>
+                  Login
+                </Button>
+              )}
             </Flex>
           </DrawerFooter>
         </DrawerContent>

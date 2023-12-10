@@ -70,19 +70,19 @@ const ItemTable = () => {
 
   if (isLoadingArticles) return <p>Loading...</p>;
   if (isError) return <p>Error...</p>;
-  console.log(page);
+
   return (
     <>
+      {isFetchingFavourites ? (
+        <Text>Fetching...</Text>
+      ) : (
+        <>
+          {store && <FavouriteSection storeID={store._id} />}
+          {store && <SearchArticles storeID={store._id} />}
+        </>
+      )}
       {articles?.length > 0 ? (
         <>
-          {isFetchingFavourites ? (
-            <Text>Fetching...</Text>
-          ) : (
-            <>
-              {store && <FavouriteSection storeID={store._id} />}
-              {store && <SearchArticles storeID={store._id} />}
-            </>
-          )}
           <TableContainer bg='neutral.10' borderRadius='xl' boxShadow='md' overflowY='auto'>
             <Table variant='unstyled'>
               <Thead>

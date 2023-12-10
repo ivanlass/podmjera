@@ -59,13 +59,13 @@ const Dashboard = () => {
   }));
 
   return (
-    <Box mt={12}>
+    <Box mt={{ md: 12 }}>
       <Heading>Dashboard</Heading>
       {storeStatistics && (
         <Grid
+          my='4'
           templateColumns={{
-            base: 'repeat(1, 1fr)',
-            sm: 'repeat(2, 1fr)',
+            base: 'repeat(2, 1fr)',
             md: 'repeat(3, 1fr)',
             lg: 'repeat(5, 1fr)',
           }}
@@ -89,19 +89,19 @@ const Dashboard = () => {
         </Grid>
       )}
 
-      <SimpleGrid columns={12} spacing={4} mt='4'>
-        <GridItem colStart={1} colEnd={{ base: 13, lg: 10 }}>
-          Ovde mozda neki graf
-        </GridItem>
-        <GridItem colStart={{ base: 1, lg: 10 }} colEnd={13}>
+      <SimpleGrid columns={12} spacing={4} mt='8'>
+        <GridItem colStart={1} colEnd={{ base: 13, lg: 7 }}>
           <Box w='100%'>
-            <Text fontSize='md' fontWeight='bold'>
+            <Text fontSize='md' fontWeight='bold' mb='4'>
               Najprodavaniji artikli
             </Text>
             <BestList list={bestProducts} sufix='x' />
           </Box>
+        </GridItem>
+
+        <GridItem colStart={{ base: 1, lg: 7 }} colEnd={13}>
           <Box w='100%'>
-            <Text fontSize='md' fontWeight='bold'>
+            <Text fontSize='md' fontWeight='bold' mb='4'>
               Najbolji kupci
             </Text>
             <BestList list={bestCustomers} sufix='KM' />

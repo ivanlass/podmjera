@@ -72,7 +72,7 @@ const SidebarContent = ({ selectedCategory, setSelectedCategory, onClose, setMod
         px='4'
         py='2'
         mt={4}
-        my={selectedCategory === 'Sve' ? '6' : '2'}
+        my={4}
       >
         Sve
       </Text>
@@ -98,7 +98,6 @@ const SidebarContent = ({ selectedCategory, setSelectedCategory, onClose, setMod
             textTransform='capitalize'
             transition={'all .3s ease'}
             color={selectedCategory === category ? 'white' : 'primary.600'}
-            fontWeight={700}
             _hover={{
               boxShadow: 'lg',
               background: 'primary.300',

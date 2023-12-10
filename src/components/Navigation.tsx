@@ -56,7 +56,7 @@ const Navigation = () => {
         {user ? (
           <Avatar onClick={() => setIsDropdownOpen((prev) => !prev)} h='40px' w='40px' src={user?.picture} cursor='pointer' />
         ) : (
-          <Button onClick={login} variant='none'>
+          <Button fontWeight='normal' onClick={login} variant='none'>
             Login
           </Button>
         )}
@@ -87,7 +87,6 @@ const Navigation = () => {
                   navigate(
                     createPath({
                       path: ROUTE.ORDERSCUSTOMER,
-                      params: { newOrder: 'false' },
                     })
                   )
                 }

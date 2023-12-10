@@ -15,7 +15,7 @@ const ChooseTimeOfArrival = ({ selectedTimeOfArrival, setSelectedTimeOfArrival }
 
   return (
     <Box>
-      <Text fontSize='2xl' fontWeight='bold'>
+      <Text fontSize={{ base: 'lg', md: '2xl' }} fontWeight='bold'>
         Odaberite vrijeme dostave
       </Text>
       <Text mb='4' fontSize='sm' color='text.secondary'>
@@ -37,7 +37,7 @@ const ChooseTimeOfArrival = ({ selectedTimeOfArrival, setSelectedTimeOfArrival }
                     <Text fontSize='md' fontWeight='bold' textAlign='left' color='text.primary'>
                       Danas radimo od
                     </Text>
-                    <Text fontSize='md' fontWeight='bold' ml='2'>
+                    <Text fontSize='md' fontWeight='bold' ml='2' color='text.primary'>
                       {specificStore[key]} - {specificStore[key.replace('Open', 'Close')]}
                     </Text>
                   </Box>
@@ -54,7 +54,7 @@ const ChooseTimeOfArrival = ({ selectedTimeOfArrival, setSelectedTimeOfArrival }
             justifyContent='center'
             flexDir='column'
             alignItems='center'
-            height='100px'
+            height={{ base: '80px', md: '100px' }}
             p={2}
             borderRadius='xl'
             cursor='pointer'

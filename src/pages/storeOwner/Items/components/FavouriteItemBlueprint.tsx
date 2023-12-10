@@ -1,4 +1,4 @@
-import { Tr, useToast, Flex, Spinner } from '@chakra-ui/react';
+import { Tr, useToast } from '@chakra-ui/react';
 import type { FC } from 'react';
 import { useDrag } from 'react-dnd';
 import { useSaveFavouriteArticle } from '../../../../API/Queries';

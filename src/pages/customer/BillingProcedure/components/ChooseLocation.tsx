@@ -40,7 +40,7 @@ const ChooseLocation = ({ selectedAddress, setSelectedAddress }: Props) => {
   return (
     <Box>
       <Flex justifyContent='space-between' alignItems='center' mb='2'>
-        <Text fontSize='2xl' fontWeight='bold'>
+        <Text fontSize={{ base: 'lg', md: '2xl' }} fontWeight='bold'>
           Odaberite lokaciju
         </Text>
         <IconButton
@@ -60,7 +60,7 @@ const ChooseLocation = ({ selectedAddress, setSelectedAddress }: Props) => {
           </Button>
         </Box>
       ) : (
-        <Flex gap='8' rowGap={8} flexWrap='wrap' flexDir={{ base: 'column', md: 'row' }}>
+        <Flex gap={{ base: 4, md: 8 }} rowGap={{ base: 4, md: 8 }} flexWrap='wrap' flexDir={{ base: 'column', md: 'row' }}>
           {userMeta &&
             userMeta.adresses &&
             userMeta?.adresses.map((address: string) => {
@@ -68,7 +68,7 @@ const ChooseLocation = ({ selectedAddress, setSelectedAddress }: Props) => {
                 <Box
                   width={{ base: '100%', md: 'calc(50% - 16px)' }}
                   key={address}
-                  height='50px'
+                  height={{ base: '30px', md: '50px' }}
                   display='flex'
                   justifyContent='center'
                   alignItems='center'
@@ -83,7 +83,7 @@ const ChooseLocation = ({ selectedAddress, setSelectedAddress }: Props) => {
                   bg='neutral.20'
                   onClick={() => setSelectedAddress(address)}
                 >
-                  <Text fontSize='xl'>{address}</Text>
+                  <Text fontSize={{ base: 'md', md: 'lg' }}>{address}</Text>
                 </Box>
               );
             })}

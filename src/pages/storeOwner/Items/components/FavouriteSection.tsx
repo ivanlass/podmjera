@@ -1,7 +1,8 @@
-import { SimpleGrid, Box, Text, Flex } from '@chakra-ui/react';
+import { Box, Text, Flex } from '@chakra-ui/react';
 import FavouriteItemsPlaceholder from './FavouriteItemsPlaceholder';
 import { useGetAllFavouriteArticles } from '../../../../API/Queries';
 import { articlesInterface } from '../../../../interfaces/articles.interface';
+import { useDrop } from 'react-dnd';
 
 interface IProps {
   storeID: string;
@@ -11,12 +12,19 @@ const FavouriteSection = ({ storeID }: IProps) => {
   const { data: favouriteArticles } = useGetAllFavouriteArticles(storeID, {
     enabled: !!storeID,
   });
+  const [{ canDrop }] = useDrop(() => ({
+    accept: 'box',
+    drop: () => ({ name: 'Favourite' }),
+    collect: (monitor) => ({
+      canDrop: monitor.canDrop(),
+    }),
+  }));
 
   const findArticle = (orderNum: number) => {
     return favouriteArticles?.find((article: articlesInterface) => article.position === orderNum);
   };
   return (
-    <Box bg='neutral.10' p='4' mt={20} boxShadow='md' borderRadius='xl'>
+    <Box position={canDrop ? 'sticky' : 'static'} top={0} zIndex={100} bg='neutral.10' p='4' mt={20} boxShadow='md' borderRadius='xl'>
       <Text fontSize='2xl'>Favoriti</Text>
       <Text color='text.secondary' mb='4'>
         Ovdje stavite artikle koje želite da se prikazuju na početnoj stranici vaše trgovine, kao prvi na popisu.
